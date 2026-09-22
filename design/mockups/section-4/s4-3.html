@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Geist+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+:root{--sunken:oklch(0.165 0.008 52);--canvas:oklch(0.142 0.008 55);--raised:oklch(0.205 0.01 50);--float:oklch(0.25 0.008 55);--overlay:oklch(0.28 0.01 52);--overlay-h:oklch(0.315 0.011 52);--ink:oklch(0.9564 0.0127 63.92);--soft:oklch(0.72 0.028 56);--faint:oklch(0.66 0.033 55);--hair:oklch(0.3 0.012 50);--signal:oklch(0.78 0.125 36);--action:#a9be8c;--action-fg:#1a2112;
+--raise:0 0 0 1px oklch(0.9564 0.0127 63.92/.04),0 1px 2px oklch(0.06 0.006 50/.3),0 10px 28px -16px oklch(0.06 0.006 50/.5);
+--floatsh:0 0 0 1px oklch(0.9564 0.0127 63.92/.07),0 18px 44px -14px oklch(0.06 0.006 50/.7)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--canvas);color:var(--ink);font:400 18px/1.55 "IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"Geist Mono",monospace}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;font-size:17px;font-weight:500;white-space:nowrap}
+.pri{background:var(--action);color:var(--action-fg)}
+.sec{background:var(--overlay);color:var(--ink)}
+.ghost{color:var(--soft)}
+h1{font-weight:300;letter-spacing:-.03em;line-height:1.02}
+h1 span{color:var(--soft)}
+.nav a{color:var(--soft);font-size:16px;text-decoration:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px oklch(0.78 0.125 36/.18)}
+.film{background-size:cover;background-position:center}
+.tag{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+</style><style>
+.h2{font-weight:300;font-size:60px;line-height:1.05;letter-spacing:-.03em}
+.h2 span{color:var(--soft)}
+.lead{font-size:20px;color:var(--soft);line-height:1.55}
+.ava{display:inline-block;flex:none;border-radius:50%;background-size:cover;background-position:center}
+.tile{position:relative;border-radius:22px;overflow:hidden;background-size:cover;background-position:center}
+.name{position:absolute;left:12px;bottom:12px;padding:4px 12px;border-radius:999px;background:oklch(0.142 0.008 55/.72);font-size:14px;display:flex;gap:6px;align-items:center}
+.sunk{background:var(--sunken);box-shadow:inset 0 1px 2px oklch(0.06 0.006 50/.45),inset 0 0 0 1px oklch(0.9564 0.0127 63.92/.04);border-radius:16px}
+.pane{background:var(--raised);border-radius:24px;box-shadow:var(--raise)}
+@keyframes in-seat{0%{opacity:0;transform:translateY(18px) scale(.96);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes dash{to{stroke-dashoffset:0}}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+@keyframes bgcycle{0%{opacity:0}3%,16%{opacity:1}19%,100%{opacity:0}}
+.bgl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;animation:bgcycle 18s infinite}
+@keyframes lab{0%{opacity:0;transform:translateY(6px)}3%,16%{opacity:1;transform:none}19%,100%{opacity:0}}
+.lab{grid-area:1/1;opacity:0;animation:lab 18s infinite}
+@keyframes acc{0.0%{background:#a9be8c}16.7%{background:#6ec3b4}33.3%{background:#94b6d2}50.0%{background:#b3b4d6}66.7%{background:#cc98be}83.3%{background:#a9be8c}100%{background:#a9be8c}}
+@keyframes ring{0%{transform:translateX(0)}14.7%{transform:translateX(0px)}16.7%{transform:translateX(44px)}31.3%{transform:translateX(44px)}33.3%{transform:translateX(88px)}48.0%{transform:translateX(88px)}50.0%{transform:translateX(132px)}64.7%{transform:translateX(132px)}66.7%{transform:translateX(176px)}81.3%{transform:translateX(176px)}83.3%{transform:translateX(220px)}100%{transform:translateX(220px)}}
+</style></head><body>
+<section style="padding:150px 110px 150px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:60px">
+    <h2 class="h2">Your room.<br><span>Your light.</span></h2>
+    <p class="lead" style="max-width:440px">Pick where you appear to be, how your camera looks and the colour of your Morse. Everyone in the call sees the room you chose.</p>
+  </div>
+  <div style="position:relative;height:640px;border-radius:36px;overflow:hidden;margin-top:72px;box-shadow:var(--floatsh)">
+    <div class="bgl" style="background-image:url(a/sunlit-room.webp);animation-delay:0s;filter:sepia(.25) saturate(1.1)"></div><div class="bgl" style="background-image:url(a/lake-sunrise.webp);animation-delay:3s;filter:contrast(1.1) saturate(.8) sepia(.15)"></div><div class="bgl" style="background-image:url(a/reading-nook.webp);animation-delay:6s;filter:hue-rotate(-12deg) saturate(.9) brightness(1.02)"></div><div class="bgl" style="background-image:url(a/soft-sky.webp);animation-delay:9s;filter:grayscale(1) contrast(1.05)"></div><div class="bgl" style="background-image:url(a/snowy-cabin.webp);animation-delay:12s;filter:saturate(1.45)"></div><div class="bgl" style="background-image:url(a/desert-terrace.webp);animation-delay:15s;filter:brightness(1.12)"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(70% 70% at 50% 45%,transparent,oklch(0.142 0.008 55/.45))"></div>
+    <span style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%)"><span class="ava" style="width:160px;height:160px;background-image:url(a/neuralarc-avatar-sage-512.webp)"></span></span>
+    <span class="name" style="left:24px;bottom:24px;font-size:17px;padding:8px 18px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M7 6.5C7 4.01472 9.01472 2 11.5 2C13.9853 2 16 4.01472 16 6.5V11.5C16 13.9853 13.9853 16 11.5 16C9.01472 16 7 13.9853 7 11.5V6.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M11.5 19H11.0828C7.57267 19 4.57706 16.4623 4 13M11.5 19H11.9172C15.4273 19 18.4229 16.4623 19 13M11.5 19V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg> You</span>
+    <div style="position:absolute;right:24px;top:24px;display:grid;padding:8px 18px;border-radius:999px;background:oklch(0.142 0.008 55/.75);font-size:16px">
+      <span class="lab" style="animation-delay:0s">Style · Warm</span><span class="lab" style="animation-delay:3s">Style · Film</span><span class="lab" style="animation-delay:6s">Style · Cool</span><span class="lab" style="animation-delay:9s">Style · Mono</span><span class="lab" style="animation-delay:12s">Style · Vivid</span><span class="lab" style="animation-delay:15s">Style · Brighten</span>
+    </div>
+    <div style="position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;align-items:center;gap:18px;padding:10px 12px 10px 20px;border-radius:999px;background:oklch(0.142 0.008 55/.8)">
+      <div style="position:relative;display:flex;gap:14px">
+        <span style="position:absolute;left:-4px;top:-4px;width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 2px #F7EFE8;animation:ring 18s steps(1) infinite"></span>
+        <span style="width:30px;height:30px;border-radius:50%;background:#a9be8c"></span><span style="width:30px;height:30px;border-radius:50%;background:#6ec3b4"></span><span style="width:30px;height:30px;border-radius:50%;background:#94b6d2"></span><span style="width:30px;height:30px;border-radius:50%;background:#b3b4d6"></span><span style="width:30px;height:30px;border-radius:50%;background:#cc98be"></span>
+      </div>
+      <span style="display:flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font-size:16px;font-weight:500;color:#1a1510;animation:acc 18s steps(1) infinite">+ New meeting</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:40px;margin-top:40px;color:var(--soft);font-size:17px">
+    <span>16 backgrounds in four sets</span><span>7 camera styles</span><span>5 accents</span><span>Light or dark</span>
+  </div>
+</section></body></html>

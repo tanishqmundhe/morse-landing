@@ -163,7 +163,7 @@ export const extras = {
   titleMuted: "you’d expect, done properly.",
   body: "The small things that make a call feel easy, each one as considered as the big ones.",
   items: [
-    { id: "captions", title: "Captions, in the languages you mix", body: "Hindi and English in one sentence? Morse follows along." },
+    { id: "captions", title: "Captions, translated as you speak", body: "Speak Hindi or Marathi; everyone in the call reads it in English." },
     { id: "languages", title: "18 languages", body: "Ten understood without a setting, eight more when you ask." },
     { id: "whiteboard", title: "A whiteboard in the call", body: "Sketch it out together, with everyone’s cursor on the board." },
     { id: "annotate", title: "Draw on what’s shared", body: "Circle the number that matters while you present." },

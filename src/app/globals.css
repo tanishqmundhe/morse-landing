@@ -118,6 +118,13 @@
   }
 }
 
+/* Excalidraw's hand-drawn face (OFL), Latin subset, for the whiteboard card. */
+@font-face {
+  font-family: "Excalifont";
+  src: url("/fonts/Excalifont-Latin.woff2") format("woff2");
+  font-display: swap;
+}
+
 /* ── Section 3: the feature pictures ─────────────────────────────────────
    Each loops on its own clock. A card that is off screen is paused
    (.feat:not([data-play])). */

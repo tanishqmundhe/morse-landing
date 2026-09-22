@@ -63,13 +63,13 @@ Nothing is set below 13px.
    - **Moving it:** scroll sideways by trackpad, by dragging with a mouse (snapping is off during the drag and back on release), by keyboard, or with the two round buttons beside the heading, which grey out at each end.
    - **Entrance:** the cards arrive once, one after another, 90ms apart, rising and sharpening.
    - **Playback:** a card animates only while it's on screen (`.feat[data-play]`; the keyframes are in `globals.css` under "Section 3").
-   - **The six pictures (`features/pictures.tsx`), CSS and SVG only:**
-     - Captions: Priya's Hindi and English words stream in, the line clears, the next streams in.
-     - 18 languages: each in its own script, rolling past a band and resting on each.
-     - Whiteboard: a hand-drawn sketch draws itself in Caveat (the only place the handwriting face appears), with Arjun's named cursor following the pen.
-     - Draw on what's shared: a coral pen circles the drop-off bar on Priya's chart and writes "the drop".
-     - Reactions: the app's pixel emoji float up, and "Arjun raised a hand" comes and goes.
-     - Mind map: after the notes page's own mind map, the meeting branches into sections and points, lines drawing and dots popping.
+   - **The six pictures.** Languages, reactions and the mind map run on CSS keyframes (`features/pictures.tsx`); captions, the whiteboard and the annotation run on GSAP timelines in their own files, paused off screen and resting on a finished frame under reduced motion (`features/timeline.ts`).
+     - **Captions (`captions.tsx`):** what's said, then what Morse shows. Speech in Hindi or Marathi holds for 3.4s, turns over into the English caption with the letter 3D swap, and holds 4.6s; the speaker changes with it. Devanagari turns word by word so conjuncts stay whole; Latin turns letter by letter. Hindi and Marathi are set in IBM Plex Sans Devanagari.
+     - **Whiteboard (`whiteboard.tsx`):** drawn as Excalidraw draws — roughjs shapes (the same library Excalidraw uses) on its dark canvas (#121212), Excalifont for text, its toolbar island, and two collaborators' cursors with name tags. Arjun and Priya work at the same time: shapes grow as a cursor drags them out, arrows draw under the tip, text types where the cursor clicks, and the cursors glide on eased curves.
+     - **Annotation (`annotate.tsx`):** Priya presents a quarter's revenue against target on a light slide. Her pen — the app's first annotation ink, #F2784B — loops round the month that missed, writes "24% short" by hand, then draws an arrow to it, moving the way a hand does.
+     - **Reactions:** the app's pixel emoji float up past the Morse mark, centred on the blue "tide" profile colour, and "Arjun raised a hand" comes and goes.
+     - **18 languages:** each in its own script, rolling past a band and resting on each.
+     - **Mind map:** after the notes page's own mind map. All three branches set off together, a beat apart, each growing its points.
    - **Replaced:** the earlier "One meeting, start to finish" tab section, which repeated section 2. The nav's "How it works" link became "Features".
 5. **Booking (`#booking`):** on a sunken band. A working booking-page preview:
    - It shows this month and next, and the visitor's real time zone.
