@@ -533,7 +533,7 @@ export function HomeScreen() {
 }
 
 /** Knowledge: the notes the teleprompter answers from. Sits at the row's end. */
-export function KnowledgeScreen() {
+export function KnowledgeScreen({ active }: { active: boolean }) {
   const folders: [string, string, string][] = [
     ["Acme", "12 notes", "ember"],
     ["Onboarding research", "8 notes", "lagoon"],
@@ -546,7 +546,15 @@ export function KnowledgeScreen() {
         <span className="text-[24px] font-light text-ink">Knowledge</span>
         <span className="rounded-full bg-action px-4 py-1.5 text-[14px] font-medium text-action-foreground">Add note</span>
       </div>
-      <div className="mt-4 flex h-12 items-center rounded-full bg-raised px-5 text-[16px] text-ink-faint">Search your notes</div>
+      <div className="mt-4 flex h-12 items-center rounded-full bg-raised px-5 text-[16px]" key={active ? "on" : "off"}>
+        {active ? (
+          <span className="text-ink">
+            <Written text="Acme renewal" delay={400} step={90} />
+          </span>
+        ) : (
+          <span className="text-ink-faint">Search your notes</span>
+        )}
+      </div>
       <div className="mt-5 grid grid-cols-4 gap-3">
         {folders.map(([n, c, col]) => (
           <div key={n} className="overflow-hidden rounded-[22px] bg-raised">
@@ -563,8 +571,11 @@ export function KnowledgeScreen() {
         ["Acme renewal notes", "Renewal terms, seat counts and what we promised in August."],
         ["Second-meeting nudge", "Why people drop off after sign-up, from twelve interviews."],
         ["Pricing for 2027", "Draft tiers and the questions still open."],
-      ].map(([t, d]) => (
-        <div key={t} className="mt-2 rounded-[18px] bg-raised px-5 py-3.5">
+      ].map(([t, d], i) => (
+        <div
+          key={t}
+          className={`mt-2 rounded-[18px] bg-raised px-5 py-3.5 transition-shadow duration-500 ${active && i === 0 ? "shadow-[0_0_0_2px_var(--action)] delay-[1200ms]" : ""}`}
+        >
           <p className="text-[17px] text-ink">{t}</p>
           <p className="text-[14px] text-ink-faint">{d}</p>
         </div>

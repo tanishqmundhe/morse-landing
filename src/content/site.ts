@@ -96,9 +96,9 @@ export const showcase = {
     { chip: "booking", label: "Thu, 2:00 pm" },
   ] as Piece[],
   /**
-   * In row order. The first and last only ever sit at the sides, so the screen
-   * in the middle always has a neighbour on each side. The room's line is the
-   * sentence itself.
+   * In row order. Home only ever sits at the side, so the opening screen has a
+   * neighbour on each side; from Room to Knowledge every screen takes the
+   * middle. The room's line is the sentence itself.
    */
   slides: [
     { id: "home", line: null },
@@ -139,7 +139,15 @@ export const showcase = {
         { chip: "google", label: "Google Calendar" },
       ],
     },
-    { id: "knowledge", line: null },
+    {
+      id: "knowledge",
+      line: [
+        { text: "And the answers come from your notes," },
+        { chip: "note", label: "Knowledge" },
+        { text: "with files and Google Drive folders brought in." },
+        { chip: "google", label: "Google Drive" },
+      ],
+    },
   ] as { id: string; line: Piece[] | "statement" | null }[],
 };
 

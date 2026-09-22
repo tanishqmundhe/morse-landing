@@ -34,9 +34,10 @@ import {
  * 3. Scrolling moves the row sideways. Whatever is in the middle plays, and the
  *    line above becomes that screen's own line, in the same words-and-chips voice.
  *
- * The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge;
- * only Room to Calendar ever take the middle, so there is always a screen
- * fading off on each side.
+ * The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge.
+ * It opens on Room with Home fading off to the left, and every screen from
+ * Room to Knowledge takes the middle before the section lets go. The row has
+ * half a screen of padding after Knowledge so it can be centred.
  *
  * Scroll writes positions straight to the DOM in one animation frame; React
  * only hears when the screen in the middle changes.
@@ -44,7 +45,7 @@ import {
 
 const slides = showcase.slides;
 const FIRST = 1;
-const LAST = slides.length - 2;
+const LAST = slides.length - 1;
 
 // Phases, in screen heights of scroll.
 const PRE = 0.55; // lighting starts this far before the section pins
@@ -87,7 +88,7 @@ function screenFor(id: string, active: boolean) {
     case "calendar":
       return <CalendarScreen active={active} />;
     default:
-      return <KnowledgeScreen />;
+      return <KnowledgeScreen active={active} />;
   }
 }
 
@@ -408,6 +409,7 @@ export function Showcase() {
         <div ref={rowWrap} className="absolute inset-x-0 opacity-0 will-change-transform" style={{ top: "60%" }} aria-hidden={!rising}>
           <div
             ref={row}
+            style={{ paddingRight: "calc(50vw - var(--w) / 2)" }}
             className="relative flex items-center gap-[clamp(20px,2.4vw,44px)] overflow-hidden py-6 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]"
           >
             {slides.map((s, i) => (
