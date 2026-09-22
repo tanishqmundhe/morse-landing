@@ -11,7 +11,7 @@ export function SiteFooter() {
   return (
     <footer className={`${WRAP} flex flex-col items-center gap-8 py-10 text-center sm:flex-row sm:justify-between sm:gap-6 sm:py-12 sm:text-left`}>
       <a href="#" aria-label="Morse, back to top" className="text-ink-soft transition-colors hover:text-ink">
-        <Logo className="h-5 w-auto" />
+        <Logo className="h-[26px] w-auto" />
       </a>
 
       <nav aria-label="Sections" className="flex flex-wrap justify-center gap-x-7 gap-y-2 text-[15px] text-ink-soft">
@@ -24,7 +24,7 @@ export function SiteFooter() {
 
       <p className="flex items-center gap-2.5 text-[15px] text-ink-faint">
         {footer.maker}
-        <UnifiedMachinesLogo className="h-[26px] w-auto shrink-0" />
+        <UnifiedMachinesLogo className="h-[15px] w-auto shrink-0" />
       </p>
     </footer>
   );

@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { Add01Icon } from "@hugeicons/core-free-icons";
 import { faq } from "@/content/site";
-import { H2, Heading, Icon, WRAP } from "./ui";
+import { H2, Heading, Icon, SECTION, WRAP } from "./ui";
 
 /**
  * Section 7: the questions, centred, to settle into the same rhythm as the
@@ -16,7 +16,7 @@ export function Faq() {
   const id = useId();
 
   return (
-    <section id="questions" className={`${WRAP} scroll-mt-24 py-28 text-center lg:py-40 2xl:py-48`}>
+    <section id="questions" className={`${WRAP} ${SECTION} scroll-mt-24 text-center`}>
       <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
 
       <div className="mx-auto mt-16 max-w-[860px] text-left">

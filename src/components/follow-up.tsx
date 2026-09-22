@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Calendar03Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { followUp } from "@/content/site";
-import { Eyebrow, H2, Heading, Icon, PRIMARY, SECONDARY, WRAP } from "./ui";
+import { Eyebrow, H2, Heading, Icon, PRIMARY, SECONDARY, SECTION, WRAP } from "./ui";
 
 type Choice = "open" | "booked" | "skipped";
 
@@ -13,7 +13,7 @@ export function FollowUp() {
   const [choice, setChoice] = useState<Choice>("open");
 
   return (
-    <section className={`${WRAP} grid items-center gap-12 border-t border-hairline py-20 lg:grid-cols-2 lg:gap-16 lg:py-28`}>
+    <section className={`${WRAP} ${SECTION} grid items-center gap-12 border-t border-hairline lg:grid-cols-2 lg:gap-16`}>
       <div>
         <Eyebrow className="mb-5">{followUp.eyebrow}</Eyebrow>
         <Heading lead={followUp.title} muted={followUp.titleMuted} className={H2} />

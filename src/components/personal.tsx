@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Add01Icon, PlayIcon, RepeatIcon } from "@hugeicons/core-free-icons";
 import { teleprompter, yours } from "@/content/site";
-import { CARD, Eyebrow, Heading, Icon, Lines, WRAP } from "./ui";
+import { CARD, Eyebrow, Heading, Icon, Lines, SECTION, WRAP } from "./ui";
 
 export function Personal() {
   return (
-    <section id="teleprompter" className={`${WRAP} grid scroll-mt-24 gap-5 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28`}>
+    <section id="teleprompter" className={`${WRAP} ${SECTION} grid scroll-mt-24 gap-5 lg:grid-cols-[1.15fr_1fr]`}>
       <Teleprompter />
       <MakeItYours />
     </section>

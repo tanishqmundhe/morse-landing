@@ -56,7 +56,7 @@ export function SiteHeader() {
     >
       <div className="flex h-[68px] items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10">
         <a href="#" aria-label="Morse, back to top" className="text-ink">
-          <Logo className="h-[22px] w-auto sm:h-6" />
+          <Logo className="h-[26px] w-auto sm:h-[30px]" />
         </a>
 
         <nav

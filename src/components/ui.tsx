@@ -6,6 +6,8 @@ import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
  * Depth is luminance and a machined shadow, never a border (Morse contract #5).
  */
 export const CARD = "rounded-[28px] bg-raised shadow-raised";
+/** One rhythm for every section between the hero and the closing. */
+export const SECTION = "py-28 lg:py-40 2xl:py-48";
 export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 2xl:max-w-[1360px]";
 
 /** Capsules only (contract #8). Sage is spent on the one thing to press. */

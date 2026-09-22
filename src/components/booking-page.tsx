@@ -4,7 +4,7 @@ import { ArrowLeft01Icon, Link01Icon } from "@hugeicons/core-free-icons";
 import { booking } from "@/content/site";
 import { Film } from "./film";
 import { useLoop } from "./features/timeline";
-import { H2, Heading, Icon, WRAP } from "./ui";
+import { H2, Heading, Icon, SECTION, WRAP } from "./ui";
 
 /**
  * Section 4: a booking page, drawn the way the app draws one — two near-square
@@ -127,7 +127,7 @@ export function BookingPage() {
   }, { rest: 0.5 });
 
   return (
-    <section id="booking" className={`${WRAP} scroll-mt-24 py-28 text-center lg:py-40 2xl:py-48`}>
+    <section id="booking" className={`${WRAP} ${SECTION} scroll-mt-24 text-center`}>
       <Heading lead={booking.title} muted={booking.titleMuted} className={H2} />
       <p className="mx-auto mt-6 max-w-[620px] text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]">{booking.body}</p>
       <p className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-full bg-raised px-6 text-[17px] text-ink shadow-raised">

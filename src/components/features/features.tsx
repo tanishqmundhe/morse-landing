@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { extras } from "@/content/site";
-import { H2, Heading, Icon } from "../ui";
+import { H2, Heading, Icon, SECTION } from "../ui";
 import { PICTURES } from "./pictures";
 
 /**
@@ -87,7 +87,7 @@ export function Features() {
     "grid size-12 place-items-center rounded-full bg-overlay text-ink transition-[background-color,opacity,transform] duration-150 hover:bg-overlay-hover active:scale-95 disabled:pointer-events-none disabled:opacity-30";
 
   return (
-    <section id="features" className="scroll-mt-24 py-28 lg:py-40 2xl:py-48" aria-label="Everything else">
+    <section id="features" className={`${SECTION} scroll-mt-24`} aria-label="Everything else">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:justify-between 2xl:max-w-[1360px]">
         <Heading lead={extras.title} muted={extras.titleMuted} className={H2} />
         <div className="flex items-end gap-8">
