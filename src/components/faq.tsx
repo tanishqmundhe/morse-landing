@@ -4,7 +4,7 @@ import { H2, Heading, Icon, WRAP } from "./ui";
 
 export function Faq() {
   return (
-    <section id="questions" className={`${WRAP} grid scroll-mt-6 gap-10 border-t border-hairline py-20 lg:grid-cols-[0.8fr_1.2fr] lg:py-28`}>
+    <section id="questions" className={`${WRAP} grid scroll-mt-24 gap-10 border-t border-hairline py-20 lg:grid-cols-[0.8fr_1.2fr] lg:py-28`}>
       <Heading lead={faq.title} className={H2} />
       <div>
         {faq.items.map((item) => (

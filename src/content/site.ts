@@ -19,9 +19,11 @@ export const meta = {
 };
 
 export const nav = {
+  // In page order, so the highlight moves one way as you scroll.
   links: [
     { label: "How it works", href: "#how" },
     { label: "Booking", href: "#booking" },
+    { label: "Teleprompter", href: "#teleprompter" },
     { label: "Questions", href: "#questions" },
   ],
   cta: { label: "Open Morse", href: links.app },
@@ -30,18 +32,48 @@ export const nav = {
 export const hero = {
   title: "Good conversations.",
   titleMuted: "Real progress.",
-  lede: "Morse is a video meeting app that takes its own notes, answers questions from your notes while you talk, and books the follow-up. Your calendar is in the same place.",
+  lede: "Video calls that write the meeting down for you, answer questions from your notes while you talk, and book the next meeting before anyone hangs up.",
   primary: { label: "Open Morse", href: links.app },
   secondary: { label: "See how it works", href: "#how" },
-  image: {
-    src: "/product/today.jpg",
-    width: 1786,
-    height: 1082,
-    alt: "The Morse home screen: a greeting, a New meeting button, a field to join by code, and a large dot-matrix clock",
+  film: { src: "/films/signal-loop.mp4", poster: "/films/signal-poster.jpg" },
+  /**
+   * The card over the film plays one meeting through the three things Morse
+   * does in it. Each scene is the app's own surface, cut down.
+   */
+  live: {
+    meeting: "Weekly product sync",
+    recording: "Recording",
+    startSeconds: 12 * 60 + 4,
+    scenes: [
+      {
+        id: "notes",
+        label: "Notes",
+        speaker: "Priya",
+        text: "Can we get the launch brief ready for Friday?",
+        result: { lead: "Action item", text: "Launch brief · Jamie · Fri" },
+      },
+      {
+        id: "teleprompter",
+        label: "Teleprompter",
+        speaker: "Daniel",
+        question: "What did we agree with Acme on pricing?",
+        answer: "This year’s rate, fixed until March, with two extra seats.",
+        source: "Acme renewal notes",
+      },
+      {
+        id: "follow-up",
+        label: "Follow-up",
+        speaker: "Priya",
+        text: "Let’s pick this up Thursday at two.",
+        title: "Book a follow-up?",
+        time: "Thu, 2:00 – 2:30 pm",
+        book: "Book",
+        skip: "Don’t book",
+        booked: "Booked. Invites sent.",
+      },
+    ] as const,
   },
 };
-
-export const features = ["Video meetings", "Notes and action items", "Teleprompter", "Booking pages", "Calendar"];
 
 export type Stage = "before" | "during" | "after";
 

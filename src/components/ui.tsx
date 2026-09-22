@@ -9,8 +9,9 @@ export const CARD = "rounded-[28px] bg-raised shadow-raised";
 export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8";
 
 /** Capsules only (contract #8). Sage is spent on the one thing to press. */
+// Pressing gives a little: the capsule sinks by 3% and springs back.
 const BUTTON =
-  "inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-[17px] font-medium whitespace-nowrap transition-colors duration-150";
+  "inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-[17px] font-medium whitespace-nowrap transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]";
 export const PRIMARY = `${BUTTON} bg-action text-action-foreground hover:bg-action-hover`;
 export const SECONDARY = `${BUTTON} bg-overlay text-ink hover:bg-overlay-hover`;
 

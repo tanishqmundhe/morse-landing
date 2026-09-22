@@ -7,7 +7,7 @@ import { CARD, Eyebrow, Heading, Icon, Lines, WRAP } from "./ui";
 
 export function Personal() {
   return (
-    <section className={`${WRAP} grid gap-5 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28`}>
+    <section id="teleprompter" className={`${WRAP} grid scroll-mt-24 gap-5 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28`}>
       <Teleprompter />
       <MakeItYours />
     </section>

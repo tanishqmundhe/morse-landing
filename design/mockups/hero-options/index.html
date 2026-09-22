@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morse hero options</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --canvas:#0c0907; --raised:#1c1714; --ink:#f7efe8; --soft:#b3a194; --faint:#9c8b7e; --hair:#2e2622; --action:#a9be8c; }
+  * { box-sizing:border-box; margin:0 }
+  body { background:var(--canvas); color:var(--ink); font:400 17px/1.55 "IBM Plex Sans",sans-serif; -webkit-font-smoothing:antialiased }
+  header { max-width:1240px; margin:0 auto; padding:56px 24px 24px }
+  h1 { font-weight:300; font-size:44px; letter-spacing:-.02em }
+  header p { color:var(--soft); margin-top:10px; max-width:640px }
+  nav { position:sticky; top:0; z-index:2; background:rgb(12 9 7 / .9); backdrop-filter:blur(8px); border-bottom:1px solid var(--hair) }
+  nav div { max-width:1240px; margin:0 auto; padding:12px 24px; display:flex; gap:8px; flex-wrap:wrap }
+  nav a { color:var(--soft); text-decoration:none; padding:6px 14px; border-radius:999px; background:var(--raised) }
+  nav a:hover { color:var(--ink) }
+  section { max-width:1240px; margin:0 auto; padding:48px 24px 16px }
+  h2 { font-weight:400; font-size:26px }
+  h2 small { font-size:15px; color:var(--action); margin-left:10px; font-weight:500 }
+  .note { color:var(--soft); margin-top:6px; max-width:760px }
+  .frame { margin-top:20px; width:100%; aspect-ratio:1440/900; border-radius:20px; overflow:hidden; background:#000; box-shadow:0 0 0 1px rgb(247 239 232 / .06) }
+  .frame iframe { width:1440px; height:900px; border:0; transform-origin:0 0 }
+  footer { max-width:1240px; margin:0 auto; padding:40px 24px 80px; color:var(--faint); font-size:15px }
+</style>
+</head>
+<body>
+<header>
+  <h1>Hero and top nav options</h1>
+  <p>The four directions from 22 September 2026, as first mocked up. Option A is the one built on the site; B, C and D are kept here to come back to. Stills stand in for the looping films.</p>
+</header>
+<nav><div><a href="#a">A · Film window</a><a href="#b">B · Split stage</a><a href="#c">C · Rooms</a><a href="#d">D · Signal</a></div></nav>
+
+<section id="a">
+  <h2>A · Film window <small>Chosen, built on the site</small></h2>
+  <p class="note">The signal film fills a large rounded window with everything laid over it. As built: the code row above the headline is gone, and the corner card now plays one meeting through Notes, Teleprompter and Follow-up.</p>
+  <div class="frame"><iframe src="hero-A.html" title="Option A" loading="lazy"></iframe></div>
+</section>
+<section id="b">
+  <h2>B · Split stage</h2>
+  <p class="note">Closest to the Forgeflow reference: framed edges, copy left, the ringed-meadow film right with the Teleprompter answer writing itself in and the call controls under it. A slow MORSE code strip divides it from a statement paragraph that lights up as you scroll.</p>
+  <div class="frame"><iframe src="hero-B.html" title="Option B" loading="lazy"></iframe></div>
+</section>
+<section id="c">
+  <h2>C · Rooms</h2>
+  <p class="note">A centred headline over a row of meeting tiles, each with a film as its background, the way the app’s backgrounds work. The speaking highlight moves between tiles and a caption appears on the speaker. Floating pill nav.</p>
+  <div class="frame"><iframe src="hero-C.html" title="Option C" loading="lazy"></iframe></div>
+</section>
+<section id="d">
+  <h2>D · Signal</h2>
+  <p class="note">The name spelled out in the logo’s own dots and dashes. A coral pulse travels along it before the headline arrives; the gold tunnel film sits dim behind; the app’s today card rises from below as you scroll.</p>
+  <div class="frame"><iframe src="hero-D.html" title="Option D" loading="lazy"></iframe></div>
+</section>
+<footer>Source: design/mockups/build.js. The PNGs beside this folder are the same four options at full size.</footer>
+<script>
+  // Fit each 1440×900 mockup to its frame.
+  const fit = () => document.querySelectorAll(".frame").forEach(f => {
+    f.querySelector("iframe").style.transform = `scale(${f.clientWidth / 1440})`;
+  });
+  addEventListener("resize", fit); fit();
+</script>
+</body>
+</html>

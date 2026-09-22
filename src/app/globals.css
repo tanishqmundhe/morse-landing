@@ -79,6 +79,33 @@
 
   --animate-blink: blink 1.2s ease-in-out infinite;
   --animate-rise: rise 420ms var(--ease-out) both;
+  /* The hero's one orchestrated entrance: film settles, copy follows, card last. */
+  --animate-film-in: film-in 1600ms var(--ease-out) both;
+  --animate-enter: enter 900ms var(--ease-out) both;
+  /* A word being written in: sharpens as it arrives. */
+  --animate-word: word 420ms var(--ease-out) both;
+  @keyframes film-in {
+    from { opacity: 0; transform: scale(1.06); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+  @keyframes word {
+    from { opacity: 0; transform: translateY(3px); filter: blur(3px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+  @keyframes fill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes fade-out {
+    to { opacity: 0; visibility: hidden; }
+  }
+  @keyframes press {
+    50% { transform: scale(0.94); filter: brightness(1.12); }
+  }
   @keyframes blink {
     0%, 100% { opacity: 0.25; }
     50% { opacity: 1; }

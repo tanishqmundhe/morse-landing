@@ -34,7 +34,7 @@ function isOpen(date: Date, today: Date) {
 
 export function Booking() {
   return (
-    <section id="booking" className="scroll-mt-6 bg-sunken py-20 lg:py-28">
+    <section id="booking" className="scroll-mt-24 bg-sunken py-20 lg:py-28">
       <div className={`${WRAP} grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16`}>
         <div>
           <Eyebrow className="mb-5">{booking.eyebrow}</Eyebrow>

@@ -33,8 +33,18 @@ Nothing is set below 13px.
 
 ## Sections (in order)
 
-1. **Header:** the real logo, three anchors (hidden below md), and Open Morse as a secondary capsule.
-2. **Hero:** a light two-tone h1, a lede, Open Morse (sage) and a "See how it works" text link. Beside it, the app's today card: a crop of the real product, in a raised frame with no tilt. Then the feature list over a hairline.
+1. **Header (`site-header.tsx`):** fixed. It's clear over the film and turns into a solid pill (`bg-canvas/85`, `shadow-float`) once the film has scrolled away.
+   - The logo sits on the left and Open Morse (sage) on the right.
+   - Between them, a pill of four links in page order. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
+2. **Hero, option A "Film window" (`hero.tsx`):** the app's signal film (`public/films/signal-loop.mp4`) fills a window inset 14px, `rounded-[30px]`, one screen tall (max 940px). Scrims hold the lower-left dark for the copy; below `lg` a flat 55% canvas layer covers the whole film.
+   - **Copy:** a two-line h1 in Plex 300 at 92px, the second line `ink-soft`; the lede; Open Morse (sage, with its arrow nudging on hover) and See how it works (`overlay`).
+   - **Entrance:** the page's one orchestrated moment. The film settles from 1.06×, the h1 lines, lede and buttons arrive at 350/500/700/850ms with a blur-to-sharp rise, and the card follows at 1150ms.
+   - **Live card (`live-card.tsx`, `lg` and up):** one meeting, with a coral pulse and a live Recording timer. It plays three scenes, 6.5s each, with words written in one at a time:
+     - Notes: what Priya said becomes an action item.
+     - Teleprompter: Daniel's question, answered from notes.
+     - Follow-up: Book is pressed for you, then "Booked. Invites sent."
+     - The segments underneath are the timeline and can be pressed to jump. Hovering holds the scene; with reduced motion nothing advances on its own.
+   - The other three options (B Split stage, C Rooms, D Signal) are kept in `design/mockups/hero-options/index.html`.
 3. **How it works (`#how`):** Before / During / After tabs.
    - Before: a booking confirmation.
    - During: a live transcript with the coral Recording dot.
@@ -50,6 +60,12 @@ Nothing is set below 13px.
 7. **Questions (`#questions`):** a `details` list with a rotating plus.
 8. **Closing:** the mark, the line, and Open Morse.
 9. **Footer:** the Morse logo, and "A product by" with the Unified Machines lockup, as in the app.
+
+## Motion
+
+- **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).
+- **Films** pause while off screen and rest on their poster under reduced motion (`film.tsx`).
+- **Everything** respects `prefers-reduced-motion` (see the global rule in `globals.css`).
 
 ## Copy rules
 

@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><title>D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Geist+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+:root{--sunken:oklch(0.165 0.008 52);--canvas:oklch(0.142 0.008 55);--raised:oklch(0.205 0.01 50);--float:oklch(0.25 0.008 55);--overlay:oklch(0.28 0.01 52);--overlay-h:oklch(0.315 0.011 52);--ink:oklch(0.9564 0.0127 63.92);--soft:oklch(0.72 0.028 56);--faint:oklch(0.66 0.033 55);--hair:oklch(0.3 0.012 50);--signal:oklch(0.78 0.125 36);--action:#a9be8c;--action-fg:#1a2112;
+--raise:0 0 0 1px oklch(0.9564 0.0127 63.92/.04),0 1px 2px oklch(0.06 0.006 50/.3),0 10px 28px -16px oklch(0.06 0.006 50/.5);
+--floatsh:0 0 0 1px oklch(0.9564 0.0127 63.92/.07),0 18px 44px -14px oklch(0.06 0.006 50/.7)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--canvas);color:var(--ink);font:400 18px/1.55 "IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+.mono{font-family:"Geist Mono",monospace}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;font-size:17px;font-weight:500;white-space:nowrap}
+.pri{background:var(--action);color:var(--action-fg)}
+.sec{background:var(--overlay);color:var(--ink)}
+.ghost{color:var(--soft)}
+h1{font-weight:300;letter-spacing:-.03em;line-height:1.02}
+h1 span{color:var(--soft)}
+.nav a{color:var(--soft);font-size:16px;text-decoration:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px oklch(0.78 0.125 36/.18)}
+.film{background-size:cover;background-position:center}
+.tag{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+</style><style></style></head><body>
+<div class="film" style="position:absolute;inset:0;background-image:url(gold-8.jpg);opacity:.28"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 30%,transparent,var(--canvas) 80%)"></div>
+<header class="nav" style="position:absolute;top:0;left:0;right:0;height:86px;padding:0 56px;display:flex;align-items:center;justify-content:space-between">
+  <img src="logo.svg" style="height:22px"><div style="display:flex;align-items:center;gap:34px"><nav style="display:flex;gap:30px"><a>Product</a><a>Teleprompter</a><a>Booking</a><a>Questions</a></nav><span class="btn sec" style="height:42px;padding:0 20px;font-size:16px">Open Morse</span></div>
+</header>
+<section style="position:relative;text-align:center;padding-top:128px">
+  <div style="display:inline-flex;flex-direction:column;align-items:center;gap:14px">
+    <svg width="692.8000000000001" height="12" viewBox="0 0 692.8000000000001 12"><rect x="0" y="0" width="52.800000000000004" height="12" rx="6" fill="#F7EFE8"/><rect x="64.80000000000001" y="0" width="52.800000000000004" height="12" rx="6" fill="#F7EFE8"/><rect x="161.60000000000002" y="0" width="52.800000000000004" height="12" rx="6" fill="#F7EFE8"/><rect x="226.40000000000003" y="0" width="52.800000000000004" height="12" rx="6" fill="#F7EFE8"/><rect x="291.20000000000005" y="0" width="52.800000000000004" height="12" rx="6" fill="#F7EFE8"/><rect x="388.00000000000006" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/><rect x="412.00000000000006" y="0" width="52.800000000000004" height="12" rx="6" fill="var(--signal)"/><rect x="476.80000000000007" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/><rect x="532.8000000000001" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/><rect x="556.8000000000001" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/><rect x="580.8000000000001" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/><rect x="636.8000000000001" y="0" width="12" height="12" rx="6" fill="#F7EFE8"/></svg>
+    <div class="mono" style="position:relative;height:16px;width:692.8000000000001px;font-size:13px;color:var(--faint)"><span style="position:absolute;left:58.80000000000001px;transform:translateX(-50%)">M</span><span style="position:absolute;left:252.80000000000007px;transform:translateX(-50%)">O</span><span style="position:absolute;left:438.4000000000001px;transform:translateX(-50%)">R</span><span style="position:absolute;left:562.8000000000001px;transform:translateX(-50%)">S</span><span style="position:absolute;left:642.8000000000001px;transform:translateX(-50%)">E</span></div>
+  </div>
+  <h1 style="font-size:80px;margin-top:44px">Every meeting,<br><span>written down.</span></h1>
+  <p style="margin:22px auto 0;font-size:20px;color:var(--soft);max-width:580px">Notes, action items and the follow-up, from the call itself. No bot in the room.</p>
+  <div style="display:flex;gap:14px;margin-top:32px;justify-content:center"><span class="btn pri">Open Morse <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></span><span class="btn sec"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/></svg> Watch it work</span></div>
+</section>
+<div style="position:absolute;left:50%;bottom:-400px;transform:translateX(-50%);width:1000px;padding:10px;border-radius:32px;background:var(--raised);box-shadow:var(--floatsh)">
+  <img src="today.jpg" style="width:100%;display:block;border-radius:24px">
+</div>
+</body></html>

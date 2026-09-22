@@ -30,7 +30,7 @@ export function HowItWorks() {
   }
 
   return (
-    <section id="how" className={`${WRAP} scroll-mt-6 py-20 lg:py-28`}>
+    <section id="how" className={`${WRAP} scroll-mt-24 py-20 lg:py-28`}>
       <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
         <div>
           <Eyebrow className="mb-5">{how.eyebrow}</Eyebrow>
