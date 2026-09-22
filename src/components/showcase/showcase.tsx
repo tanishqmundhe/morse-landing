@@ -50,8 +50,8 @@ const LAST = slides.length - 2;
 const PRE = 0.55; // lighting starts this far before the section pins
 const LIGHT = 0.75; // pinned, lighting
 const RISE = 0.55; // the sentence rises, the row comes up
-const SETTLE = 0.3; // the first screen sits in the middle before the row moves
-const END = 0.3; // held on the last screen before letting go
+const SETTLE = 0.45; // the first screen sits in the middle before the row moves
+const END = 0.9; // held on the last screen, centred and playing, before letting go
 const TRAVEL = 1.25; // scroll per screen, as a multiple of the distance it moves
 // Of each screen's share of the travel, the part spent still in the middle.
 const DWELL = 0.35;
@@ -181,38 +181,53 @@ function Chip({ chip, label }: { chip: ChipKind; label: string }) {
 }
 
 const LINE =
-  "text-center text-[28px]/[1.4] font-light tracking-[-0.02em] text-balance text-ink sm:text-[40px]/[1.34] xl:text-[48px]/[1.32] 2xl:text-[56px]/[1.3]";
+  "text-left text-[28px]/[1.4] font-light tracking-[-0.02em] text-balance text-ink sm:text-[40px]/[1.34] xl:text-[48px]/[1.32] 2xl:text-[56px]/[1.3]";
 
-/** The sentence: each unit's light follows the scroll through --lit. */
-function Statement() {
+/**
+ * Lines turn over letter by letter, like a row of small boxes rolling on their
+ * horizontal axis (after Fancy Components' Letter 3D Swap). A line's letters
+ * rest face-on while it is showing, rolled up and away (+90°) once the page has
+ * moved past it, and rolled under (−90°) while it is still to come. Moving
+ * forward, the old line rolls up and the new one rolls up into place; moving
+ * back, both roll down. The wave runs from the first letter to the last, with
+ * a slight spring. A chip turns over as one piece.
+ */
+const TURN = "transform 620ms cubic-bezier(0.34, 1.3, 0.64, 1), opacity 260ms ease-out";
+
+function Turning({ pieces, rot, lit = false }: { pieces: Piece[]; rot: number; lit?: boolean }) {
+  const list = units(pieces);
+  const letters = list.reduce((n, u) => n + ("word" in u ? u.word.length : 1), 0);
+  const step = Math.min(14, 650 / letters);
+  let k = 0;
+  const face = (content: React.ReactNode, key: number) => {
+    const i = k++;
+    return (
+      <span
+        key={key}
+        className="inline-block [backface-visibility:hidden] will-change-transform"
+        style={{
+          transform: `perspective(700px) translateZ(-0.5em) rotateX(${rot}deg) translateZ(0.5em)`,
+          opacity: rot ? 0 : 1,
+          transition: TURN,
+          transitionDelay: `${i * step}ms`,
+        }}
+      >
+        {content}
+      </span>
+    );
+  };
   return (
-    <p className={LINE}>
-      {units(showcase.statement).map((u, i) => (
+    <p className={LINE} style={lit ? undefined : { ["--lit" as string]: 99 }}>
+      {list.map((u, i) => (
         <Fragment key={i}>
           {i > 0 && " "}
-          <span style={{ ["--i" as string]: i }}>
-            {"word" in u ? <span style={{ opacity: `calc(0.16 + 0.84 * ${LIT})` }}>{u.word}</span> : <Chip chip={u.chip} label={u.label} />}
-          </span>
-        </Fragment>
-      ))}
-    </p>
-  );
-}
-
-/** A screen's own line. Arriving, its words rise into place one after another; leaving, they go together. */
-function Line({ pieces, on }: { pieces: Piece[]; on: boolean }) {
-  return (
-    <p className={LINE} style={{ ["--lit" as string]: 99 }}>
-      {units(pieces).map((u, i) => (
-        <Fragment key={i}>
-          {i > 0 && " "}
-          <span
-            className={`inline-block transition-[opacity,transform,filter] ease-out ${
-              on ? "translate-y-0 opacity-100 blur-0 duration-500" : "translate-y-[0.3em] opacity-0 blur-[6px] duration-300"
-            }`}
-            style={{ transitionDelay: on ? `${120 + i * 28}ms` : "0ms" }}
-          >
-            {"word" in u ? u.word : <Chip chip={u.chip} label={u.label} />}
+          <span className="inline-block whitespace-nowrap" style={{ ["--i" as string]: i }}>
+            {"word" in u ? (
+              // The sentence's words also follow the scroll's light.
+              <span style={lit ? { opacity: `calc(0.16 + 0.84 * ${LIT})` } : undefined}>{[...u.word].map((ch, j) => face(ch, j))}</span>
+            ) : (
+              face(<Chip chip={u.chip} label={u.label} />, 0)
+            )}
           </span>
         </Fragment>
       ))}
@@ -344,12 +359,14 @@ export function Showcase() {
 
   // The sentence stands for the room; every other screen has its own line.
   const showing = risen ? active : FIRST;
+  // Past lines rest rolled up, lines to come rolled under.
+  const turn = (i: number) => (i < showing ? 90 : i > showing ? -90 : 0);
 
   if (still) {
     return (
       <section id="product" className="scroll-mt-24 py-32 lg:py-44" aria-label="The product">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-          <Statement />
+          <Turning pieces={showcase.statement} rot={0} lit />
         </div>
         <div className="mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:px-8">
           {slides.slice(FIRST, LAST + 1).map((s) => (
@@ -357,7 +374,7 @@ export function Showcase() {
               <Fit>{screenFor(s.id, false)}</Fit>
               {Array.isArray(s.line) && (
                 <div className="mt-6 [&_p]:!text-left [&_p]:!text-[22px]">
-                  <Line pieces={s.line} on />
+                  <Turning pieces={s.line} rot={0} />
                 </div>
               )}
             </div>
@@ -373,19 +390,14 @@ export function Showcase() {
         {/* The words: every line stacked in one cell, so the tallest sets the height. */}
         <div ref={words} className="absolute inset-x-0 top-0 will-change-transform">
           <div className="mx-auto grid max-w-[1240px] px-5 sm:px-10 2xl:max-w-[1560px]">
-            <div
-              className={`col-start-1 row-start-1 self-center transition-[opacity,filter,transform] duration-500 ease-out ${
-                showing === FIRST ? "" : "pointer-events-none -translate-y-3 opacity-0 blur-[6px]"
-              }`}
-              aria-hidden={showing !== FIRST}
-            >
-              <Statement />
+            <div className="col-start-1 row-start-1 self-start" aria-hidden={showing !== FIRST}>
+              <Turning pieces={showcase.statement} rot={turn(FIRST)} lit />
             </div>
             {slides.map(
               (s, i) =>
                 Array.isArray(s.line) && (
-                  <div key={s.id} className="col-start-1 row-start-1 self-center" aria-hidden={showing !== i}>
-                    <Line pieces={s.line} on={showing === i} />
+                  <div key={s.id} className="col-start-1 row-start-1 self-start" aria-hidden={showing !== i}>
+                    <Turning pieces={s.line} rot={turn(i)} />
                   </div>
                 ),
             )}
