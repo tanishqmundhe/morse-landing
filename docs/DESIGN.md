@@ -87,9 +87,8 @@ Nothing is set below 13px.
    - One answer is open at a time. It opens by height (a `0fr → 1fr` grid row, which eases smoothly whatever the answer's length) while the plus turns into a cross.
    - Each question is a real button carrying `aria-expanded` and `aria-controls`, so it works from the keyboard and reads correctly aloud.
    - "Still wondering?" and a mail link close the section. The address is the one Morse's own mail comes from; confirm it before launch.
-9. **Closing:** the mark, the line, and Open Morse.
-10. **Footer:** the Morse logo, and "A product by" with the Unified Machines lockup, as in the app.
-
+9. **Closing (`closing.tsx`):** section 8. The app's ringed-meadow film fills a band inset 14px, `rounded-[30px]`, at least 620px tall from `lg` — the page opens on a film and closes on one. Over it, centred: the mark as a sign-off, the two-tone line ("Less meeting admin. / More meeting of minds.") and Open Morse, its arrow nudging on hover. A top-to-bottom scrim keeps the words at AA over the film.
+10. **Footer (`site-footer.tsx`):** on plain ground under the band. The Morse logo (a link back to the top) on one end, "A product by" with the Unified Machines lockup on the other, and the page's own sections between them. It stacks and centres on a phone.
 ## Motion
 
 - **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).

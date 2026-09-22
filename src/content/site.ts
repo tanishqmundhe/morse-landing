@@ -301,10 +301,13 @@ export const faq = {
 };
 
 export const closing = {
-  title: "Less meeting admin.\nMore meeting of minds.",
+  title: "Less meeting admin.",
+  titleMuted: "More meeting of minds.",
+  film: { src: "/films/ringed-meadow-loop.mp4", poster: "/films/ringed-meadow-poster.jpg" },
   cta: { label: "Open Morse", href: links.app },
 };
 
 export const footer = {
+  links: nav.links,
   maker: "A product by",
 };
