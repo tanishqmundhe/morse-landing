@@ -71,10 +71,12 @@ Nothing is set below 13px.
      - **18 languages:** each in its own script, rolling past a band and resting on each.
      - **Mind map:** after the notes page's own mind map. All three branches set off together, a beat apart, each growing its points.
    - **Replaced:** the earlier "One meeting, start to finish" tab section, which repeated section 2. The nav's "How it works" link became "Features".
-5. **Booking (`#booking`):** on a sunken band. A working booking-page preview:
-   - It shows this month and next, and the visitor's real time zone.
-   - Weekdays after today are open.
-   - Capsule time slots, styled like `booking-flow.tsx`.
+5. **Booking (`#booking`, `booking-page.tsx`):** section 4, the booking page as the app draws one (`booking/booking-shell.tsx`).
+   - **Above:** the section's heading and three points (meeting lengths, your hours and holidays, ten minutes to undo).
+   - **The page:** the host — avatar, "Book a meeting with Priya Shah", role and bio — then two near-square cards (9:10 from `lg`): the app's own `ascii-wood` film looping in one, inset 8px with the card's corners, and the form in the other. Under them, "Booked through Morse" with the mark, as the app has it.
+   - **The form plays itself,** each step pushing the last one out sideways as `booking-flow.tsx` does: a day in the month (free days carry the sage dot and the "Free times" key), the times in the guest's zone, name and email typed in with a caret, Confirm, then "You're booked in with Priya." with the ten-minute undo counting down in real seconds.
+   - **The pointer** measures its targets from the rendered page, so it lands on the day, the time, each field and the button at any card size, gliding on eased curves.
+   - **Replaced** the first version's booking section, which used an invented calendar card.
 6. **Personal:** two cards.
    - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.

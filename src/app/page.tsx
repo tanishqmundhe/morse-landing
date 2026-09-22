@@ -1,4 +1,4 @@
-import { Booking } from "@/components/booking";
+import { BookingPage } from "@/components/booking-page";
 import { Closing } from "@/components/closing";
 import { Faq } from "@/components/faq";
 import { FollowUp } from "@/components/follow-up";
@@ -17,7 +17,7 @@ export default function Home() {
         <Hero />
         <Showcase />
         <Features />
-        <Booking />
+        <BookingPage />
         <Personal />
         <FollowUp />
         <Faq />

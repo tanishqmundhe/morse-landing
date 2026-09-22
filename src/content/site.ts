@@ -173,20 +173,46 @@ export const extras = {
   languages: ["English", "हिन्दी", "Español", "Français", "Deutsch", "Русский", "Português", "日本語", "Italiano", "Nederlands", "मराठी", "தமிழ்", "తెలుగు", "বাংলা", "ಕನ್ನಡ", "ગુજરાતી", "ਪੰਜਾਬੀ", "اردو"],
 };
 
+/**
+ * Section 4: the booking page, as it really looks — the host, a looping film
+ * beside the form, and the form itself stepping from day to time to details to
+ * booked. Copy follows the app: "Free times", "Confirm", the ten-minute undo.
+ */
 export const booking = {
-  eyebrow: "Booking pages",
-  title: "Your calendar.\nA booking page.",
+  title: "A page that books you.",
   titleMuted: "No extra tool.",
-  body: "Choose the meeting lengths you offer and your usual hours. People pick a time in their own time zone. It lands on your calendar, synced with Google, with a Morse link.",
-  points: ["15 to 90 minute meetings", "Holidays for your country left out", "Day, week, month and schedule views"],
-  demo: {
+  body: "Share one link. People pick from the times your calendar actually has free, in their own time zone, and the meeting lands on your week with a Morse link.",
+  points: [
+    "Meeting types from 15 to 90 minutes",
+    "Your usual hours, and your country’s holidays",
+    "Ten minutes to undo, for them and for you",
+  ],
+  page: {
     host: "Priya Shah",
-    type: "Product conversation",
-    minutes: 30,
-    // Weekday slots, as a host's usual hours would offer them.
-    times: ["10:00 am", "11:30 am", "2:00 pm", "3:30 pm", "4:30 pm"],
-    pickDay: "Pick a day",
-    note: "A preview. Nothing is booked.",
+    role: "Product lead, Neural Arc",
+    bio: "Happy to talk through onboarding, pricing or anything half-formed.",
+    film: "/films/ascii-wood.mp4",
+    type: "Intro call",
+    minutes: "30 min",
+    month: "September 2026",
+    day: 23,
+    dayLabel: "Wednesday 23 September",
+    zone: "Times shown in Asia/Calcutta (GMT+5:30)",
+    free: "Free times",
+    times: ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "13:00", "13:30", "14:00"],
+    pick: "10:30",
+    name: { label: "Your name", value: "Sam Whitfield" },
+    email: { label: "Your email", value: "sam@acme.com", hint: "Where the invitation goes." },
+    confirm: "Confirm",
+    done: {
+      title: "You’re booked in with Priya.",
+      what: "Intro call, Wednesday 23 September at 10:30",
+      sent: "The invitation and the joining link are on their way to",
+      carries: ". It carries a calendar entry, so the time will be in your own calendar too.",
+      undo: "left to undo it here.",
+      undoLabel: "Undo",
+    },
+    footer: "Booked through Morse",
   },
 };
 
