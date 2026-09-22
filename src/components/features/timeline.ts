@@ -14,11 +14,12 @@ export { gsap };
  * A looping GSAP timeline for one feature card. `build` adds the tweens; `q`
  * finds elements inside the card. The timeline plays only while the card is
  * on screen, and under reduced motion it rests on the frame at `rest` (0 to 1)
- * so the card still shows its finished picture.
+ * so the card still shows its finished picture. `repeat: 0` plays it once —
+ * for something that should happen on arrival and then stay put.
  */
 export function useLoop<T extends HTMLElement = HTMLDivElement>(
   build: (tl: gsap.core.Timeline, q: (selector: string) => Element[]) => void,
-  { rest = 0.7, repeatDelay = 0 }: { rest?: number; repeatDelay?: number } = {},
+  { rest = 0.7, repeatDelay = 0, repeat = -1 }: { rest?: number; repeatDelay?: number; repeat?: number } = {},
 ) {
   const root = useRef<T>(null);
   useLayoutEffect(() => {
@@ -26,7 +27,7 @@ export function useLoop<T extends HTMLElement = HTMLDivElement>(
     if (!el) return;
     let io: IntersectionObserver | undefined;
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay, paused: true });
+      const tl = gsap.timeline({ repeat, repeatDelay, paused: true });
       build(tl, gsap.utils.selector(el));
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
         tl.progress(rest).pause();

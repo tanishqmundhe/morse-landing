@@ -87,24 +87,25 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
      - **18 languages:** each in its own script, rolling past a band and resting on each.
      - **Mind map:** after the notes page's own mind map. All three branches set off together, a beat apart, each growing its points.
    - **Replaced:** the earlier "One meeting, start to finish" tab section, which repeated section 2. The nav's "How it works" link became "Features".
-5. **Booking (`#booking`, `booking-page.tsx`):** section 4, the booking page as the app draws one (`booking/booking-shell.tsx`), framed centred.
+5. **Counted (`numbers.tsx`):** a quiet band between the features and the booking page. Four figures — 18 languages, 16 backgrounds, 7 camera styles, 11 note templates — each over a hairline, counting up once when the band arrives and then left alone (`useLoop`'s `repeat: 0`). Beside the heading, one line: what Morse works with (Google Calendar, Drive and sign-in), in words rather than borrowed logos.
+6. **Booking (`#booking`, `booking-page.tsx`):** section 4, the booking page as the app draws one (`booking/booking-shell.tsx`), framed centred.
    - **Above:** "One link, and your calendar does the rest.", one line under it, and the page's own link as a quiet chip (`onmorse.com/priya`). Nothing else sits above the cards — no second host header.
    - **The cards:** two near-square cards (9:10 from `lg`), the app's `ascii-wood` film looping in one (inset 8px, the card's corners, drifting 1 → 1.045 over 18s so it breathes) and the form in the other.
    - **Below:** the three points in one quiet row.
    - **The form plays itself,** each step pushing the last one out sideways as `booking-flow.tsx` does: a day, the times in the guest's zone, name and email, booked.
    - **Polish:** the day ripples under the pointer before it fills; the chosen time fills out from the middle with a growing circle; what's chosen stays in the header strip as the app's crumbs (`· Wed 23 · 10:30`); Confirm presses and reads "Booking…" for a beat; the check beside "You're booked in" draws itself; the undo row arrives after and counts down in real seconds; the pointer drifts slightly between steps so it never looks frozen.
    - **The pointer** measures its targets from the rendered page, so it lands on the day, the time, each field and the button at any card size.
-6. **Personal:** two cards.
+7. **Personal:** two cards.
    - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.
 7. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
-8. **Questions (`#questions`, `faq.tsx`):** section 7, centred, so the end of the page keeps the booking section's rhythm.
+9. **Questions (`#questions`, `faq.tsx`):** section 7, centred, so the end of the page keeps the booking section's rhythm.
    - "A few things you might be wondering." over a 860px column of questions at 25px, hairlines between them.
    - One answer is open at a time. It opens by height (a `0fr → 1fr` grid row, which eases smoothly whatever the answer's length) while the plus turns into a cross.
    - Each question is a real button carrying `aria-expanded` and `aria-controls`, so it works from the keyboard and reads correctly aloud.
    - "Still wondering?" and a mail link close the section. The address is the one Morse's own mail comes from; confirm it before launch.
-9. **Closing (`closing.tsx`):** section 8. The app's ringed-meadow film fills a band inset 14px, `rounded-[30px]`, at least 620px tall from `lg` — the page opens on a film and closes on one. Over it, centred: the mark as a sign-off, the two-tone line ("Less meeting admin. / More meeting of minds.") and Open Morse, its arrow nudging on hover. A top-to-bottom scrim keeps the words at AA over the film.
-10. **Footer (`site-footer.tsx`):** on plain ground under the band. The Morse logo (a link back to the top) on one end, "A product by" with the Unified Machines lockup on the other, and the page's own sections between them. It stacks and centres on a phone.
+10. **Closing (`closing.tsx`):** section 8. The app's ringed-meadow film fills a band inset 14px, `rounded-[30px]`, at least 620px tall from `lg` — the page opens on a film and closes on one. Over it, centred: the mark as a sign-off, the two-tone line ("Less meeting admin. / More meeting of minds.") and Open Morse, its arrow nudging on hover. A top-to-bottom scrim keeps the words at AA over the film.
+11. **Footer (`site-footer.tsx`):** the mark and one line on the left, three short columns beside it (the page, Morse, say hello), then a rule and the year with "A product by" and the Unified Machines lockup. It stacks on a phone.
 ## Motion
 
 - **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).

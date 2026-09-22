@@ -179,6 +179,24 @@ export const extras = {
  * beside the form, and the form itself stepping from day to time to details to
  * booked. Copy follows the app: "Free times", "Confirm", the ten-minute undo.
  */
+/**
+ * A quiet band between the features and the booking page: what the product
+ * counts, and what it works with. Every number is checked against the app —
+ * ten automatic languages plus eight more, 16 backgrounds in four sets, seven
+ * camera styles, eleven note templates.
+ */
+export const numbers = {
+  eyebrow: "Counted",
+  title: "Small print, worth reading.",
+  items: [
+    { value: 18, label: "languages understood", note: "Ten without a setting, eight more when you ask" },
+    { value: 16, label: "backgrounds", note: "Cozy home, nature, stylized and fun" },
+    { value: 7, label: "camera styles", note: "Warm, Film, Mono and four more" },
+    { value: 11, label: "note templates", note: "Standup, 1:1, client meeting, retrospective…" },
+  ],
+  works: "Works with Google Calendar, Google Drive and Google sign-in.",
+};
+
 export const booking = {
   eyebrow: "Booking pages",
   title: "One link, and your",
@@ -259,6 +277,21 @@ export const closing = {
 };
 
 export const footer = {
-  links: nav.links,
+  line: "Video meetings that write themselves down.",
+  columns: [
+    { title: "The page", links: nav.links },
+    {
+      title: "Morse",
+      links: [
+        { label: "Open Morse", href: links.app },
+        { label: "Booking page", href: links.app },
+      ],
+    },
+    {
+      title: "Say hello",
+      links: [{ label: "hello@neuralarc.ai", href: "mailto:hello@neuralarc.ai" }],
+    },
+  ],
   maker: "A product by",
 };
+
