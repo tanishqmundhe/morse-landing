@@ -45,21 +45,34 @@ Nothing is set below 13px.
      - Follow-up: Book is pressed for you, then "Booked. Invites sent."
      - The segments underneath are the timeline and can be pressed to jump. Hovering holds the scene; with reduced motion nothing advances on its own.
    - The other three options (B Split stage, C Rooms, D Signal) are kept in `design/mockups/hero-options/index.html`.
-3. **How it works (`#how`):** Before / During / After tabs.
+3. **Product (`#product`, `showcase/showcase.tsx`):** section 2, in two movements.
+   - **Arriving:** "Morse is a video call [3 in call] that writes everything down, [Transcript] answers what you're asked, [From Acme notes] and books what comes next. [Thu, 2:00 pm]" lights up word by word as the section rises. Each chip plays its bit when the light reaches it: the avatars slide together, and the booking chip turns sage. Plex 300 at 48px.
+   - **Pinned:** the section holds for 0.3 of a screen height with the sentence lit, then scrolling moves a row of five rebuilt app screens sideways (`showcase/screens.tsx`, drawn at 1120 × 700 and scaled to fit):
+     - Room: People open, the transcript building.
+     - Teleprompter: the answer written in, then the Book a follow-up offer.
+     - Notes: the summary written in, the first action item ticked, the recording playing.
+     - Calendar: the booked follow-up drops into Thursday with the coral glow.
+     - Booking page: 2:00 picked, then "Booked".
+   - **As the row moves:** the sentence blurs away and a counter (01 / 05), a title and a line about the screen in the middle take its place. They swap as each new screen arrives, the title written in word by word.
+   - **The row:** the middle screen is whole and plays; the others step back (93%, half opacity). Under it are a progress line and the five names, which scroll the page to that screen.
+   - **Scroll drives it all** through CSS variables and `scrollLeft`, written in one animation frame. React re-renders only when the middle screen changes.
+   - **Reduced motion:** nothing pins. The sentence is fully lit, and the screens become a row you swipe through, each with its caption.
+   - **Assets:** avatars and profile backgrounds come from the app (`public/app/`). The demo people are Priya Shah, Arjun Mehta and Alex; no real names.
+4. **How it works (`#how`):** Before / During / After tabs.
    - Before: a booking confirmation.
    - During: a live transcript with the coral Recording dot.
    - After: Notes, with a summary, decisions and action items you can tick.
-4. **Booking (`#booking`):** on a sunken band. A working booking-page preview:
+5. **Booking (`#booking`):** on a sunken band. A working booking-page preview:
    - It shows this month and next, and the visitor's real time zone.
    - Weekdays after today are open.
    - Capsule time slots, styled like `booking-flow.tsx`.
-5. **Personal:** two cards.
+6. **Personal:** two cards.
    - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.
-6. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
-7. **Questions (`#questions`):** a `details` list with a rotating plus.
-8. **Closing:** the mark, the line, and Open Morse.
-9. **Footer:** the Morse logo, and "A product by" with the Unified Machines lockup, as in the app.
+7. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
+8. **Questions (`#questions`):** a `details` list with a rotating plus.
+9. **Closing:** the mark, the line, and Open Morse.
+10. **Footer:** the Morse logo, and "A product by" with the Unified Machines lockup, as in the app.
 
 ## Motion
 

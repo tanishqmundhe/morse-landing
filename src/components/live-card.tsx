@@ -10,7 +10,7 @@ const [notes, prompter, follow] = live.scenes;
 const SCENE_MS = 6500;
 
 /** Words written in one after another, as the app streams an answer. */
-function Written({ text, delay = 0, step = 55 }: { text: string; delay?: number; step?: number }) {
+export function Written({ text, delay = 0, step = 55 }: { text: string; delay?: number; step?: number }) {
   return text.split(" ").map((w, i) => (
     <Fragment key={i}>
       {i > 0 && " "}

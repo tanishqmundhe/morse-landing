@@ -7,6 +7,7 @@ import { HowItWorks } from "@/components/how-it-works";
 import { Personal } from "@/components/personal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Showcase } from "@/components/showcase/showcase";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <SiteHeader />
       <main id="main">
         <Hero />
+        <Showcase />
         <HowItWorks />
         <Booking />
         <Personal />

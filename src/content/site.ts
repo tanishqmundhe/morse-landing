@@ -21,9 +21,9 @@ export const meta = {
 export const nav = {
   // In page order, so the highlight moves one way as you scroll.
   links: [
+    { label: "Product", href: "#product" },
     { label: "How it works", href: "#how" },
     { label: "Booking", href: "#booking" },
-    { label: "Teleprompter", href: "#teleprompter" },
     { label: "Questions", href: "#questions" },
   ],
   cta: { label: "Open Morse", href: links.app },
@@ -73,6 +73,57 @@ export const hero = {
       },
     ] as const,
   },
+};
+
+/**
+ * Section 2. A sentence that lights up as it arrives, with pieces of the
+ * product inside it; then, pinned, a row of the app's screens scrolls sideways
+ * and the words above follow the one in the middle.
+ */
+export const showcase = {
+  // Each chip sits after the words before it and plays when the light reaches it.
+  statement: [
+    { text: "Morse is a video call" },
+    { chip: "call", label: "3 in call" },
+    { text: "that writes everything down," },
+    { chip: "transcript", label: "Transcript" },
+    { text: "answers what you’re asked," },
+    { chip: "teleprompter", label: "From Acme notes" },
+    { text: "and books what comes next." },
+    { chip: "booking", label: "Thu, 2:00 pm" },
+  ] as ({ text: string } | { chip: string; label: string })[],
+  slides: [
+    {
+      id: "room",
+      label: "Room",
+      title: "The meeting room.",
+      body: "Everyone on the stage, the transcript building on the left, the people on the right. Backgrounds on every tile.",
+    },
+    {
+      id: "teleprompter",
+      label: "Teleprompter",
+      title: "Asked, and answered.",
+      body: "Priya asks about Acme and the answer comes from your notes. When Arjun suggests Thursday, it offers to book it.",
+    },
+    {
+      id: "notes",
+      label: "Notes",
+      title: "Notes, without taking any.",
+      body: "A summary, the decisions and everyone’s action items, with the recording and transcript underneath.",
+    },
+    {
+      id: "calendar",
+      label: "Calendar",
+      title: "Your week, in one place.",
+      body: "Morse meetings and your Google events together, by day, week, month or schedule.",
+    },
+    {
+      id: "booking",
+      label: "Booking",
+      title: "A page to book you.",
+      body: "People pick a time in their own time zone. It lands on your calendar with a Morse link.",
+    },
+  ],
 };
 
 export type Stage = "before" | "during" | "after";
