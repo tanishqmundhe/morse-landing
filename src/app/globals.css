@@ -125,6 +125,13 @@
   font-display: swap;
 }
 
+/* Section 4: the booking film breathes rather than sitting still. */
+@keyframes film-drift {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.045); }
+}
+.film-drift { animation: film-drift 18s ease-in-out infinite; }
+
 /* ── Section 3: the feature pictures ─────────────────────────────────────
    Each loops on its own clock. A card that is off screen is paused
    (.feat:not([data-play])). */

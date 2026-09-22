@@ -179,9 +179,10 @@ export const extras = {
  * booked. Copy follows the app: "Free times", "Confirm", the ten-minute undo.
  */
 export const booking = {
-  title: "A page that books you.",
-  titleMuted: "No extra tool.",
-  body: "Share one link. People pick from the times your calendar actually has free, in their own time zone, and the meeting lands on your week with a Morse link.",
+  title: "One link, and your",
+  titleMuted: "calendar does the rest.",
+  body: "Share it once. People pick from the times you actually have free, in their own time zone, and the meeting lands on your week with a Morse link.",
+  link: "onmorse.com/priya",
   points: [
     "Meeting types from 15 to 90 minutes",
     "Your usual hours, and your country’s holidays",
@@ -204,6 +205,7 @@ export const booking = {
     name: { label: "Your name", value: "Sam Whitfield" },
     email: { label: "Your email", value: "sam@acme.com", hint: "Where the invitation goes." },
     confirm: "Confirm",
+    booking: "Booking…",
     done: {
       title: "You’re booked in with Priya.",
       what: "Intro call, Wednesday 23 September at 10:30",
