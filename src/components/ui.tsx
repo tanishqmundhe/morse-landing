@@ -6,7 +6,7 @@ import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
  * Depth is luminance and a machined shadow, never a border (Morse contract #5).
  */
 export const CARD = "rounded-[28px] bg-raised shadow-raised";
-export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8";
+export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 2xl:max-w-[1360px]";
 
 /** Capsules only (contract #8). Sage is spent on the one thing to press. */
 // Pressing gives a little: the capsule sinks by 3% and springs back.

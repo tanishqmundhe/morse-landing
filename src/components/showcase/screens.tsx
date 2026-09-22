@@ -483,3 +483,92 @@ export function BookingScreen({ active }: { active: boolean }) {
     </Frame>
   );
 }
+
+/** The meetings home: the film, a greeting, the clock, and what's next. Sits at the row's start. */
+export function HomeScreen() {
+  return (
+    <Frame>
+      <div className="mx-auto flex w-[760px] flex-1 flex-col pt-4">
+        <div className="overflow-hidden rounded-[28px] bg-raised p-2">
+          <div className="relative h-[190px] overflow-hidden rounded-[22px] bg-cover bg-center" style={{ backgroundImage: "url(/app/film-poster.jpg)" }}>
+            <span className="absolute top-4 left-4 flex items-center gap-2 text-[15px] text-ink">
+              <LogoMark className="size-4" title="" /> Morse
+            </span>
+          </div>
+          <div className="flex items-end justify-between px-5 pt-5 pb-4">
+            <div>
+              <p className="text-[18px] font-light text-ink-soft">Good morning,</p>
+              <p className="text-[44px]/[1.1] font-light text-ink">Alex</p>
+              <p className="mt-1 text-[15px] text-ink-soft">Design lead</p>
+              <div className="mt-4 flex gap-2">
+                <span className="flex h-11 items-center gap-2 rounded-full bg-action px-5 text-[16px] font-medium text-action-foreground">
+                  + New meeting
+                </span>
+                <span className="flex h-11 w-[200px] items-center rounded-full bg-overlay px-4 text-[15px] text-ink-faint">Code or link</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-[15px] text-ink">Tuesday 22 September</p>
+              <p className="mt-2 font-mono text-[64px]/[1] tracking-[-0.04em] text-ink">10:24</p>
+            </div>
+          </div>
+        </div>
+        <p className="mt-6 font-mono text-label text-ink-faint uppercase">Upcoming</p>
+        {[
+          ["11:00", "Weekly design review", "Priya, Arjun"],
+          ["14:00", "Acme renewal", "Guest: Sam from Acme"],
+        ].map(([t, n, w]) => (
+          <div key={n} className="mt-2 flex items-center gap-5 rounded-[20px] bg-raised px-5 py-3.5">
+            <span className="w-14 text-[17px] text-ink tabular-nums">{t}</span>
+            <span className="flex-1">
+              <span className="block text-[17px] text-ink">{n}</span>
+              <span className="block text-[14px] text-ink-faint">{w}</span>
+            </span>
+            <span className="rounded-full bg-overlay px-4 py-1.5 text-[14px] text-ink">Start</span>
+          </div>
+        ))}
+      </div>
+    </Frame>
+  );
+}
+
+/** Knowledge: the notes the teleprompter answers from. Sits at the row's end. */
+export function KnowledgeScreen() {
+  const folders: [string, string, string][] = [
+    ["Acme", "12 notes", "ember"],
+    ["Onboarding research", "8 notes", "lagoon"],
+    ["Pricing", "5 notes", "sage"],
+    ["Hiring", "9 notes", "lilac"],
+  ];
+  return (
+    <Frame>
+      <div className="flex h-11 items-center justify-between">
+        <span className="text-[24px] font-light text-ink">Knowledge</span>
+        <span className="rounded-full bg-action px-4 py-1.5 text-[14px] font-medium text-action-foreground">Add note</span>
+      </div>
+      <div className="mt-4 flex h-12 items-center rounded-full bg-raised px-5 text-[16px] text-ink-faint">Search your notes</div>
+      <div className="mt-5 grid grid-cols-4 gap-3">
+        {folders.map(([n, c, col]) => (
+          <div key={n} className="overflow-hidden rounded-[22px] bg-raised">
+            <div className="h-24 bg-cover bg-center" style={{ backgroundImage: `url(/app/bg-${col}.webp)` }} />
+            <div className="px-4 py-3">
+              <p className="text-[17px] text-ink">{n}</p>
+              <p className="text-[14px] text-ink-faint">{c}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-6 font-mono text-label text-ink-faint uppercase">Recent</p>
+      {[
+        ["Acme renewal notes", "Renewal terms, seat counts and what we promised in August."],
+        ["Second-meeting nudge", "Why people drop off after sign-up, from twelve interviews."],
+        ["Pricing for 2027", "Draft tiers and the questions still open."],
+      ].map(([t, d]) => (
+        <div key={t} className="mt-2 rounded-[18px] bg-raised px-5 py-3.5">
+          <p className="text-[17px] text-ink">{t}</p>
+          <p className="text-[14px] text-ink-faint">{d}</p>
+        </div>
+      ))}
+    </Frame>
+  );
+}

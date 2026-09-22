@@ -45,19 +45,19 @@ Nothing is set below 13px.
      - Follow-up: Book is pressed for you, then "Booked. Invites sent."
      - The segments underneath are the timeline and can be pressed to jump. Hovering holds the scene; with reduced motion nothing advances on its own.
    - The other three options (B Split stage, C Rooms, D Signal) are kept in `design/mockups/hero-options/index.html`.
-3. **Product (`#product`, `showcase/showcase.tsx`):** section 2, in two movements.
-   - **Arriving:** "Morse is a video call [3 in call] that writes everything down, [Transcript] answers what you're asked, [From Acme notes] and books what comes next. [Thu, 2:00 pm]" lights up word by word as the section rises. Each chip plays its bit when the light reaches it: the avatars slide together, and the booking chip turns sage. Plex 300 at 48px.
-   - **Pinned:** the section holds for 0.3 of a screen height with the sentence lit, then scrolling moves a row of five rebuilt app screens sideways (`showcase/screens.tsx`, drawn at 1120 × 700 and scaled to fit):
-     - Room: People open, the transcript building.
-     - Teleprompter: the answer written in, then the Book a follow-up offer.
-     - Notes: the summary written in, the first action item ticked, the recording playing.
-     - Calendar: the booked follow-up drops into Thursday with the coral glow.
-     - Booking page: 2:00 picked, then "Booked".
-   - **As the row moves:** the sentence blurs away and a counter (01 / 05), a title and a line about the screen in the middle take its place. They swap as each new screen arrives, the title written in word by word.
-   - **The row:** the middle screen is whole and plays; the others step back (93%, half opacity). Under it are a progress line and the five names, which scroll the page to that screen.
-   - **Scroll drives it all** through CSS variables and `scrollLeft`, written in one animation frame. React re-renders only when the middle screen changes.
-   - **Reduced motion:** nothing pins. The sentence is fully lit, and the screens become a row you swipe through, each with its caption.
+3. **Product (`#product`, `showcase/showcase.tsx`):** section 2. It is pinned while three things happen in turn:
+   - **Lighting:** the sentence sits centred on the screen and lights up word by word: "Morse is a video call [3 in call] that writes everything down, [Transcript] answers what you're asked, [From Acme notes] and books what comes next. [Thu, 2:00 pm]". Each chip plays its part as the light reaches it: the avatars slide together, and the booking chip turns sage. It's centred Plex 300, 28/40/48/56px, in a column up to 1560px wide on 2xl.
+   - **Rising:** once it's nearly lit, the sentence eases up to the top and the row of screens rises and fades in beneath it.
+   - **Travelling:** scrolling moves the row sideways, resting on each screen in turn.
+     - The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge. Only Room to Calendar ever take the middle, so a screen fades off on each side the whole way; Home and Knowledge exist to be those sides.
+     - The line above belongs to the screen in the middle. The sentence stands for Room; each other screen has its own line in the same words-and-chips voice. Arriving, a line's words rise and sharpen one after another; leaving, they blur away together.
+     - The middle screen plays its animation. The others step back by distance (scale down to 88%, opacity down to 45%), and the row's edges fade out through a mask.
+   - **No chrome:** no counter, titles, progress bar or name tabs.
+   - **Sizes follow the window:** screens are up to 60vw wide, whatever the height leaves, and at most 1320px.
+   - **Scroll per phase** is set by the constants at the top of the file (`PRE`, `LIGHT`, `RISE`, `SETTLE`, `TRAVEL`, `DWELL`, `END`).
+   - **Reduced motion:** nothing pins. The sentence shows fully lit, and the screens become a swipeable row with their lines underneath.
    - **Assets:** avatars and profile backgrounds come from the app (`public/app/`). The demo people are Priya Shah, Arjun Mehta and Alex; no real names.
+   - **Section spacing** is generous across the page: `py-28 lg:py-40 2xl:py-48`, and the wrap grows to 1360px on 2xl.
 4. **How it works (`#how`):** Before / During / After tabs.
    - Before: a booking confirmation.
    - During: a live transcript with the coral Recording dot.

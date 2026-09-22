@@ -76,12 +76,15 @@ export const hero = {
 };
 
 /**
- * Section 2. A sentence that lights up as it arrives, with pieces of the
- * product inside it; then, pinned, a row of the app's screens scrolls sideways
- * and the words above follow the one in the middle.
+ * Section 2. A sentence that lights up in the middle of the screen, then rises
+ * as a row of the app's screens comes up under it. Scrolling moves the row
+ * sideways; the line above changes with the screen in the middle. Every line
+ * is words and chips, the chips being small pieces of the product.
  */
+type Piece = { text: string } | { chip: Chip; label: string };
+export type Chip = "call" | "transcript" | "teleprompter" | "booking" | "globe" | "question" | "note" | "done" | "calendar" | "google";
+
 export const showcase = {
-  // Each chip sits after the words before it and plays when the light reaches it.
   statement: [
     { text: "Morse is a video call" },
     { chip: "call", label: "3 in call" },
@@ -91,39 +94,53 @@ export const showcase = {
     { chip: "teleprompter", label: "From Acme notes" },
     { text: "and books what comes next." },
     { chip: "booking", label: "Thu, 2:00 pm" },
-  ] as ({ text: string } | { chip: string; label: string })[],
+  ] as Piece[],
+  /**
+   * In row order. The first and last only ever sit at the sides, so the screen
+   * in the middle always has a neighbour on each side. The room's line is the
+   * sentence itself.
+   */
   slides: [
+    { id: "home", line: null },
+    { id: "room", line: "statement" },
     {
-      id: "room",
-      label: "Room",
-      title: "The meeting room.",
-      body: "Everyone on the stage, the transcript building on the left, the people on the right. Backgrounds on every tile.",
+      id: "booking",
+      line: [
+        { text: "People book you from a page" },
+        { chip: "booking", label: "Thu, 2:00 pm" },
+        { text: "that knows your calendar and shows their own time zone." },
+        { chip: "globe", label: "Their time zone" },
+      ],
     },
     {
       id: "teleprompter",
-      label: "Teleprompter",
-      title: "Asked, and answered.",
-      body: "Priya asks about Acme and the answer comes from your notes. When Arjun suggests Thursday, it offers to book it.",
+      line: [
+        { text: "Someone asks about Acme" },
+        { chip: "question", label: "Priya asked" },
+        { text: "and the answer is already in front of you." },
+        { chip: "teleprompter", label: "From Acme notes" },
+      ],
     },
     {
       id: "notes",
-      label: "Notes",
-      title: "Notes, without taking any.",
-      body: "A summary, the decisions and everyone’s action items, with the recording and transcript underneath.",
+      line: [
+        { text: "When the call ends, the notes are written" },
+        { chip: "note", label: "Summary" },
+        { text: "and everyone knows what they’re doing next." },
+        { chip: "done", label: "3 action items" },
+      ],
     },
     {
       id: "calendar",
-      label: "Calendar",
-      title: "Your week, in one place.",
-      body: "Morse meetings and your Google events together, by day, week, month or schedule.",
+      line: [
+        { text: "The follow-up lands on your week" },
+        { chip: "calendar", label: "Thu, 2:00 pm" },
+        { text: "right next to your Google events." },
+        { chip: "google", label: "Google Calendar" },
+      ],
     },
-    {
-      id: "booking",
-      label: "Booking",
-      title: "A page to book you.",
-      body: "People pick a time in their own time zone. It lands on your calendar with a Morse link.",
-    },
-  ],
+    { id: "knowledge", line: null },
+  ] as { id: string; line: Piece[] | "statement" | null }[],
 };
 
 export type Stage = "before" | "during" | "after";

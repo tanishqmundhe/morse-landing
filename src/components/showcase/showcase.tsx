@@ -1,29 +1,60 @@
 "use client";
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Calendar03Icon, ClosedCaptionIcon, SparklesIcon } from "@hugeicons/core-free-icons";
-import { showcase } from "@/content/site";
+import {
+  Calendar03Icon,
+  CheckListIcon,
+  ClosedCaptionIcon,
+  Globe02Icon,
+  GoogleIcon,
+  Note01Icon,
+  SparklesIcon,
+} from "@hugeicons/core-free-icons";
+import type { IconSvgElement } from "@hugeicons/react";
+import { showcase, type Chip as ChipKind } from "@/content/site";
 import { Icon } from "../ui";
-import { Written } from "../live-card";
-import { BookingScreen, CalendarScreen, NotesScreen, RoomScreen, SCREEN_H, SCREEN_W, TeleprompterScreen } from "./screens";
+import {
+  BookingScreen,
+  CalendarScreen,
+  HomeScreen,
+  KnowledgeScreen,
+  NotesScreen,
+  RoomScreen,
+  SCREEN_H,
+  SCREEN_W,
+  TeleprompterScreen,
+} from "./screens";
 
 /**
- * Section 2, in two movements.
+ * Section 2, pinned while three things happen in turn:
  *
- * 1. Arriving: the sentence lights up word by word as the section rises, and
- *    each chip inside it plays its bit of the product when the light reaches it.
- * 2. Pinned: the section holds still and scrolling moves the row of screens
- *    sideways. The sentence gives way to words about the screen in the middle,
- *    which change as the next one arrives. The screen in the middle plays.
+ * 1. The sentence sits in the middle of the screen and lights up word by word.
+ *    Each chip in it plays its part when the light reaches it.
+ * 2. Nearly lit, it rises to the top and the row of screens comes up under it.
+ * 3. Scrolling moves the row sideways. Whatever is in the middle plays, and the
+ *    line above becomes that screen's own line, in the same words-and-chips voice.
  *
- * Scroll drives everything through CSS variables written in one animation
- * frame, so the page never re-renders while it scrolls; React only hears when
- * the screen in the middle changes.
+ * The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge;
+ * only Room to Calendar ever take the middle, so there is always a screen
+ * fading off on each side.
+ *
+ * Scroll writes positions straight to the DOM in one animation frame; React
+ * only hears when the screen in the middle changes.
  */
 
-const SCREENS = { room: RoomScreen, teleprompter: TeleprompterScreen, notes: NotesScreen, calendar: CalendarScreen, booking: BookingScreen };
 const slides = showcase.slides;
-const HOLD = 0.3; // of a screen height: the sentence stays, fully lit, before the row moves
+const FIRST = 1;
+const LAST = slides.length - 2;
+
+// Phases, in screen heights of scroll.
+const PRE = 0.55; // lighting starts this far before the section pins
+const LIGHT = 0.75; // pinned, lighting
+const RISE = 0.55; // the sentence rises, the row comes up
+const SETTLE = 0.3; // the first screen sits in the middle before the row moves
+const END = 0.3; // held on the last screen before letting go
+const TRAVEL = 1.25; // scroll per screen, as a multiple of the distance it moves
+// Of each screen's share of the travel, the part spent still in the middle.
+const DWELL = 0.35;
 
 const REDUCE = "(prefers-reduced-motion: reduce)";
 function useReducedMotion() {
@@ -38,6 +69,28 @@ function useReducedMotion() {
   );
 }
 
+const clamp = (v: number) => Math.min(1, Math.max(0, v));
+const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
+
+function screenFor(id: string, active: boolean) {
+  switch (id) {
+    case "home":
+      return <HomeScreen />;
+    case "room":
+      return <RoomScreen active={active} />;
+    case "booking":
+      return <BookingScreen active={active} />;
+    case "teleprompter":
+      return <TeleprompterScreen active={active} />;
+    case "notes":
+      return <NotesScreen active={active} />;
+    case "calendar":
+      return <CalendarScreen active={active} />;
+    default:
+      return <KnowledgeScreen />;
+  }
+}
+
 /** Lays out a 1120 × 700 screen at whatever width its box has. */
 function Fit({ children }: { children: React.ReactNode }) {
   const box = useRef<HTMLDivElement>(null);
@@ -50,7 +103,7 @@ function Fit({ children }: { children: React.ReactNode }) {
     return () => ro.disconnect();
   }, []);
   return (
-    <div ref={box} className="relative w-full overflow-hidden rounded-[22px] shadow-float" style={{ aspectRatio: `${SCREEN_W} / ${SCREEN_H}` }}>
+    <div ref={box} className="relative w-full overflow-hidden rounded-[24px] shadow-float" style={{ aspectRatio: `${SCREEN_W} / ${SCREEN_H}` }}>
       <div className="absolute top-0 left-0 origin-top-left" style={{ transform: `scale(${scale})`, opacity: scale ? 1 : 0 }}>
         {children}
       </div>
@@ -58,33 +111,44 @@ function Fit({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── The sentence ──────────────────────────────────────────────────────────
+// ── Lines: words and chips ─────────────────────────────────────────────────
 
-type Unit = { kind: "word"; text: string } | { kind: "chip"; chip: string; label: string };
-const UNITS: Unit[] = showcase.statement.flatMap((s): Unit[] =>
-  "text" in s ? s.text.split(" ").filter(Boolean).map((text) => ({ kind: "word", text })) : [{ kind: "chip", chip: s.chip, label: s.label }],
-);
+type Piece = { text: string } | { chip: ChipKind; label: string };
+type Unit = { word: string } | { chip: ChipKind; label: string };
+const units = (pieces: Piece[]): Unit[] =>
+  pieces.flatMap((p): Unit[] => ("text" in p ? p.text.split(" ").filter(Boolean).map((word) => ({ word })) : [p]));
+const STATEMENT_UNITS = units(showcase.statement).length;
 
 // How lit a unit is, 0 to 1, from the section's --lit and the unit's --i.
-const LIT = "clamp(0, var(--lit, 99) - var(--i), 1)";
+// Lines other than the sentence set --lit high, so they are simply lit.
+const LIT = "clamp(0, var(--lit, 99) - var(--i, 0), 1)";
 
-function Chip({ chip, label, i }: { chip: string; label: string; i: number }) {
-  const icon =
-    chip === "transcript" ? ClosedCaptionIcon : chip === "teleprompter" ? SparklesIcon : chip === "booking" ? Calendar03Icon : null;
+const ICONS: Partial<Record<ChipKind, IconSvgElement>> = {
+  transcript: ClosedCaptionIcon,
+  teleprompter: SparklesIcon,
+  booking: Calendar03Icon,
+  calendar: Calendar03Icon,
+  globe: Globe02Icon,
+  note: Note01Icon,
+  done: CheckListIcon,
+  google: GoogleIcon,
+};
+
+function Chip({ chip, label }: { chip: ChipKind; label: string }) {
+  const icon = ICONS[chip];
+  // Sage is for what's been done for you; coral for the follow-up on the calendar.
+  const tone = chip === "booking" || chip === "done" ? "action" : chip === "calendar" ? "signal" : null;
   return (
     <span
-      className="mx-1 inline-flex items-center gap-[0.45em] rounded-full bg-raised pr-[0.9em] pl-[0.3em] align-middle leading-none shadow-raised"
+      className="mx-[0.12em] inline-flex h-[2.3em] items-center gap-[0.45em] rounded-full bg-raised pr-[0.95em] pl-[0.3em] align-middle text-[0.42em] leading-none shadow-raised"
       style={{
-        ["--i" as string]: i,
         opacity: `calc(0.25 + 0.75 * ${LIT})`,
-        transform: `translateY(-0.08em) scale(calc(0.92 + 0.08 * ${LIT}))`,
-        fontSize: "0.42em",
-        height: "2.3em",
+        transform: `translateY(-0.12em) scale(calc(0.92 + 0.08 * ${LIT}))`,
       }}
     >
-      {chip === "call" ? (
+      {chip === "call" || chip === "question" ? (
         <span className="flex">
-          {["ember", "lagoon", "sage"].map((c, k) => (
+          {(chip === "call" ? ["ember", "lagoon", "sage"] : ["ember"]).map((c, k) => (
             <span
               key={c}
               className="inline-block size-[1.85em] rounded-full bg-cover bg-center ring-2 ring-raised"
@@ -99,13 +163,14 @@ function Chip({ chip, label, i }: { chip: string; label: string; i: number }) {
       ) : (
         <span
           className="grid size-[1.85em] place-items-center rounded-full"
-          style={{
-            background:
-              chip === "booking"
-                ? `color-mix(in oklch, var(--action) calc(${LIT} * 100%), var(--overlay))`
-                : "var(--overlay)",
-            color: chip === "booking" ? `color-mix(in oklch, var(--action-foreground) calc(${LIT} * 100%), var(--ink))` : "var(--ink)",
-          }}
+          style={
+            tone
+              ? {
+                  background: `color-mix(in oklch, var(--${tone}) calc(${LIT} * 100%), var(--overlay))`,
+                  color: `color-mix(in oklch, var(--${tone === "action" ? "action-foreground" : "canvas"}) calc(${LIT} * 100%), var(--ink))`,
+                }
+              : { background: "var(--overlay)", color: "var(--ink)" }
+          }
         >
           {icon && <Icon icon={icon} className="size-[1em]" />}
         </span>
@@ -115,96 +180,154 @@ function Chip({ chip, label, i }: { chip: string; label: string; i: number }) {
   );
 }
 
+const LINE =
+  "text-center text-[28px]/[1.4] font-light tracking-[-0.02em] text-balance text-ink sm:text-[40px]/[1.34] xl:text-[48px]/[1.32] 2xl:text-[56px]/[1.3]";
+
+/** The sentence: each unit's light follows the scroll through --lit. */
 function Statement() {
   return (
-    <p className="text-[28px]/[1.32] font-light tracking-[-0.02em] text-ink sm:text-[40px]/[1.3] xl:text-[48px]/[1.28]">
-      {UNITS.map((u, i) => (
+    <p className={LINE}>
+      {units(showcase.statement).map((u, i) => (
         <Fragment key={i}>
           {i > 0 && " "}
-          {u.kind === "word" ? (
-            <span style={{ ["--i" as string]: i, opacity: `calc(0.16 + 0.84 * ${LIT})` }} className="transition-none">
-              {u.text}
-            </span>
-          ) : (
-            <Chip chip={u.chip} label={u.label} i={i} />
-          )}
+          <span style={{ ["--i" as string]: i }}>
+            {"word" in u ? <span style={{ opacity: `calc(0.16 + 0.84 * ${LIT})` }}>{u.word}</span> : <Chip chip={u.chip} label={u.label} />}
+          </span>
         </Fragment>
       ))}
     </p>
   );
 }
 
-// ── The section ──────────────────────────────────────────────────────────
+/** A screen's own line. Arriving, its words rise into place one after another; leaving, they go together. */
+function Line({ pieces, on }: { pieces: Piece[]; on: boolean }) {
+  return (
+    <p className={LINE} style={{ ["--lit" as string]: 99 }}>
+      {units(pieces).map((u, i) => (
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <span
+            className={`inline-block transition-[opacity,transform,filter] ease-out ${
+              on ? "translate-y-0 opacity-100 blur-0 duration-500" : "translate-y-[0.3em] opacity-0 blur-[6px] duration-300"
+            }`}
+            style={{ transitionDelay: on ? `${120 + i * 28}ms` : "0ms" }}
+          >
+            {"word" in u ? u.word : <Chip chip={u.chip} label={u.label} />}
+          </span>
+        </Fragment>
+      ))}
+    </p>
+  );
+}
+
+// ── The section ────────────────────────────────────────────────────────────
 
 export function Showcase() {
   const still = useReducedMotion();
   const section = useRef<HTMLElement>(null);
+  const words = useRef<HTMLDivElement>(null);
   const row = useRef<HTMLDivElement>(null);
-  const bar = useRef<HTMLSpanElement>(null);
+  const rowWrap = useRef<HTMLDivElement>(null);
   const cards = useRef<(HTMLDivElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-  const [moving, setMoving] = useState(false);
+  const [active, setActive] = useState(FIRST);
+  const [rising, setRising] = useState(false);
+  const [risen, setRisen] = useState(false);
   const [height, setHeight] = useState<number | null>(null);
-  const geometry = useRef({ travel: 0, hold: 0 });
+  const geo = useRef({ vh: 0, travel: 0, from: 0, textTop: 0, center: 0 });
 
-  // The section is as tall as the sideways travel, plus the hold, plus one screen.
+  // Sizes: the words take their tallest line; the row fills what's under them.
   useLayoutEffect(() => {
     if (still) return;
     const measure = () => {
+      const s = section.current;
+      const w = words.current;
       const r = row.current;
-      if (!r) return;
+      const wrap = rowWrap.current;
+      if (!s || !w || !r || !wrap) return;
       const vh = window.innerHeight;
-      const travel = Math.max(0, r.scrollWidth - r.clientWidth);
-      geometry.current = { travel, hold: vh * HOLD };
-      setHeight(vh + vh * HOLD + travel);
+      const vw = window.innerWidth;
+      const textH = w.offsetHeight;
+      const textTop = Math.max(112, vh * 0.13);
+      const rowTop = textTop + textH + Math.max(32, vh * 0.04);
+      const room = vh - rowTop - Math.max(40, vh * 0.07);
+      const width = Math.round(Math.min(vw * (vw < 640 ? 0.84 : 0.6), (room * SCREEN_W) / SCREEN_H, 1320));
+      s.style.setProperty("--w", `${width}px`);
+      wrap.style.top = `${rowTop}px`;
+      // The row is the cards' offset parent, so these don't depend on where it's scrolled.
+      const centreOf = (i: number) => {
+        const c = cards.current[i];
+        return c ? c.offsetLeft + c.offsetWidth / 2 - r.clientWidth / 2 : 0;
+      };
+      const from = centreOf(FIRST);
+      const travel = centreOf(LAST) - from;
+      geo.current = { vh, travel, from, textTop, center: (vh - textH) / 2 };
+      setHeight(vh * (1 + LIGHT + RISE + SETTLE + END) + travel * TRAVEL);
     };
     measure();
+    const ro = new ResizeObserver(measure);
+    if (words.current) ro.observe(words.current);
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, [still]);
 
   useEffect(() => {
     if (still) return;
     let frame = 0;
     let lastActive = -1;
-    let lastMoving = false;
+    let lastRising: boolean | null = null;
+    let lastRisen: boolean | null = null;
     const update = () => {
       frame = 0;
       const s = section.current;
+      const w = words.current;
       const r = row.current;
-      if (!s || !r) return;
-      const vh = window.innerHeight;
-      const top = s.getBoundingClientRect().top;
-      const { travel, hold } = geometry.current;
+      const wrap = rowWrap.current;
+      if (!s || !w || !r || !wrap) return;
+      const { vh, travel, from, textTop, center } = geo.current;
+      const y = -s.getBoundingClientRect().top;
 
-      // Arriving: lit from when the section's top is 90% down until it pins.
-      const arrive = Math.min(1, Math.max(0, (vh * 0.9 - top) / (vh * 0.9)));
-      s.style.setProperty("--lit", String(arrive * (UNITS.length + 1.5)));
+      // 1. Lighting: from before the pin to a little before the rise.
+      const lit = clamp((y + PRE * vh) / ((PRE + LIGHT * 0.9) * vh));
+      s.style.setProperty("--lit", String(lit * (STATEMENT_UNITS + 1.5)));
 
-      // Pinned: past the hold, the row travels.
-      const q = travel ? Math.min(1, Math.max(0, (-top - hold) / travel)) : 0;
-      r.scrollLeft = q * travel;
-      if (bar.current) bar.current.style.transform = `scaleX(${q})`;
+      // 2. Rising: words from the middle to the top; the row up from below.
+      const m = ease(clamp((y - LIGHT * vh) / (RISE * vh)));
+      w.style.transform = `translateY(${center + (textTop - center) * m}px)`;
+      wrap.style.opacity = String(m);
+      wrap.style.transform = `translateY(${(1 - m) * vh * 0.12}px)`;
 
-      // The screen nearest the middle is whole; the others step back.
+      // 3. Travelling: the row moves under the middle, resting on each screen.
+      const q = travel ? clamp((y - (LIGHT + RISE + SETTLE) * vh) / (travel * TRAVEL)) : 0;
+      const steps = LAST - FIRST;
+      const at = Math.min(q * steps, steps - 1e-6);
+      const k = Math.floor(at);
+      const f = ease(clamp((at - k - DWELL / 2) / (1 - DWELL)));
+      r.scrollLeft = from + ((q >= 1 ? steps : k + f) / steps) * travel;
+
+      // Every screen steps back and fades by its distance from the middle.
       const mid = window.innerWidth / 2;
-      let best = 0;
+      let best = FIRST;
       let bestD = Infinity;
       cards.current.forEach((c, i) => {
         if (!c) return;
         const b = c.getBoundingClientRect();
         const d = (b.left + b.width / 2 - mid) / b.width;
         const a = Math.min(1, Math.abs(d));
-        c.style.transform = `scale(${1 - a * 0.07})`;
-        c.style.opacity = String(1 - a * 0.5);
-        if (Math.abs(d) < bestD) {
+        c.style.transform = `scale(${1 - a * 0.12})`;
+        c.style.opacity = String(1 - a * 0.55);
+        if (i >= FIRST && i <= LAST && Math.abs(d) < bestD) {
           bestD = Math.abs(d);
           best = i;
         }
       });
-      const isMoving = -top > hold * 0.6;
       if (best !== lastActive) setActive((lastActive = best));
-      if (isMoving !== lastMoving) setMoving((lastMoving = isMoving));
+      const isRising = m > 0.02;
+      if (isRising !== lastRising) setRising((lastRising = isRising));
+      const isRisen = m > 0.98;
+      if (isRisen !== lastRisen) setRisen((lastRisen = isRisen));
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -219,109 +342,76 @@ export function Showcase() {
     };
   }, [still, height]);
 
-  /** Scroll the page to where screen `i` sits in the middle. */
-  function goTo(i: number) {
-    const s = section.current;
-    if (!s) return;
-    const { travel, hold } = geometry.current;
-    const y = s.getBoundingClientRect().top + window.scrollY + hold + (travel * i) / (slides.length - 1);
-    window.scrollTo({ top: y + 1, behavior: "smooth" });
+  // The sentence stands for the room; every other screen has its own line.
+  const showing = risen ? active : FIRST;
+
+  if (still) {
+    return (
+      <section id="product" className="scroll-mt-24 py-32 lg:py-44" aria-label="The product">
+        <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+          <Statement />
+        </div>
+        <div className="mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:px-8">
+          {slides.slice(FIRST, LAST + 1).map((s) => (
+            <div key={s.id} className="w-[84vw] max-w-[900px] shrink-0 snap-center">
+              <Fit>{screenFor(s.id, false)}</Fit>
+              {Array.isArray(s.line) && (
+                <div className="mt-6 [&_p]:!text-left [&_p]:!text-[22px]">
+                  <Line pieces={s.line} on />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    );
   }
 
-  const slide = slides[active];
-
   return (
-    <section
-      id="product"
-      ref={section}
-      className="relative scroll-mt-24"
-      style={still ? undefined : { height: height ?? "300vh" }}
-      aria-label="The product"
-    >
-      <div className={still ? "py-24" : "sticky top-0 flex h-svh flex-col justify-center gap-10 overflow-hidden pt-24 pb-6 sm:justify-start sm:gap-0 sm:pt-28"}>
-        {/* The words: the sentence, then the screen in the middle. Stacked in one cell so the row never jumps. */}
-        <div className="mx-auto grid w-full max-w-[1200px] px-5 sm:px-8">
-          <div
-            className={`col-start-1 row-start-1 transition-[opacity,transform,filter] duration-500 ease-out ${
-              moving ? "pointer-events-none -translate-y-4 opacity-0 blur-sm" : ""
-            }`}
-          >
-            <Statement />
-          </div>
-          {!still && (
+    <section id="product" ref={section} className="relative scroll-mt-24" style={{ height: height ?? "400vh" }} aria-label="The product">
+      <div className="sticky top-0 h-svh overflow-hidden">
+        {/* The words: every line stacked in one cell, so the tallest sets the height. */}
+        <div ref={words} className="absolute inset-x-0 top-0 will-change-transform">
+          <div className="mx-auto grid max-w-[1240px] px-5 sm:px-10 2xl:max-w-[1560px]">
             <div
-              className={`col-start-1 row-start-1 self-end transition-opacity duration-500 ${moving ? "opacity-100" : "pointer-events-none opacity-0"}`}
-              aria-live="polite"
+              className={`col-start-1 row-start-1 self-center transition-[opacity,filter,transform] duration-500 ease-out ${
+                showing === FIRST ? "" : "pointer-events-none -translate-y-3 opacity-0 blur-[6px]"
+              }`}
+              aria-hidden={showing !== FIRST}
             >
-              <p className="font-mono text-label text-ink-faint tabular-nums">
-                {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-              </p>
-              <h2 key={slide.id} className="mt-3 text-[32px]/[1.1] font-light tracking-[-0.025em] text-ink sm:text-[48px]/[1.06]">
-                <Written text={slide.title} step={45} />
-              </h2>
-              <p key={`${slide.id}-body`} className="mt-3 max-w-[560px] animate-enter text-[17px]/[1.55] text-ink-soft sm:text-[19px]/[1.55]" style={{ animationDelay: "180ms" }}>
-                {slide.body}
-              </p>
+              <Statement />
             </div>
-          )}
+            {slides.map(
+              (s, i) =>
+                Array.isArray(s.line) && (
+                  <div key={s.id} className="col-start-1 row-start-1 self-center" aria-hidden={showing !== i}>
+                    <Line pieces={s.line} on={showing === i} />
+                  </div>
+                ),
+            )}
+          </div>
         </div>
 
-        {/* The row of screens. Its scroll position is set by the page's; it isn't scrolled by hand. */}
-        <div
-          ref={row}
-          className={
-            still
-              ? "mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:px-8"
-              : "flex gap-6 overflow-hidden sm:mt-auto [--w:min(84vw,calc((100svh_-_440px)*1.6),980px)] [padding-inline:calc(50vw_-_var(--w)/2)]"
-          }
-        >
-          {slides.map((s, i) => {
-            const Screen = SCREENS[s.id as keyof typeof SCREENS];
-            return (
+        {/* The row. The page's scroll sets its position; it isn't scrolled by hand. */}
+        <div ref={rowWrap} className="absolute inset-x-0 opacity-0 will-change-transform" style={{ top: "60%" }} aria-hidden={!rising}>
+          <div
+            ref={row}
+            className="relative flex items-center gap-[clamp(20px,2.4vw,44px)] overflow-hidden py-6 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]"
+          >
+            {slides.map((s, i) => (
               <div
                 key={s.id}
                 ref={(el) => {
                   cards.current[i] = el;
                 }}
-                className={still ? "w-[84vw] max-w-[900px] shrink-0 snap-center" : "w-[var(--w)] shrink-0 will-change-transform"}
-                aria-hidden={!still && i !== active}
+                className="w-[var(--w)] shrink-0 will-change-transform"
+                aria-hidden={i !== active}
               >
-                <Fit>
-                  <Screen active={!still && i === active} />
-                </Fit>
-                {still && (
-                  <div className="mt-5">
-                    <h3 className="text-[27px] font-light text-ink">{s.title}</h3>
-                    <p className="mt-1 text-[17px] text-ink-soft">{s.body}</p>
-                  </div>
-                )}
+                <Fit>{screenFor(s.id, risen && i === active)}</Fit>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Where you are in the row; each name takes you to its screen. */}
-        {!still && (
-          <div className="mx-auto flex w-full max-w-[1200px] items-center gap-5 px-5 sm:mt-5 sm:px-8">
-            <span className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-overlay">
-              <span ref={bar} className="absolute inset-0 origin-left rounded-full bg-ink" style={{ transform: "scaleX(0)" }} />
-            </span>
-            <div className="hidden gap-1 sm:flex">
-              {slides.map((s, i) => (
-                <button
-                  key={s.id}
-                  onClick={() => goTo(i)}
-                  aria-current={i === active ? "true" : undefined}
-                  className={`rounded-full px-3 py-1.5 text-[15px] transition-colors ${
-                    i === active ? "bg-overlay text-ink" : "text-ink-faint hover:text-ink-soft"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
