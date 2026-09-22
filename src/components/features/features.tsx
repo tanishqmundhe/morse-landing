@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { extras } from "@/content/site";
-import { H2, Heading, Icon, SECTION } from "../ui";
+import { Eyebrow, H2, Heading, Icon, LEAD, SECTION } from "../ui";
 import { PICTURES } from "./pictures";
 
 /**
@@ -51,6 +51,12 @@ export function Features() {
     };
   }, []);
 
+  function onKeyDown(e: React.KeyboardEvent) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    step(e.key === "ArrowRight" ? 1 : -1);
+  }
+
   function step(dir: 1 | -1) {
     const r = row.current;
     const card = r?.firstElementChild as HTMLElement | null;
@@ -89,9 +95,12 @@ export function Features() {
   return (
     <section id="features" className={`${SECTION} scroll-mt-24`} aria-label="Everything else">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:justify-between 2xl:max-w-[1360px]">
-        <Heading lead={extras.title} muted={extras.titleMuted} className={H2} />
+        <div className="lg:max-w-[620px]">
+          <Eyebrow className="mb-5">{extras.eyebrow}</Eyebrow>
+          <Heading lead={extras.title} muted={extras.titleMuted} className={H2} />
+        </div>
         <div className="flex items-end gap-8">
-          <p className="max-w-[400px] text-[18px]/[1.55] text-ink-soft">{extras.body}</p>
+          <p className={`${LEAD} max-w-[400px]`}>{extras.body}</p>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <button className={button} onClick={() => step(-1)} disabled={edges.start} aria-label="Previous">
               <Icon icon={ArrowLeft01Icon} className="size-5" />
@@ -106,7 +115,8 @@ export function Features() {
       <div
         ref={row}
         tabIndex={0}
-        aria-label="Features. Scroll sideways for more."
+        onKeyDown={onKeyDown}
+        aria-label="Features. Use the arrow keys, or scroll sideways."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

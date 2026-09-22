@@ -61,4 +61,7 @@ export function Heading({
   );
 }
 
-export const H2 = "text-[36px]/[1.12] sm:text-[48px]/[1.08]";
+/** The ladder: hero 92, closing 72, sections 56, cards 28. */
+export const H2 = "text-[38px]/[1.1] sm:text-[48px]/[1.06] xl:text-[56px]/[1.05]";
+/** A section's opening line. Everything else on the page is 17px. */
+export const LEAD = "text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]";

@@ -159,6 +159,7 @@ export const showcase = {
  * reactions are the app's pixel emoji; the notes page draws a mind map.
  */
 export const extras = {
+  eyebrow: "In the call",
   title: "Everything else",
   titleMuted: "you’d expect, done properly.",
   body: "The small things that make a call feel easy, each one as considered as the big ones.",
@@ -179,6 +180,7 @@ export const extras = {
  * booked. Copy follows the app: "Free times", "Confirm", the ten-minute undo.
  */
 export const booking = {
+  eyebrow: "Booking pages",
   title: "One link, and your",
   titleMuted: "calendar does the rest.",
   body: "Share it once. People pick from the times you actually have free, in their own time zone, and the meeting lands on your week with a Morse link.",
@@ -192,7 +194,7 @@ export const booking = {
     host: "Priya Shah",
     role: "Product lead, Neural Arc",
     bio: "Happy to talk through onboarding, pricing or anything half-formed.",
-    film: "/films/ascii-wood.mp4",
+    film: { src: "/films/ascii-wood.mp4", poster: "/films/ascii-wood-poster.jpg" },
     type: "Intro call",
     minutes: "30 min",
     month: "September 2026",
@@ -218,59 +220,8 @@ export const booking = {
   },
 };
 
-export const teleprompter = {
-  eyebrow: "Teleprompter",
-  title: "Asked in the meeting.\nAnswered from your notes.",
-  body: "When someone asks a question, Morse looks through your notes and puts the answer in front of you. Nobody types. Only the colleagues the host chooses see it.",
-  card: {
-    speaker: "Daniel",
-    question: "What did we agree with Acme on renewal pricing?",
-    answer: "The annual plan at this year’s rate, fixed until March, with two extra seats included.",
-    source: "Acme renewal notes",
-    looking: "Looking in your notes",
-  },
-  play: "Play",
-  replay: "Replay",
-};
-
-export const yours = {
-  eyebrow: "Make it yours",
-  title: "Less default.",
-  titleMuted: "More you.",
-  body: "Pick an accent colour and light or dark. Choose a background from home, nature or something sillier, and a style for your camera that everyone in the call sees.",
-  greeting: "Good morning,",
-  name: "Alex",
-  button: "New meeting",
-  accents: [
-    { id: "sage", label: "Sage" },
-    { id: "patina", label: "Patina" },
-    { id: "dusk", label: "Dusk blue" },
-    { id: "indigo", label: "Indigo" },
-    { id: "plum", label: "Plum" },
-  ],
-  styles: ["Brighten", "Warm", "Cool", "Film", "Mono", "Vivid", "Light leak"],
-};
-
-export const followUp = {
-  eyebrow: "After the call",
-  title: "The meeting ends.",
-  titleMuted: "The follow-up is ready to book.",
-  body: "When a call arranges another meeting, Morse offers to book it. You see the time, any clash and who’s invited. Nothing is sent until you press Book.",
-  said: { name: "Priya", text: "Let’s pick this up on Thursday at two." },
-  card: {
-    title: "Book a follow-up?",
-    time: "Thursday, 2:00 – 2:30 pm",
-    clash: "No clashes",
-    invitees: ["Priya Shah", "Jamie Lee"],
-    book: "Book",
-    skip: "Don’t book",
-    booked: "You approved it. Invites are on their way.",
-    skipped: "You didn’t book it.",
-  },
-  caption: "A preview. Nothing is booked.",
-};
-
 export const faq = {
+  eyebrow: "Questions",
   title: "A few things you",
   titleMuted: "might be wondering.",
   more: "Still wondering?",

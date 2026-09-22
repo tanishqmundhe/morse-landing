@@ -4,7 +4,7 @@ import { ArrowLeft01Icon, Link01Icon } from "@hugeicons/core-free-icons";
 import { booking } from "@/content/site";
 import { Film } from "./film";
 import { useLoop } from "./features/timeline";
-import { H2, Heading, Icon, SECTION, WRAP } from "./ui";
+import { Eyebrow, H2, Heading, Icon, LEAD, SECTION, WRAP } from "./ui";
 
 /**
  * Section 4: a booking page, drawn the way the app draws one — two near-square
@@ -128,8 +128,9 @@ export function BookingPage() {
 
   return (
     <section id="booking" className={`${WRAP} ${SECTION} scroll-mt-24 text-center`}>
+      <Eyebrow className="mb-5">{booking.eyebrow}</Eyebrow>
       <Heading lead={booking.title} muted={booking.titleMuted} className={H2} />
-      <p className="mx-auto mt-6 max-w-[620px] text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]">{booking.body}</p>
+      <p className={`${LEAD} mx-auto mt-6 max-w-[620px]`}>{booking.body}</p>
       <p className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-full bg-raised px-6 text-[17px] text-ink shadow-raised">
         <Icon icon={Link01Icon} className="size-[18px] text-ink-faint" />
         {booking.link}
@@ -141,7 +142,7 @@ export function BookingPage() {
         <div data-card className={`${CARD} h-40 p-2 lg:aspect-[9/10] lg:h-auto`}>
           <div className="relative isolate size-full overflow-hidden rounded-[20px] bg-black">
             <div className="film-drift absolute inset-0">
-              <Film src={p.film} className="object-center" />
+              <Film src={p.film.src} poster={p.film.poster} className="object-center" />
             </div>
           </div>
         </div>

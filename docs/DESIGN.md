@@ -19,17 +19,33 @@ not reinvented.
 
 ## Type ladder (px)
 
-| Use | Size |
-| --- | --- |
-| Hero h1 | 46 → 64 → 72 |
-| Section h2 | 36 → 48 |
-| Card title | 27 |
-| Lede | 19 |
-| Body | 17–18 |
-| Small print | 15 |
-| Label | 13 mono 600, tracked 1.6px, uppercase |
+| Use | Size | Where |
+| --- | --- | --- |
+| Hero h1 | 52 → 76 → 92 | `hero.tsx` |
+| Closing | 40 → 56 → 72 | `closing.tsx` |
+| Section h2 | 38 → 48 → 56 | `H2` in `ui.tsx` |
+| Card title | 27 | |
+| Section lead | 18 → 20 | `LEAD` in `ui.tsx` |
+| Body | 17 | |
+| Small print | 15 | |
+| Label | 13 mono 600, tracked 1.6px, uppercase | `Eyebrow` |
 
-Nothing is set below 13px.
+Nothing on the page is set below 13px (the rebuilt app screens inside cards are
+scaled artwork, and don't count). Section leads use `LEAD`; everything else is 17px.
+
+## Spacing
+
+`SECTION` (`ui.tsx`) is the one rhythm between the hero and the closing:
+112px on phones, 160 from `lg`, 192 from `2xl`. The hero and closing are
+full-bleed bands inset 14px instead. Content sits in `WRAP` (1200px, 1360 on
+2xl); the booking cards keep their own 1000px, as the app's page does.
+
+## Films
+
+Each film is trimmed and re-encoded for the web (1000–1440px wide, CRF 29–31,
+faststart, no audio): 21MB became 1.7MB. `film.tsx` loads none of them until
+they are within a screen of the viewport, rests on a poster until then, and
+pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 
 ## Sections (in order)
 

@@ -35,9 +35,21 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
+  // Set NEXT_PUBLIC_SITE_URL once the page has its own domain; until then the
+  // app's own address stands in, so shared links unfurl with a full URL.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://onmorse.com"),
   title: meta.title,
   description: meta.description,
-  openGraph: { title: meta.title, description: meta.description, type: "website", siteName: "Morse" },
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: meta.title,
+    description: meta.description,
+    type: "website",
+    siteName: "Morse",
+    url: "/",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: meta.title }],
+  },
+  twitter: { card: "summary_large_image", title: meta.title, description: meta.description, images: ["/og.jpg"] },
 };
 
 export const viewport: Viewport = {

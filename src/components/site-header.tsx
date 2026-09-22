@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { nav } from "@/content/site";
 import { Logo } from "./logo";
-import { PRIMARY } from "./ui";
+import { Icon, PRIMARY } from "./ui";
 
 /**
  * Fixed over the film. It stays clear until the film has scrolled away, then
@@ -14,10 +15,14 @@ export function SiteHeader() {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [mark, setMark] = useState<{ x: number; w: number } | null>(null);
+  const [menu, setMenu] = useState(false);
   const links = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > window.innerHeight * 0.75);
+    const onScroll = () => {
+      setSolid(window.scrollY > window.innerHeight * 0.75);
+      setMenu(false);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
@@ -51,7 +56,7 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed inset-x-2.5 top-2.5 z-40 transition-[background-color,box-shadow] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
-        solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
+        menu ? "rounded-[28px] bg-canvas/95 shadow-float backdrop-blur-md" : solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
       }`}
     >
       <div className="flex h-[68px] items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10">
@@ -85,9 +90,39 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <a href={nav.cta.href} className={`${PRIMARY} h-11 px-5 text-[16px]`}>
-          {nav.cta.label}
-        </a>
+        <div className="flex items-center gap-2">
+          <a href={nav.cta.href} className={`${PRIMARY} h-11 px-5 text-[16px]`}>
+            {nav.cta.label}
+          </a>
+          <button
+            onClick={() => setMenu(!menu)}
+            aria-expanded={menu}
+            aria-controls="menu"
+            aria-label={menu ? "Close menu" : "Menu"}
+            className="grid size-11 place-items-center rounded-full bg-overlay text-ink transition-colors hover:bg-overlay-hover md:hidden"
+          >
+            <Icon icon={menu ? Cancel01Icon : Menu01Icon} className="size-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* On a phone the links live here instead of in the pill. */}
+      <div
+        id="menu"
+        className={`overflow-hidden px-5 transition-[grid-template-rows,opacity] duration-300 ease-out md:hidden ${menu ? "grid grid-rows-[1fr] pb-4 opacity-100" : "grid grid-rows-[0fr] opacity-0"}`}
+      >
+        <nav aria-label="Sections" className="min-h-0">
+          {nav.links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenu(false)}
+              className="block border-t border-hairline/70 py-3.5 text-[18px] text-ink-soft first:border-t-0"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
   );

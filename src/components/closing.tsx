@@ -22,7 +22,7 @@ export function Closing() {
           <Heading
             lead={closing.title}
             muted={closing.titleMuted}
-            className="mt-7 text-[38px]/[1.08] sm:text-[52px]/[1.06] xl:text-[62px]/[1.04]"
+            className="mt-7 text-[40px]/[1.08] sm:text-[56px]/[1.05] xl:text-[72px]/[1.03]"
           />
           <a href={closing.cta.href} className={`${PRIMARY} group mt-9 h-[52px] px-7 text-[18px]`}>
             {closing.cta.label}
