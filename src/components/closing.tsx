@@ -1,17 +1,15 @@
 import { closing } from "@/content/site";
-import { Lines } from "./lines";
+import { LogoMark } from "./logo";
+import { Heading, PRIMARY, WRAP } from "./ui";
 
 export function Closing() {
   return (
-    <section className="closing wrap">
-      <span className="closing-mark" aria-hidden="true">
-        ✳
-      </span>
-      <h2>
-        <Lines text={closing.title} />
-      </h2>
-      <a className="button primary" href={closing.cta.href}>
-        {closing.cta.label} <span>↗</span>
+    <section className={`${WRAP} flex flex-col items-center py-24 text-center lg:py-32`}>
+      {/* The mark as the page's sign-off: the one ornament the contract allows (#7). */}
+      <LogoMark className="size-12 text-ink-soft" title="" />
+      <Heading lead={closing.title} className="mt-8 text-[38px]/[1.1] sm:text-[56px]/[1.05]" />
+      <a href={closing.cta.href} className={`${PRIMARY} mt-10`}>
+        {closing.cta.label}
       </a>
     </section>
   );
