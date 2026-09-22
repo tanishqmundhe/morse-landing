@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Geist+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+:root{--sunken:oklch(0.165 0.008 52);--canvas:oklch(0.142 0.008 55);--raised:oklch(0.205 0.01 50);--float:oklch(0.25 0.008 55);--overlay:oklch(0.28 0.01 52);--overlay-h:oklch(0.315 0.011 52);--ink:oklch(0.9564 0.0127 63.92);--soft:oklch(0.72 0.028 56);--faint:oklch(0.66 0.033 55);--hair:oklch(0.3 0.012 50);--signal:oklch(0.78 0.125 36);--action:#a9be8c;--action-fg:#1a2112;
+--raise:0 0 0 1px oklch(0.9564 0.0127 63.92/.04),0 1px 2px oklch(0.06 0.006 50/.3),0 10px 28px -16px oklch(0.06 0.006 50/.5);
+--floatsh:0 0 0 1px oklch(0.9564 0.0127 63.92/.07),0 18px 44px -14px oklch(0.06 0.006 50/.7)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--canvas);color:var(--ink);font:400 18px/1.55 "IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"Geist Mono",monospace}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;font-size:17px;font-weight:500;white-space:nowrap}
+.pri{background:var(--action);color:var(--action-fg)}
+.sec{background:var(--overlay);color:var(--ink)}
+.ghost{color:var(--soft)}
+h1{font-weight:300;letter-spacing:-.03em;line-height:1.02}
+h1 span{color:var(--soft)}
+.nav a{color:var(--soft);font-size:16px;text-decoration:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px oklch(0.78 0.125 36/.18)}
+.film{background-size:cover;background-position:center}
+.tag{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+</style><style>
+.h2{font-weight:300;font-size:60px;line-height:1.05;letter-spacing:-.03em}
+.h2 span{color:var(--soft)}
+.lead{font-size:20px;color:var(--soft);line-height:1.55}
+.ava{display:inline-block;flex:none;border-radius:50%;background-size:cover;background-position:center}
+.tile{position:relative;border-radius:22px;overflow:hidden;background-size:cover;background-position:center}
+.name{position:absolute;left:12px;bottom:12px;padding:4px 12px;border-radius:999px;background:oklch(0.142 0.008 55/.72);font-size:14px;display:flex;gap:6px;align-items:center}
+.pane{background:var(--raised);border-radius:26px;box-shadow:var(--raise)}
+.sunk{background:var(--sunken);box-shadow:inset 0 1px 2px oklch(0.06 0.006 50/.45),inset 0 0 0 1px oklch(0.9564 0.0127 63.92/.04);border-radius:18px}
+.tag{font-family:"Geist Mono",monospace;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:var(--faint)}
+@keyframes seat{0%{opacity:0;transform:translateY(16px) scale(.96);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes dash{to{stroke-dashoffset:0}}
+@keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes bgc{0%{opacity:0}4%,18%{opacity:1}22%,100%{opacity:0}}
+@keyframes lab{0%{opacity:0;transform:translateY(6px)}4%,18%{opacity:1;transform:none}22%,100%{opacity:0}}
+@keyframes tick{0%,55%{opacity:0;transform:scale(.4)}62%,100%{opacity:1;transform:scale(1)}}
+@keyframes strike{0%,55%{width:0}66%,100%{width:100%}}
+@keyframes drop{0%,40%{opacity:0;transform:translateY(-16px) scale(.97)}48%,100%{opacity:1;transform:none}}
+@keyframes cardin{0%,15%{opacity:0;transform:translateY(14px)}24%,100%{opacity:1;transform:none}}
+</style></head><body>
+<section style="padding:150px 90px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:60px">
+    <h2 class="h2">You talked.<br><span>It wrote everything down.</span></h2>
+    <p class="lead" style="max-width:420px">A summary, the decisions, and everyone’s action items — with the recording, the transcript and a map of what was said underneath.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:64px">
+    <div class="pane" style="padding:34px 38px">
+      <p class="tag">Tuesday 22 September · 42 min</p>
+      <p style="font-size:30px;font-weight:300;margin-top:10px">Weekly design review</p>
+      <p style="font-size:18px;color:var(--soft);line-height:1.55;margin-top:14px">Onboarding is where people drop off. The team will test a second-meeting nudge for two weeks and keep Acme on this year’s rate until March.</p>
+      <p class="tag" style="margin-top:28px">Decisions</p>
+      <p style="font-size:18px;margin-top:8px">Test the second-meeting nudge for two weeks</p>
+      <p style="font-size:18px;margin-top:4px">Acme stays on this year’s rate until March</p>
+      <p class="tag" style="margin-top:28px">Your action items</p>
+      <div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+        <span style="width:24px;height:24px;border-radius:50%;background:var(--overlay);display:grid;place-items:center;position:relative">
+          <span style="position:absolute;inset:0;border-radius:50%;background:var(--action);color:var(--action-fg);display:grid;place-items:center;animation:tick 9s 0s infinite"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M5 14L8.5 17.5L19 6.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></svg></span>
+        </span>
+        <span style="flex:1;font-size:18px;position:relative">Draft the onboarding nudge<span style="position:absolute;left:0;top:52%;height:1px;background:var(--faint);animation:strike 9s 0s infinite"></span></span>
+        <span style="font-size:15px;color:var(--faint)">Arjun · Fri</span>
+      </div><div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+        <span style="width:24px;height:24px;border-radius:50%;background:var(--overlay);display:grid;place-items:center;position:relative">
+          <span style="position:absolute;inset:0;border-radius:50%;background:var(--action);color:var(--action-fg);display:grid;place-items:center;animation:tick 9s 0.8s infinite"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M5 14L8.5 17.5L19 6.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></svg></span>
+        </span>
+        <span style="flex:1;font-size:18px;position:relative">Send Acme the renewal terms<span style="position:absolute;left:0;top:52%;height:1px;background:var(--faint);animation:strike 9s 0.8s infinite"></span></span>
+        <span style="font-size:15px;color:var(--faint)">Priya · Tomorrow</span>
+      </div><div style="display:flex;gap:14px;align-items:center;margin-top:12px">
+        <span style="width:24px;height:24px;border-radius:50%;background:var(--overlay);display:grid;place-items:center;position:relative">
+          <span style="position:absolute;inset:0;border-radius:50%;background:var(--action);color:var(--action-fg);display:grid;place-items:center;animation:tick 9s 1.6s infinite"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M5 14L8.5 17.5L19 6.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/></svg></span>
+        </span>
+        <span style="flex:1;font-size:18px;position:relative">Book three user interviews<span style="position:absolute;left:0;top:52%;height:1px;background:var(--faint);animation:strike 9s 1.6s infinite"></span></span>
+        <span style="font-size:15px;color:var(--faint)">You · Next week</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="pane" style="padding:18px;display:flex;flex-direction:column;gap:14px">
+        <div class="tile" style="height:190px;background-image:url(a/ember.webp)"><span style="position:absolute;inset:0;display:grid;place-items:center"><span class="ava" style="width:72px;height:72px;background-image:url(a/neuralarc-avatar-ember-512.webp)"></span></span>
+          <div style="position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;background:oklch(0.142 0.008 55/.78)">
+            <span style="width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--canvas);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M18.8906 12.846C18.5371 14.189 16.8667 15.138 13.5257 17.0361C10.296 18.8709 8.6812 19.7884 7.37983 19.4196C6.8418 19.2671 6.35159 18.9776 5.95624 18.5787C5 17.6139 5 15.7426 5 12C5 8.2574 5 6.3861 5.95624 5.42132C6.35159 5.02245 6.8418 4.73288 7.37983 4.58042C8.6812 4.21165 10.296 5.12907 13.5257 6.96393C16.8667 8.86197 18.5371 9.811 18.8906 11.154C19.0365 11.7084 19.0365 12.2916 18.8906 12.846Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"/></svg></span>
+            <span style="height:3px;flex:1;border-radius:2px;background:var(--overlay);position:relative"><span style="position:absolute;inset:0;width:38%;border-radius:2px;background:var(--ink)"></span></span>
+            <span class="mono" style="font-size:13px;color:var(--soft)">12:48</span>
+          </div>
+        </div>
+        <p style="font-size:19px">The recording, beside the words</p>
+      </div>
+      <div class="pane" style="padding:22px">
+        <p class="tag">Share</p>
+        <p style="font-size:17px;margin-top:10px">priya@neuralarc.ai, arjun@neuralarc.ai</p>
+        <p style="font-size:15px;color:var(--signal);margin-top:8px">One part mentions salary. Check before sending.</p>
+      </div>
+      <div class="pane" style="padding:22px;flex:1">
+        <p class="tag">The meeting, as a map</p>
+        <svg viewBox="0 0 320 150" style="width:100%;margin-top:10px" fill="none" stroke-linecap="round">
+          <circle cx="24" cy="75" r="5" fill="#F7EFE8"/>
+          <path d="M32 75 C 60 75, 60 34, 88 34" stroke="#FF8FB1" stroke-opacity=".6" stroke-width="1.6"/><circle cx="92" cy="34" r="4" fill="#FF8FB1"/><text x="104" y="38" fill="#b3a194" font-size="12" font-family="IBM Plex Sans">Onboarding</text><path d="M32 75 C 60 75, 60 78, 88 78" stroke="#E8C98A" stroke-opacity=".6" stroke-width="1.6"/><circle cx="92" cy="78" r="4" fill="#E8C98A"/><text x="104" y="82" fill="#b3a194" font-size="12" font-family="IBM Plex Sans">Acme renewal</text><path d="M32 75 C 60 75, 60 122, 88 122" stroke="#8FD9C4" stroke-opacity=".6" stroke-width="1.6"/><circle cx="92" cy="122" r="4" fill="#8FD9C4"/><text x="104" y="126" fill="#b3a194" font-size="12" font-family="IBM Plex Sans">Next steps</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section></body></html>

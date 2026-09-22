@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Geist+Mono:wght@500;600&display=block" rel="stylesheet">
+<style>
+:root{--sunken:oklch(0.165 0.008 52);--canvas:oklch(0.142 0.008 55);--raised:oklch(0.205 0.01 50);--float:oklch(0.25 0.008 55);--overlay:oklch(0.28 0.01 52);--overlay-h:oklch(0.315 0.011 52);--ink:oklch(0.9564 0.0127 63.92);--soft:oklch(0.72 0.028 56);--faint:oklch(0.66 0.033 55);--hair:oklch(0.3 0.012 50);--signal:oklch(0.78 0.125 36);--action:#a9be8c;--action-fg:#1a2112;
+--raise:0 0 0 1px oklch(0.9564 0.0127 63.92/.04),0 1px 2px oklch(0.06 0.006 50/.3),0 10px 28px -16px oklch(0.06 0.006 50/.5);
+--floatsh:0 0 0 1px oklch(0.9564 0.0127 63.92/.07),0 18px 44px -14px oklch(0.06 0.006 50/.7)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--canvas);color:var(--ink);font:400 18px/1.55 "IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"Geist Mono",monospace}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;font-size:17px;font-weight:500;white-space:nowrap}
+.pri{background:var(--action);color:var(--action-fg)}
+.sec{background:var(--overlay);color:var(--ink)}
+.ghost{color:var(--soft)}
+h1{font-weight:300;letter-spacing:-.03em;line-height:1.02}
+h1 span{color:var(--soft)}
+.nav a{color:var(--soft);font-size:16px;text-decoration:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px oklch(0.78 0.125 36/.18)}
+.film{background-size:cover;background-position:center}
+.tag{font-family:"Geist Mono",monospace;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+</style><style>
+.h2{font-weight:300;font-size:60px;line-height:1.05;letter-spacing:-.03em}
+.h2 span{color:var(--soft)}
+.lead{font-size:20px;color:var(--soft);line-height:1.55}
+.ava{display:inline-block;flex:none;border-radius:50%;background-size:cover;background-position:center}
+.tile{position:relative;border-radius:22px;overflow:hidden;background-size:cover;background-position:center}
+.name{position:absolute;left:12px;bottom:12px;padding:4px 12px;border-radius:999px;background:oklch(0.142 0.008 55/.72);font-size:14px;display:flex;gap:6px;align-items:center}
+.pane{background:var(--raised);border-radius:26px;box-shadow:var(--raise)}
+.sunk{background:var(--sunken);box-shadow:inset 0 1px 2px oklch(0.06 0.006 50/.45),inset 0 0 0 1px oklch(0.9564 0.0127 63.92/.04);border-radius:18px}
+.tag{font-family:"Geist Mono",monospace;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:var(--faint)}
+@keyframes seat{0%{opacity:0;transform:translateY(16px) scale(.96);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes dash{to{stroke-dashoffset:0}}
+@keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes bgc{0%{opacity:0}4%,18%{opacity:1}22%,100%{opacity:0}}
+@keyframes lab{0%{opacity:0;transform:translateY(6px)}4%,18%{opacity:1;transform:none}22%,100%{opacity:0}}
+@keyframes tick{0%,55%{opacity:0;transform:scale(.4)}62%,100%{opacity:1;transform:scale(1)}}
+@keyframes strike{0%,55%{width:0}66%,100%{width:100%}}
+@keyframes drop{0%,40%{opacity:0;transform:translateY(-16px) scale(.97)}48%,100%{opacity:1;transform:none}}
+@keyframes cardin{0%,15%{opacity:0;transform:translateY(14px)}24%,100%{opacity:1;transform:none}}
+</style></head><body>
+<section style="padding:150px 90px;display:grid;grid-template-columns:420px 1fr;gap:80px;align-items:center">
+  <div>
+    <h2 class="h2" style="font-size:54px">“Let’s pick this up<br>Thursday.”<br><span>Booked.</span></h2>
+    <p class="lead" style="font-size:19px;margin-top:24px">When a call arranges the next one, Morse offers to book it: the time it heard, a check against your calendar, and who’s invited. Nothing is sent until someone says yes.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:30px">
+      <div><p style="font-size:19px">Heard, not typed</p><p class="lead" style="font-size:16px">It comes from what was said out loud.</p></div><div><p style="font-size:19px">Checked against your week</p><p class="lead" style="font-size:16px">Clashes are caught before the invite.</p></div><div><p style="font-size:19px">Yours to approve</p><p class="lead" style="font-size:16px">One press books it; one dismisses it.</p></div>
+    </div>
+  </div>
+  <div style="position:relative;height:640px">
+    <div class="pane" style="position:absolute;inset:0;padding:14px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:100%">
+        <div class="tile" style="grid-row:span 2;background-image:url(a/ember.webp);box-shadow:0 0 0 2px var(--signal)"><span style="position:absolute;inset:0;display:grid;place-items:center"><span class="ava" style="width:96px;height:96px;background-image:url(a/neuralarc-avatar-ember-512.webp)"></span></span><span class="name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M7 6.5C7 4.01472 9.01472 2 11.5 2C13.9853 2 16 4.01472 16 6.5V11.5C16 13.9853 13.9853 16 11.5 16C9.01472 16 7 13.9853 7 11.5V6.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M11.5 19H11.0828C7.57267 19 4.57706 16.4623 4 13M11.5 19H11.9172C15.4273 19 18.4229 16.4623 19 13M11.5 19V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg> Priya Shah</span></div>
+        <div class="tile" style="background-image:url(a/lagoon.webp)"><span style="position:absolute;inset:0;display:grid;place-items:center"><span class="ava" style="width:54px;height:54px;background-image:url(a/neuralarc-avatar-lagoon-512.webp)"></span></span><span class="name">Arjun</span></div>
+        <div class="tile" style="background-image:url(a/sage.webp)"><span style="position:absolute;inset:0;display:grid;place-items:center"><span class="ava" style="width:54px;height:54px;background-image:url(a/neuralarc-avatar-sage-512.webp)"></span></span><span class="name">You</span></div>
+      </div>
+      <div style="position:absolute;left:28px;right:28px;bottom:28px;padding:20px 22px;border-radius:24px;background:var(--float);box-shadow:var(--floatsh);animation:cardin 12s infinite">
+        <p style="font-size:15px;color:var(--soft)"><b style="color:var(--ink);font-weight:500">Priya</b> said “Let’s pick this up Thursday at two.”</p>
+        <p style="margin-top:12px;font-size:21px;display:flex;align-items:center;gap:10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M16 2V6M8 2V6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12V14C3 17.7712 3 19.6569 4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284C21 19.6569 21 17.7712 21 14V12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M3 10H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/><path d="M12.1258 14H12.0008M12.1258 18H12.0008M7.625 14H7.5M7.625 18H7.5M16.625 14H16.5M12.2508 14C12.2508 14.1381 12.1389 14.25 12.0008 14.25C11.8628 14.25 11.7508 14.1381 11.7508 14C11.7508 13.8619 11.8628 13.75 12.0008 13.75C12.1389 13.75 12.2508 13.8619 12.2508 14ZM12.2508 18C12.2508 18.1381 12.1389 18.25 12.0008 18.25C11.8628 18.25 11.7508 18.1381 11.7508 18C11.7508 17.8619 11.8628 17.75 12.0008 17.75C12.1389 17.75 12.2508 17.8619 12.2508 18ZM7.75 14C7.75 14.1381 7.63807 14.25 7.5 14.25C7.36193 14.25 7.25 14.1381 7.25 14C7.25 13.8619 7.36193 13.75 7.5 13.75C7.63807 13.75 7.75 13.8619 7.75 14ZM7.75 18C7.75 18.1381 7.63807 18.25 7.5 18.25C7.36193 18.25 7.25 18.1381 7.25 18C7.25 17.8619 7.36193 17.75 7.5 17.75C7.63807 17.75 7.75 17.8619 7.75 18ZM16.75 14C16.75 14.1381 16.6381 14.25 16.5 14.25C16.3619 14.25 16.25 14.1381 16.25 14C16.25 13.8619 16.3619 13.75 16.5 13.75C16.6381 13.75 16.75 13.8619 16.75 14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg> Book a follow-up?</p>
+        <p style="font-size:17px;color:var(--soft);margin-top:4px">Thursday, 2:00 – 2:30 pm · No clashes</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <span style="display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 4px;border-radius:999px;background:var(--overlay);font-size:15px"><span class="ava" style="width:26px;height:26px;background-image:url(a/neuralarc-avatar-ember-512.webp)"></span>Priya Shah</span><span style="display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 4px;border-radius:999px;background:var(--overlay);font-size:15px"><span class="ava" style="width:26px;height:26px;background-image:url(a/neuralarc-avatar-lagoon-512.webp)"></span>Arjun Mehta</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <span class="btn pri" style="flex:1;justify-content:center;height:44px">Book</span>
+          <span class="btn sec" style="flex:1;justify-content:center;height:44px">Don’t book</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></body></html>

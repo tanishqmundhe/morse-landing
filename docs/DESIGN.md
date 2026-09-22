@@ -82,7 +82,11 @@ Nothing is set below 13px.
    - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.
 7. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
-8. **Questions (`#questions`):** a `details` list with a rotating plus.
+8. **Questions (`#questions`, `faq.tsx`):** section 7, centred, so the end of the page keeps the booking section's rhythm.
+   - "A few things you might be wondering." over a 860px column of questions at 25px, hairlines between them.
+   - One answer is open at a time. It opens by height (a `0fr → 1fr` grid row, which eases smoothly whatever the answer's length) while the plus turns into a cross.
+   - Each question is a real button carrying `aria-expanded` and `aria-controls`, so it works from the keyboard and reads correctly aloud.
+   - "Still wondering?" and a mail link close the section. The address is the one Morse's own mail comes from; confirm it before launch.
 9. **Closing:** the mark, the line, and Open Morse.
 10. **Footer:** the Morse logo, and "A product by" with the Unified Machines lockup, as in the app.
 

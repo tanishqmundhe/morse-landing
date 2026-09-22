@@ -271,7 +271,11 @@ export const followUp = {
 };
 
 export const faq = {
-  title: "Questions",
+  title: "A few things you",
+  titleMuted: "might be wondering.",
+  more: "Still wondering?",
+  // The address Morse's own mail comes from; confirm before launch.
+  email: "hello@neuralarc.ai",
   items: [
     {
       q: "What is Morse?",
