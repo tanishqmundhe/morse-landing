@@ -58,10 +58,19 @@ Nothing is set below 13px.
    - **Reduced motion:** nothing pins. The sentence shows fully lit, and the screens become a swipeable row with their lines underneath.
    - **Assets:** avatars and profile backgrounds come from the app (`public/app/`). The demo people are Priya Shah, Arjun Mehta and Alex; no real names.
    - **Section spacing** is generous across the page: `py-28 lg:py-40 2xl:py-48`, and the wrap grows to 1360px on 2xl.
-4. **How it works (`#how`):** Before / During / After tabs.
-   - Before: a booking confirmation.
-   - During: a live transcript with the coral Recording dot.
-   - After: Notes, with a summary, decisions and action items you can tick.
+4. **Features (`#features`, `features/features.tsx`):** section 3, "Everything else you'd expect, done properly", laid out as a filmstrip.
+   - **The row:** tall cards (19:25; 380px, 440px on 2xl, 78vw on phones) in one row with wide gaps. The title and one line sit under each card, not inside it. The row starts in line with the page column (`--page`, 1200px, or 1360px on 2xl) and runs off the right.
+   - **Moving it:** scroll sideways by trackpad, by dragging with a mouse (snapping is off during the drag and back on release), by keyboard, or with the two round buttons beside the heading, which grey out at each end.
+   - **Entrance:** the cards arrive once, one after another, 90ms apart, rising and sharpening.
+   - **Playback:** a card animates only while it's on screen (`.feat[data-play]`; the keyframes are in `globals.css` under "Section 3").
+   - **The six pictures (`features/pictures.tsx`), CSS and SVG only:**
+     - Captions: Priya's Hindi and English words stream in, the line clears, the next streams in.
+     - 18 languages: each in its own script, rolling past a band and resting on each.
+     - Whiteboard: a hand-drawn sketch draws itself in Caveat (the only place the handwriting face appears), with Arjun's named cursor following the pen.
+     - Draw on what's shared: a coral pen circles the drop-off bar on Priya's chart and writes "the drop".
+     - Reactions: the app's pixel emoji float up, and "Arjun raised a hand" comes and goes.
+     - Mind map: after the notes page's own mind map, the meeting branches into sections and points, lines drawing and dots popping.
+   - **Replaced:** the earlier "One meeting, start to finish" tab section, which repeated section 2. The nav's "How it works" link became "Features".
 5. **Booking (`#booking`):** on a sunken band. A working booking-page preview:
    - It shows this month and next, and the visitor's real time zone.
    - Weekdays after today are open.

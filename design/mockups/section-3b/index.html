@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Morse section 3 layouts</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0}body{background:#0c0907;color:#f7efe8;font:400 17px/1.55 "IBM Plex Sans",sans-serif}
+main{max-width:1320px;margin:0 auto;padding:56px 24px 80px}h1{font-weight:300;font-size:44px;letter-spacing:-.02em}h2{font-weight:400;font-size:26px;margin-top:64px}
+p{color:#b3a194;max-width:780px;margin-top:6px}.frame{margin-top:20px;width:100%;aspect-ratio:1440/1100;border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgb(247 239 232/.08)}
+.frame iframe{width:1440px;height:1100px;border:0;transform-origin:0 0}</style></head>
+<body><main><h1>Section 3: everything else, four layouts</h1><p>These are live: every feature is animating. Scroll inside the frames for layouts 3 and 4.</p>
+<h2>1 · Index and stage</h2><p>The six features as a large-type index on the left; one big stage on the right plays the chosen feature. It moves to the next every seven seconds, or on hover.</p><div class="frame"><iframe src="s3b-1.html" loading="lazy"></iframe></div>
+<h2>2 · Constellation</h2><p>Six pieces scattered at different sizes on open canvas, all playing at once, captions under each.</p><div class="frame"><iframe src="s3b-2.html" loading="lazy"></iframe></div>
+<h2>3 · Filmstrip</h2><p>Tall cards in one row with wide gaps; drag or scroll sideways. Each plays when it comes into view.</p><div class="frame"><iframe src="s3b-3.html" loading="lazy"></iframe></div>
+<h2>4 · Stacked cards</h2><p>One feature per card, text beside the animation. Cards stick and stack on top of one another as you scroll.</p><div class="frame"><iframe src="s3b-4.html" loading="lazy"></iframe></div>
+</main><script>const fit=()=>document.querySelectorAll('.frame').forEach(f=>f.querySelector('iframe').style.transform=`scale(${f.clientWidth/1440})`);addEventListener('resize',fit);fit();</script></body></html>

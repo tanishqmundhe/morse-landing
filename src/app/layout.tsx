@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, IBM_Plex_Sans } from "next/font/google";
+import { Caveat, Geist_Mono, IBM_Plex_Sans } from "next/font/google";
 import { meta } from "@/content/site";
 import "./globals.css";
 
@@ -18,6 +18,14 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+// Handwriting, only for what people draw on the whiteboard and shared screens.
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-caveat",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
@@ -31,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${plex.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable}`}>
       <body>
         <a
           href="#main"

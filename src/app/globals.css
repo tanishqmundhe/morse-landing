@@ -7,6 +7,8 @@
  */
 :root {
   color-scheme: dark;
+  /* The page column, for rows that bleed to the right but start in line with it. */
+  --page: 1200px;
 
   --sunken: oklch(0.165 0.008 52);
   --canvas: oklch(0.142 0.008 55); /* #0C0907 */
@@ -114,6 +116,42 @@
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
   }
+}
+
+/* ── Section 3: the feature pictures ─────────────────────────────────────
+   Each loops on its own clock. A card that is off screen is paused
+   (.feat:not([data-play])). */
+.feat:not([data-play]) * {
+  animation-play-state: paused !important;
+}
+/* Captions: words stream in; the line clears; the next streams in. */
+@keyframes cap-word { 0% { opacity: 0; filter: blur(3px); } 3% { opacity: 1; filter: none; } 100% { opacity: 1; } }
+@keyframes cap-line { 0%, 46% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.cap-line { grid-area: 1 / 1; animation: cap-line 10s infinite both; }
+.cap-line > span { opacity: 0; animation: cap-word 10s infinite both; }
+/* Drawings: strokes drawn in (pathLength 1), words fade in, dots pop; the sheet fades before it loops. */
+@keyframes f-draw { 0% { stroke-dashoffset: 1; } 14%, 100% { stroke-dashoffset: 0; } }
+@keyframes f-sheet { 0%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes f-fade { 0% { opacity: 0; } 6%, 100% { opacity: 1; } }
+@keyframes f-pop { 0% { opacity: 0; transform: scale(0.4); } 6% { opacity: 1; transform: scale(1.08); } 9%, 100% { opacity: 1; transform: scale(1); } }
+.f-sheet { animation: f-sheet 10s infinite; }
+.f-ink { stroke-dasharray: 1; stroke-dashoffset: 1; animation: f-draw 10s infinite both; }
+.f-fade { opacity: 0; animation: f-fade 10s infinite both; }
+.f-pop { opacity: 0; transform-box: fill-box; transform-origin: center; animation: f-pop 10s infinite both; }
+/* Reactions float up the stage; a raised hand comes and goes. */
+@keyframes f-rise {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  12% { opacity: 1; transform: translate(6px, -40px) scale(1); }
+  50% { transform: translate(-8px, -150px); }
+  80% { opacity: 1; }
+  100% { transform: translate(4px, -260px); opacity: 0; }
+}
+.f-float { animation: f-rise 4.2s ease-out infinite; opacity: 0; }
+@keyframes f-hand { 0%, 20% { opacity: 0; transform: translateY(10px) scale(0.9); } 26%, 70% { opacity: 1; transform: none; } 76%, 100% { opacity: 0; transform: translateY(-6px); } }
+.f-hand { animation: f-hand 7s infinite; }
+
+@media (min-width: 96rem) {
+  :root { --page: 1360px; }
 }
 
 @layer base {

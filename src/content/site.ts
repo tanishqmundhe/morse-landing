@@ -22,7 +22,7 @@ export const nav = {
   // In page order, so the highlight moves one way as you scroll.
   links: [
     { label: "Product", href: "#product" },
-    { label: "How it works", href: "#how" },
+    { label: "Features", href: "#features" },
     { label: "Booking", href: "#booking" },
     { label: "Questions", href: "#questions" },
   ],
@@ -34,7 +34,7 @@ export const hero = {
   titleMuted: "Real progress.",
   lede: "Video calls that write the meeting down for you, answer questions from your notes while you talk, and book the next meeting before anyone hangs up.",
   primary: { label: "Open Morse", href: links.app },
-  secondary: { label: "See how it works", href: "#how" },
+  secondary: { label: "See how it works", href: "#product" },
   film: { src: "/films/signal-loop.mp4", poster: "/films/signal-poster.jpg" },
   /**
    * The card over the film plays one meeting through the three things Morse
@@ -151,51 +151,26 @@ export const showcase = {
   ] as { id: string; line: Piece[] | "statement" | null }[],
 };
 
-export type Stage = "before" | "during" | "after";
-
-export const how = {
-  eyebrow: "Before, during, after",
-  title: "One meeting,",
-  titleMuted: "start to finish.",
-  body: "Morse doesn’t stop when the call ends. It covers the booking before, the notes during and the follow-up after.",
-  defaultStage: "during" as Stage,
-  tabs: [
-    { stage: "before", title: "Let people pick the time", sub: "A booking page tied to your calendar." },
-    { stage: "during", title: "Stay in the conversation", sub: "Morse writes it down. No bot joins the call." },
-    { stage: "after", title: "Leave with notes, not homework", sub: "Summary, decisions and action items." },
-  ] as { stage: Stage; title: string; sub: string }[],
-  panels: {
-    before: {
-      label: "Booked",
-      title: "Product conversation",
-      meta: "30 min · Thursday · 11:30 am",
-      rows: [
-        { icon: "globe", text: "Shown in the guest’s own time zone" },
-        { icon: "calendar", text: "On your calendar, synced with Google" },
-        { icon: "video", text: "The Morse link goes out by email" },
-      ],
-    },
-    during: {
-      label: "Recording",
-      title: "Weekly product sync",
-      turns: [
-        { name: "Priya", time: "10:04", text: "Can we get the launch brief ready for Friday?" },
-        { name: "Jamie", time: "10:04", text: "Yes. I’ll pull the first draft together tomorrow." },
-        { name: "Priya", time: "10:05", text: "Great, and let’s keep the pricing page out of this round." },
-      ],
-      foot: "Transcribed as you talk, in English, Hindi and more.",
-    },
-    after: {
-      label: "Notes",
-      title: "Weekly product sync",
-      summary: "The team agreed to ship the launch brief on Friday and hold the pricing page until the next round.",
-      decisions: ["Launch brief ships Friday", "Pricing page waits for the next round"],
-      actions: [
-        { task: "Draft the launch brief", owner: "Jamie", due: "Fri" },
-        { task: "Share last quarter’s numbers", owner: "You", due: "Tomorrow" },
-      ],
-    },
-  },
+/**
+ * Section 3. The smaller things in a call, one looping picture each, in a row
+ * you drag or scroll sideways. Every claim is in the app: captions follow
+ * mixed languages; ten languages are automatic and eight more can be added;
+ * the whiteboard shows everyone's cursor; you can draw on a shared screen;
+ * reactions are the app's pixel emoji; the notes page draws a mind map.
+ */
+export const extras = {
+  title: "Everything else",
+  titleMuted: "you’d expect, done properly.",
+  body: "The small things that make a call feel easy, each one as considered as the big ones.",
+  items: [
+    { id: "captions", title: "Captions, in the languages you mix", body: "Hindi and English in one sentence? Morse follows along." },
+    { id: "languages", title: "18 languages", body: "Ten understood without a setting, eight more when you ask." },
+    { id: "whiteboard", title: "A whiteboard in the call", body: "Sketch it out together, with everyone’s cursor on the board." },
+    { id: "annotate", title: "Draw on what’s shared", body: "Circle the number that matters while you present." },
+    { id: "reactions", title: "Reactions and raised hands", body: "Pixel emoji float up the stage; hands wait their turn." },
+    { id: "mindmap", title: "Notes, drawn as a map", body: "Every meeting’s notes branch out, section by section." },
+  ],
+  languages: ["English", "हिन्दी", "Español", "Français", "Deutsch", "Русский", "Português", "日本語", "Italiano", "Nederlands", "मराठी", "தமிழ்", "తెలుగు", "বাংলা", "ಕನ್ನಡ", "ગુજરાતી", "ਪੰਜਾਬੀ", "اردو"],
 };
 
 export const booking = {
