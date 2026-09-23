@@ -225,28 +225,23 @@ export const quiet = {
   items: [
     {
       id: "bot",
-      title: "No bot joins your call.",
-      body: "Morse transcribes the meeting itself, so no extra attendee turns up in the room. Recording is visible to everyone while it runs.",
+      title: "No bot in the room",
+      body: "Morse transcribes the call itself, so no extra attendee turns up. Recording is visible to everyone while it runs.",
     },
     {
       id: "google",
-      title: "It keeps one calendar, not two.",
-      body: "You sign in with Google, and Morse writes meetings onto the calendar you already keep, in among everything else that is on it.",
+      title: "One calendar, not two",
+      body: "You sign in with Google, and meetings land on the calendar you already keep, in among everything else on it.",
     },
     {
       id: "api",
-      title: "Claude can use it as you.",
-      body: "Make a token in Settings, and a script or an AI agent can drive Morse over its own API: your meetings, notes, knowledge and booking. It acts as you, so it expires, and you can revoke it.",
+      title: "Claude can use it",
+      body: "A token in Settings lets a script or an AI agent drive Morse as you. It acts as you, so it expires and you can revoke it.",
     },
     {
       id: "counts",
-      // Rendered as "18 languages, 16 backgrounds, 11 note templates."
-      counts: [
-        { value: 18, label: "languages," },
-        { value: 16, label: "backgrounds," },
-        { value: 11, label: "note templates." },
-      ],
-      body: "Ten languages understood without a setting, eight more when you ask. Seven camera styles, and a template for each kind of meeting.",
+      title: "Eighteen languages",
+      body: "Ten without a setting, eight more when you ask, and sixteen backgrounds behind eleven note templates.",
     },
   ],
 };
