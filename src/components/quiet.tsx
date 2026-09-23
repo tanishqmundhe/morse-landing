@@ -77,7 +77,7 @@ export function Quiet() {
           {/* One block, cut into four by a hairline of the raised colour. */}
           {/* Square, and lined in `hairline` — `raised` is a surface colour and
               barely reads as a rule against the canvas. */}
-          <div className="mt-14 border border-hairline bg-hairline lg:mt-16">
+          <div className="mt-14 overflow-hidden rounded-[24px] border border-hairline bg-hairline lg:mt-16">
             <div className="grid gap-px lg:grid-cols-4">
               {quiet.items.map((item, i) => {
                 // This card's quarter of the run, 0 to 1.

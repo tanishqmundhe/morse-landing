@@ -75,7 +75,7 @@ export function Replaces() {
           <p className={`${LEAD} mt-6`}>{replaces.body}</p>
         </div>
 
-        <div className="mt-14 border border-hairline lg:mt-16">
+        <div className="mt-14 overflow-hidden rounded-[24px] border border-hairline lg:mt-16">
           {/* The strip runs; the list is longer than the column. */}
           <div className="overflow-hidden border-b border-hairline [mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)]">
             <div className="marquee flex w-max">
