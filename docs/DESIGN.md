@@ -52,10 +52,13 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 1. **Header (`site-header.tsx`):** fixed. It's clear over the film and turns into a solid pill (`bg-canvas/85`, `shadow-float`) once the film has scrolled away.
    - The logo sits on the left and Open Morse (sage) on the right.
    - Between them, a pill of four links in page order. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
-2a. **Instead of (`replaces.tsx`):** what Morse stands in for, in the arrangement aeye.framer.ai uses under its hero — a strip of equal cells over a full-bleed band with a line running through it. Measured off the live page: their band is 280 tall on `#F5F5F5`, set in mono at 32px with -0.06em tracking, over 2px diamonds on a 14px pitch.
-   - **Inverted onto the warm black.** The cells are the page's own ground with a hairline of `raised` between them, so six read as one block cut into six; the band is `raised` under the same dot field; the line is ink, not their blue.
-   - **The marquee carries the list** — the call, the notetaker, the scheduling link, the whiteboard, the captions, then One Morse with the mark. The track holds four copies and moves by exactly a quarter of its width, so the loop never jumps; there is no gap between copies, because a gap would break that sum. Measured: track 7918, copy 1980.
-   - **The marks are the tools' own trademarks** and comparative use is against most of their brand guidelines. `MARKS = false` in the component turns the strip back into plain names.
+2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page rather than read off a screenshot:
+   - **Their strip** is six cells of **200 × 132** inside the 1200 column, hairline divided, each logo centred and clipped. Ours is the same grid, inverted: cells on the page's own ground with a hairline of `raised` around and between them.
+   - **Their band** is **1200 × 280** on `#F5F5F5` over a fine dot field, with `· · ·  >` held at the left edge and `<  · · ·` at the right, and one line of mono between them at 32px / -0.06em in blue.
+   - **Neither of theirs moves.** Sampled the strip and the band over two seconds: no animation, no transform, nothing. The brackets only *suggest* a line running past.
+   - **Ours runs.** The brackets are what earns it — a line passing between two arrows is the one place a ticker belongs. The track holds four copies and moves by exactly a quarter of its width so the loop never jumps; a gap between copies would break that sum, so each phrase carries its own separator. Measured: track 7726, copy 1932.
+   - The line is ink, not their blue. Sage only marks the things you press.
+   - **The marks are the tools' own trademarks** and comparative use is against most of their brand guidelines. `MARKS = false` falls back to plain names.
    - Deliberately absent: the calendar (Morse syncs with Google Calendar rather than replacing it) and Excalidraw (which is what the whiteboard runs on).
 3. **Hero, option A "Film window" (`hero.tsx`):** the app's signal film (`public/films/signal-loop.mp4`) fills a window inset 14px, `rounded-[30px]`, one screen tall (max 940px). Scrims hold the lower-left dark for the copy; below `lg` a flat 55% canvas layer covers the whole film.
    - **Copy:** a two-line h1 in Plex 300 at 92px, the second line `ink-soft`; the lede; Open Morse (sage, with its arrow nudging on hover) and See how it works (`overlay`).

@@ -6,24 +6,54 @@ import { LogoMark } from "./logo";
 import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
 
 /**
- * What Morse stands in for, in the arrangement aeye.framer.ai uses under its
- * hero — a strip of equal cells over a full-bleed band with a line running
- * through it. Measured off the live page: their band is 280 tall on #F5F5F5,
- * set in mono at 32px with -0.06em tracking, over a field of 2px diamonds on
- * a 14px pitch.
+ * What Morse stands in for, built to the geometry of the band under
+ * aeye.framer.ai's hero — measured off the live page, not guessed:
  *
- * Ours is the same arrangement, inverted onto the warm black: the cells are
- * the page's own ground with a hairline of `raised` between them, the band is
- * `raised` under the same dot field, and the line is ink rather than their
- * blue, because sage only marks the things you press.
+ *   strip   six cells, 200 × 132, inside the 1200 column, hairline divided,
+ *           the logo centred and clipped
+ *   band    1200 × 280 on #F5F5F5 over a fine dot field, with `· · ·  >` held
+ *           at the left edge and `<  · · ·` at the right, and one line of mono
+ *           between them at 32px, -0.06em
  *
- * The marks are the tools' own trademarks. Comparative use is against most of
- * their brand guidelines, so `MARKS` turns the strip back into plain names.
+ * Theirs is static between those brackets. Ours runs: the brackets are what
+ * makes that read, since a line passing between two arrows is the one place a
+ * ticker belongs. The track holds four copies and moves by exactly a quarter
+ * of its width, so the loop never jumps — a gap between copies would break
+ * that sum, so each phrase carries its own separator instead.
+ *
+ * Inverted onto the warm black: cells are the page's ground with a hairline of
+ * `raised` around and between them, the band is `raised`, the line is ink
+ * rather than their blue, because sage only marks the things you press.
+ *
+ * The marks are the tools' own trademarks, and comparative use is against most
+ * of their brand guidelines. `MARKS = false` falls back to plain names.
  */
 const MARKS = true;
 
+function Brackets({ side }: { side: "left" | "right" }) {
+  const dots = (
+    <span aria-hidden="true" className="tracking-[0.32em] text-ink-faint/60">
+      ···
+    </span>
+  );
+  return (
+    <span className="flex shrink-0 items-center gap-5 font-mono text-[22px] text-ink-soft sm:text-[26px]">
+      {side === "left" ? (
+        <>
+          {dots}
+          <span aria-hidden="true">&gt;</span>
+        </>
+      ) : (
+        <>
+          <span aria-hidden="true">&lt;</span>
+          {dots}
+        </>
+      )}
+    </span>
+  );
+}
+
 export function Replaces() {
-  // Enough repeats that the track covers any width twice over.
   const run = [...replaces.ticker, replaces.one];
 
   return (
@@ -35,42 +65,45 @@ export function Replaces() {
           <p className={`${LEAD} mt-6`}>{replaces.body}</p>
         </div>
 
-        {/* Six equal cells, divided by a hairline of the raised colour. */}
-        <div className="mt-14 overflow-hidden rounded-[20px] bg-raised p-px lg:mt-16">
+        {/* Six cells, 200 × 132 at the column's width. */}
+        <div className="mt-14 overflow-hidden rounded-t-[20px] bg-raised p-px pb-0 lg:mt-16">
           <div className="grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-6">
             {BRANDS.map((brand) => (
-              <div key={brand.name} className="flex items-center justify-center gap-2.5 bg-canvas px-4 py-8 text-ink-faint">
+              <div key={brand.name} className="flex h-[108px] items-center justify-center gap-2.5 overflow-clip bg-canvas px-4 text-ink-faint lg:h-[132px]">
                 {MARKS && (
                   <svg viewBox="0 0 24 24" className="size-[22px] shrink-0" fill="currentColor" aria-hidden="true">
                     <path d={brand.path} />
                   </svg>
                 )}
-                <span className="text-[16px] whitespace-nowrap">{brand.name}</span>
+                <span className="truncate text-[16px]">{brand.name}</span>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* The band runs the full width of the window, as theirs does. */}
-      <div className="dots mt-2 overflow-hidden bg-raised py-14">
-        {/* No gap between the copies: the loop moves the track by exactly a
-              quarter of its width, so any gap there would make it jump. Each
-              word carries its own separator instead. */}
-          <div className="marquee flex w-max font-mono text-[26px] tracking-[-0.04em] whitespace-nowrap sm:text-[32px]">
-          {Array.from({ length: 4 }, (_, k) => (
-            <span key={k} className="flex" aria-hidden={k > 0}>
-              {run.map((word) => (
-                <span key={word} className={word === replaces.one ? "flex items-center gap-3 text-ink" : "text-ink-faint"}>
-                  {word === replaces.one && <LogoMark className="size-6 shrink-0" />}
-                  {word}
-                  <span aria-hidden="true" className="mx-10 text-ink-faint/40">
-                    ·
-                  </span>
+        {/* The band: brackets held at both edges, the line running between. */}
+        <div className="dots flex h-[220px] items-center gap-6 overflow-hidden rounded-b-[20px] bg-raised px-7 sm:gap-8 lg:h-[280px]">
+          <Brackets side="left" />
+
+          <div className="relative min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_5%,#000_95%,transparent)]">
+            <div className="marquee flex w-max font-mono text-[26px] tracking-[-0.04em] whitespace-nowrap sm:text-[32px]">
+              {Array.from({ length: 4 }, (_, k) => (
+                <span key={k} className="flex" aria-hidden={k > 0}>
+                  {run.map((word) => (
+                    <span key={word} className={word === replaces.one ? "flex items-center gap-3 text-ink" : "text-ink-soft"}>
+                      {word === replaces.one && <LogoMark className="size-6 shrink-0" />}
+                      {word}
+                      <span aria-hidden="true" className="mx-9 text-ink-faint/40">
+                        ·
+                      </span>
+                    </span>
+                  ))}
                 </span>
               ))}
-            </span>
-          ))}
+            </div>
+          </div>
+
+          <Brackets side="right" />
         </div>
       </div>
     </section>
