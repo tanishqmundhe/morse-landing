@@ -52,11 +52,10 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 1. **Header (`site-header.tsx`):** fixed. It's clear over the film and turns into a solid pill (`bg-canvas/85`, `shadow-float`) once the film has scrolled away.
    - The logo sits on the left and Open Morse (sage) on the right.
    - Between them, a pill of four links in page order. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
-2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page — cells of 200 × 132 inside the column, over a 280-tall dotted band with `· · ·  >` held at the left edge and `<  · · ·` at the right.
-   - **Theirs is six fixed cells and nothing moves at all** — sampled over two seconds: no animation, no transform. The brackets only suggest a line running past.
-   - **Ours scrolls the strip and holds the band still.** The list of tools is longer than a row and will grow; a marquee takes any number, a grid of six does not. The track is the list twice over and moves by exactly half its width, so the loop never jumps (measured: track 4400, copy 2200). Each cell carries its own right-hand rule rather than a grid gap, because a gap breaks that sum.
-   - Between the brackets, held still: the mark and "Five subscriptions → one meeting".
-   - **The marks are the tools' own trademarks** and comparative use is against most of their brand guidelines. `MARKS = false` in the component falls back to plain names. Not on the list: Google Calendar (Morse syncs with it rather than replacing it), Excalidraw (what the whiteboard runs on) and Notion (Knowledge is not a wiki).
+2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page — cells of 200 × 132 inside the column over a 280-tall dotted band, `· · ·  >` at the left edge and `<  · · ·` at the right. Theirs is six fixed cells and nothing moves; ours scrolls the strip and holds the band still, because the list is longer than a row and a marquee takes any number. Track is the list twice over, moving half its width, so the loop never jumps.
+   - **Seven categories, each checked against the app** before it went on the page: the video call, the notetaker, the recording library, the transcription service, the in-call assistant, the whiteboard and the booking link. Twenty-one tools.
+   - **Left off, and why** (`brand-marks.ts` carries the full note): voice recorders — the voice-note backend is real but the recording, transcription and summarising happen on a phone and there is no iOS client in this repo, so claiming it would be claiming someone else's app. Notion and Confluence — Knowledge feeds the in-call assistant, it is not a wiki. 1Password and Bitwarden — the vault replaces a password pasted into a chat, not a password manager. Google Calendar (Morse syncs with it) and Excalidraw (what the whiteboard runs on).
+   - **Marks are optional per tool.** simple-icons has none for the notetakers, Rev, Descript, Teams or SavvyCal — the names that carry the argument — so a cell reads with or without one. `MARKS = false` drops them all; comparative use is against most of these brand guidelines.
 3. **Hero, option A "Film window" (`hero.tsx`):** the app's signal film (`public/films/signal-loop.mp4`) fills a window inset 14px, `rounded-[30px]`, one screen tall (max 940px). Scrims hold the lower-left dark for the copy; below `lg` a flat 55% canvas layer covers the whole film.
    - **Copy:** a two-line h1 in Plex 300 at 92px, the second line `ink-soft`; the lede; Open Morse (sage, with its arrow nudging on hover) and See how it works (`overlay`).
    - **Entrance:** the page's one orchestrated moment. The film settles from 1.06×, the h1 lines, lede and buttons arrive at 350/500/700/850ms with a blur-to-sharp rise, and the card follows at 1150ms.
@@ -163,6 +162,17 @@ originals. The booking host has no company, and every address is
 `@onmorse.com`.
 
 ## Claims corrected against the app
+
+Checked on 2026-09-23 against `feat/neural-cal`, before writing the replaces
+list. What the code would not support:
+
+- **No Google Drive import.** `migrations/0030_knowledge_files.py` names `drive` as a source value and says "for milestone 3". No OAuth scope, no API call, no picker, no route, no button.
+- **No iOS app in this repo.** The voice-note backend is real; the client that records, transcribes and summarises is not here, and the plan to adopt it is marked DROPPED.
+- **Not "diarised".** Speaker identity comes from the authenticated per-participant track, not a diarizer. Say speaker-attributed — it's the better claim anyway.
+- **Not "writes to both calendars".** One event on the host's primary calendar; colleagues appear via Google attendees, external guests get an ICS email instead.
+- **Not `freeBusy`.** Availability reads the host's own calendar with `events.list`, by explicit decision.
+- **No round-robin, no team booking page.** Out of scope in plan 020.
+- **Voice-note export is Markdown and TXT**, not PDF.
 
 - **No Google Drive.** The showcase said Knowledge takes "files and Google Drive folders". `migrations/0030_knowledge_files.py` names `drive` as a source value but marks it "for milestone 3" — it isn't shipped. The line is now "whole documents dropped in and read", with the real upload types.
 - **Nothing "lives in your Google account".** Morse keeps notes, transcripts and recordings itself; what's true is Google-only sign-in and meetings written onto the calendar you already keep.

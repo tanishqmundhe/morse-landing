@@ -77,24 +77,18 @@ export const hero = {
 };
 
 /**
- * Between the hero and the product: the five things Morse stands in for.
- *
- * Tools are named in words, never by their logos: comparative use is against
- * most of their brand guidelines, and they are not ours to put on the page.
- * Every row is something the app genuinely does. Deliberately absent: the
- * calendar (Morse syncs with Google Calendar, it doesn't replace it) and
- * Excalidraw (which is what the whiteboard runs on). The last row names no
- * product: Interprefy and Wordly do conference interpretation, which Morse
- * does not. Translated captions are normally a paid add-on on the call tool
- * you already have, so that is what it says.
+ * Between the hero and the product: the seven jobs Morse does that are
+ * normally seven subscriptions. Every category was checked against the app
+ * before it went on the page — see the notes in `brand-marks.ts` for what was
+ * left off and why.
  */
 export const replaces = {
   eyebrow: "Instead of",
-  title: "Five subscriptions,",
+  title: "Seven subscriptions,",
   titleMuted: "one meeting.",
-  body: "The call, the notetaker, the scheduling link, the whiteboard and the captions are all the same meeting.",
+  body: "The call, the notes, the recording, the transcript, the assistant, the whiteboard and the booking link are all the same meeting.",
   /** Held between the brackets in the band, as the reference holds its line. */
-  line: "Five subscriptions → one meeting",
+  line: "Seven subscriptions → one meeting",
 };
 
 /**
