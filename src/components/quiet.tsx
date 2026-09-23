@@ -23,11 +23,23 @@ import { EASE, Eyebrow, H2, Heading, WRAP } from "./ui";
  *
  * The cards are the page's own ground with a hairline of `raised` between
  * them, so the four read as one block cut into four rather than four cards
- * floating apart. Lit in ink, not in their blue: sage still only marks the
- * things you press.
+ * floating apart.
+ *
+ * Each card lights in its own colour, from the five accents a person can pick
+ * in the app. The rail, the icon and the number take it; the words stay ink so
+ * they can still be read. An unlit card holds none of it — the colour is the
+ * reward for the rail arriving.
  */
 
 const ICONS = { bot: UserGroupIcon, google: Calendar03Icon, api: Key01Icon, counts: TranslateIcon };
+
+/**
+ * A colour per card, from the five accents a person can actually pick in
+ * Settings → Appearance. Sage is the one held back: it marks the things you
+ * press, everywhere else on the page, and spending it here would cost that.
+ * The rest run cool to warm across the four.
+ */
+const TINTS = { bot: "var(--accent-patina)", google: "var(--accent-dusk)", api: "var(--accent-indigo)", counts: "var(--accent-plum)" };
 
 /** How much scroll the rail takes to cross all four cards. */
 const TRAVEL = 1500;
@@ -85,12 +97,31 @@ export function Quiet() {
                 // Lit the moment the head crosses this card's left edge.
                 const on = `clamp(0, calc((var(--p, 0) - ${i / n}) * 1000), 1)`;
                 return (
-                  <article key={item.id} className="flex flex-col bg-canvas p-7" style={{ ["--f" as string]: f, ["--on" as string]: on }}>
-                    <p className="font-mono text-label text-ink-faint tabular-nums">{String(i + 1).padStart(3, "0")}</p>
+                  <article
+                    key={item.id}
+                    className="relative flex flex-col bg-canvas p-7"
+                    style={{ ["--f" as string]: f, ["--on" as string]: on, ["--tint" as string]: TINTS[item.id as keyof typeof TINTS] }}
+                  >
+                    {/* A wash of the card's colour, rising from its foot. */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background: "radial-gradient(120% 80% at 50% 118%, color-mix(in oklch, var(--tint) 20%, transparent), transparent 72%)",
+                        opacity: "var(--on)",
+                        transition: `opacity 620ms ${EASE}`,
+                      }}
+                    />
+                    <p
+                      className="relative font-mono text-label tabular-nums"
+                      style={{ color: "color-mix(in oklch, var(--tint) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
+                    >
+                      {String(i + 1).padStart(3, "0")}
+                    </p>
 
                     {/* Fixed, not a minimum: the four rails sit on one line. */}
                     <p
-                      className="mt-8 h-[52px] text-[16px]/[1.6] text-ink-soft"
+                      className="relative mt-8 h-[52px] text-[16px]/[1.6] text-ink-soft"
                       style={{
                         opacity: "var(--on)",
                         transform: "translateY(calc((1 - var(--on)) * 6px))",
@@ -104,27 +135,31 @@ export function Quiet() {
                         card's edges, with a square trailing 4px behind its
                         head — the reference's own arrangement. */}
                     <div className="dots relative -mx-7 mt-6 h-6 bg-overlay">
-                      <div className="absolute top-1/2 left-0 h-[7px] -translate-y-1/2 bg-ink" style={{ width: "calc(var(--f) * 100%)" }} />
+                      <div className="absolute top-1/2 left-0 h-[7px] -translate-y-1/2" style={{ width: "calc(var(--f) * 100%)", background: "var(--tint)" }} />
                       <div
-                        className="absolute top-1/2 size-[7px] -translate-y-1/2 bg-ink"
-                        style={{ left: "calc(var(--f) * 100% + 4px)", opacity: "calc(var(--on) * clamp(0, calc((1 - var(--f)) * 60), 1))" }}
+                        className="absolute top-1/2 size-[7px] -translate-y-1/2"
+                        style={{
+                          left: "calc(var(--f) * 100% + 4px)",
+                          background: "var(--tint)",
+                          opacity: "calc(var(--on) * clamp(0, calc((1 - var(--f)) * 60), 1))",
+                        }}
                       />
                     </div>
 
                     <p
-                      className="mt-6 text-[23px]/[1.2] font-light"
+                      className="relative mt-6 text-[23px]/[1.2] font-light"
                       style={{ color: "color-mix(in oklch, var(--ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                     >
                       {item.title}
                     </p>
 
-                    <div className="mt-auto flex justify-end pt-7">
+                    <div className="relative mt-auto flex justify-end pt-7">
                       <HugeiconsIcon
                         icon={ICONS[item.id as keyof typeof ICONS]}
                         className="size-12"
                         strokeWidth={1.1}
                         aria-hidden="true"
-                        style={{ color: "color-mix(in oklch, var(--ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
+                        style={{ color: "color-mix(in oklch, var(--tint) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                       />
                     </div>
                   </article>

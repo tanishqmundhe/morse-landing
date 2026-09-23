@@ -61,8 +61,8 @@ export function Reactions() {
   const emoji = ["red-heart", "party-popper", "thumbs-up", "fire", "clapping-hands", "face-with-tears-of-joy", "red-heart"];
   const left = [18, 34, 52, 66, 78, 42, 88];
   return (
-    <div className={STAGE} style={{ background: "url(/app/bg-tide.webp) center/cover" }}>
-      <Avatar colour="tide" size={104} centred />
+    <div className={STAGE} style={{ background: "url(/app/bg-lagoon.webp) center/cover" }}>
+      <Avatar colour="lagoon" size={104} centred />
       {emoji.map((e, i) => (
         // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs, no optimisation to gain
         <img key={i} src={`/emoji/${e}.svg`} alt="" className="f-float absolute -bottom-2.5 size-11" style={{ left: `${left[i]}%`, ...at(i * 0.62) }} />

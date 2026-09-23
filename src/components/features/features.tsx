@@ -138,7 +138,8 @@ export function Features() {
               }`}
               style={{ transitionDelay: arrived ? `${i * 90}ms` : "0ms" }}
             >
-              <div className="aspect-[19/25]">
+              {/* 19:22, not 19:25 — the taller crop left the pictures floating. */}
+              <div className="aspect-[19/22]">
                 <Picture />
               </div>
               <figcaption className="mt-6 pr-4">

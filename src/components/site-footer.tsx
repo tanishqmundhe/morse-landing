@@ -1,26 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ArrowUpRight01Icon,
-  Github01Icon,
-  InstagramIcon,
-  Linkedin01Icon,
-  NewTwitterIcon,
-  YoutubeIcon,
-} from "@hugeicons/core-free-icons";
+import { ArrowUpRight01Icon, InstagramIcon, Linkedin01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
 import { footer } from "@/content/site";
 import { Logo } from "./logo";
 import { UnifiedMachinesLogo } from "./unified-machines-logo";
 import { EASE, Icon, PRIMARY, UNDERLINE, WRAP } from "./ui";
 
-const SOCIAL = {
-  x: NewTwitterIcon,
-  linkedin: Linkedin01Icon,
-  instagram: InstagramIcon,
-  youtube: YoutubeIcon,
-  github: Github01Icon,
-};
+const SOCIAL = { x: NewTwitterIcon, linkedin: Linkedin01Icon, instagram: InstagramIcon };
 
 const CELL = "p-8 sm:p-10 lg:p-12";
 

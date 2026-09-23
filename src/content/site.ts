@@ -335,8 +335,6 @@ export const footer = {
       { label: "X", icon: "x", href: "#" },
       { label: "LinkedIn", icon: "linkedin", href: "#" },
       { label: "Instagram", icon: "instagram", href: "#" },
-      { label: "YouTube", icon: "youtube", href: "#" },
-      { label: "GitHub", icon: "github", href: "#" },
     ],
   },
   touch: {
