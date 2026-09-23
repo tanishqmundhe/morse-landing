@@ -3,8 +3,10 @@ import { LogoMark } from "@/components/logo";
 import { PRIMARY } from "@/components/ui";
 
 export default function NotFound() {
+  // `id="main"` is the layout's skip-link target; without it the link on
+  // this page led nowhere.
   return (
-    <main className="grid min-h-svh place-items-center px-5 text-center">
+    <main id="main" className="grid min-h-svh place-items-center px-5 text-center">
       <div>
         <LogoMark className="mx-auto size-10 text-ink-soft" title="" />
         <h1 className="mt-7 text-[38px]/[1.1] font-light tracking-[-0.025em] text-ink sm:text-[48px]/[1.06]">
