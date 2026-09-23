@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, Geist_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Devanagari } from "next/font/google";
 import { meta } from "@/content/site";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import "./globals.css";
 
 // The app's two registers (contract #3): Plex for what people say, mono for
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable} ${plexDeva.variable}`}>
       <body>
+        <SmoothScroll />
         <a
           href="#main"
           className="fixed top-3 left-4 z-50 -translate-y-[200%] rounded-full bg-action px-4 py-2 text-[15px] text-action-foreground focus:translate-y-0"

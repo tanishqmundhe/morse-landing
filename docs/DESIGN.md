@@ -108,6 +108,14 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 11. **Footer (`site-footer.tsx`):** the mark and one line on the left, three short columns beside it (the page, Morse, say hello), then a rule and the year with "A product by" and the Unified Machines lockup. It stacks on a phone.
 ## Motion
 
+- **Scrolling** is eased by Lenis (`smooth-scroll.tsx`), driven from GSAP's ticker so the
+  scroll and the card timelines settle in one frame. `lerp: 0.12` for the wheel; anchor links
+  use a fixed 1.1s instead, so a jump to the last section doesn't drag. Lenis eases the real
+  window scroll, so `position: sticky`, the pinned showcase, the header's scroll test and
+  find-in-page are untouched, and it reads each section's `scroll-mt-24` itself — all four nav
+  targets rest 120px from the top, exactly where native smooth scrolling put them.
+  `allowNestedScroll` leaves horizontal swipes over the features filmstrip to the browser.
+  Touch stays native (Lenis's default) and `respectReducedMotion` drops smoothing to 1:1.
 - **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).
 - **Films** pause while off screen and rest on their poster under reduced motion (`film.tsx`).
 - **Everything** respects `prefers-reduced-motion` (see the global rule in `globals.css`).

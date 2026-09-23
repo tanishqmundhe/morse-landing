@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Lenis's own housekeeping: see src/components/smooth-scroll.tsx. */
+@import "lenis/dist/lenis.css";
 
 /*
  * Morse's own dark palette, copied from the app (Neural-Arc/morse
@@ -170,7 +172,9 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Lenis eases anchors itself, and native smooth scrolling fights it.
+       scroll-padding stays for the browser's own focus and find scrolling. */
+    scroll-behavior: auto;
     scroll-padding-top: 24px;
     overflow-x: clip;
   }
