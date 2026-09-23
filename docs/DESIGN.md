@@ -52,7 +52,13 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 1. **Header (`site-header.tsx`):** fixed. It's clear over the film and turns into a solid pill (`bg-canvas/85`, `shadow-float`) once the film has scrolled away.
    - The logo sits on the left and Open Morse (sage) on the right.
    - Between them, a pill of four links in page order. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
-2. **Hero, option A "Film window" (`hero.tsx`):** the app's signal film (`public/films/signal-loop.mp4`) fills a window inset 14px, `rounded-[30px]`, one screen tall (max 940px). Scrims hold the lower-left dark for the copy; below `lg` a flat 55% canvas layer covers the whole film.
+2a. **Instead of (`replaces.tsx`):** between the hero and the product, five things you pay for separately collapsing into one. A staircase of five rows — each a step further out and a step dimmer — over one card squared up underneath.
+   - **Tools are named in words, never by their logos.** Comparative use is against most of their brand guidelines and they aren't ours to put on the page; the same call was made for Google's logos earlier.
+   - **The five are what the app genuinely does.** Not the calendar (Morse syncs with Google Calendar rather than replacing it) and not Excalidraw (which is what the whiteboard runs on). The last row names no product: Interprefy and Wordly do conference interpretation, which Morse doesn't — translated captions are normally a paid add-on on the call tool you already have.
+   - **Motion:** plays once on arrival and stays (`repeat: 0`). The rows have to be readable at rest, since they carry the information. Rows rise in 90ms apart, each to the opacity its depth gives it, the crosses pop after them, Morse lands last.
+   - On a phone the tools drop to their own line; side by side the names truncate.
+   - The other three layouts (A ledger, C struck through, D browser tabs) are in `design/mockups/section-replace/`.
+3. **Hero, option A "Film window" (`hero.tsx`):** the app's signal film (`public/films/signal-loop.mp4`) fills a window inset 14px, `rounded-[30px]`, one screen tall (max 940px). Scrims hold the lower-left dark for the copy; below `lg` a flat 55% canvas layer covers the whole film.
    - **Copy:** a two-line h1 in Plex 300 at 92px, the second line `ink-soft`; the lede; Open Morse (sage, with its arrow nudging on hover) and See how it works (`overlay`).
    - **Entrance:** the page's one orchestrated moment. The film settles from 1.06×, the h1 lines, lede and buttons arrive at 350/500/700/850ms with a blur-to-sharp rise, and the card follows at 1150ms.
    - **Live card (`live-card.tsx`, `lg` and up):** one meeting, with a coral pulse and a live Recording timer. It plays three scenes, 6.5s each, with words written in one at a time:
@@ -158,6 +164,19 @@ originals. The booking host has no company, and every address is
 - **No Google Drive.** The showcase said Knowledge takes "files and Google Drive folders". `migrations/0030_knowledge_files.py` names `drive` as a source value but marks it "for milestone 3" — it isn't shipped. The line is now "whole documents dropped in and read", with the real upload types.
 - **Nothing "lives in your Google account".** Morse keeps notes, transcripts and recordings itself; what's true is Google-only sign-in and meetings written onto the calendar you already keep.
 - **Tokens are not BYOK.** Morse issues *you* a token so a script or an AI agent can drive Morse as you (Settings → API tokens, `Authorization: Bearer mp_…`). There is no way to give Morse your own model key; the provider is server-side. The copy must not promise scopes or rate limits: a token is all-or-nothing and neither exists yet.
+
+## Copy
+
+Run against blader/humanizer's 25 patterns on 2026-09-23. What it caught and
+what changed is in the commit; what it did **not** catch is worth recording —
+no stock AI vocabulary anywhere, no staged run-ups, no forced triads, and only
+two em-dashes in the whole of the prose. Things to keep out when adding copy:
+closers that restate the sentence before them, "not X but Y" framings that
+correct nothing, sayings that dress an ordinary claim as a hidden truth, and
+em-dashes used as the universal connector.
+
+The hero and the closing lines were left alone. Both are two-fragment
+constructions the skill would flag, and both are brand lines the client chose.
 
 ## Copy rules
 
