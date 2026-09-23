@@ -130,9 +130,12 @@ export function BookingPage() {
     <section id="booking" className={`${WRAP} ${SECTION} scroll-mt-24 text-center`}>
       <Eyebrow className="mb-5">{booking.eyebrow}</Eyebrow>
       <Heading lead={booking.title} muted={booking.titleMuted} className={H2} />
-      <p className={`${LEAD} mx-auto mt-6 max-w-[620px]`}>{booking.body}</p>
-      <p className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-full bg-raised px-6 text-[17px] text-ink shadow-raised">
-        <Icon icon={Link01Icon} className="size-[18px] text-ink-faint" />
+      <p className={`${LEAD} mx-auto mt-6 max-w-[720px]`}>{booking.body}</p>
+      {/* What "one link" actually looks like — the reader sees the shape of
+          their own. Mono, because it's an exact string (contract #3), and not
+          a capsule: capsules are for things you press, and this isn't one. */}
+      <p className="mt-7 flex items-center justify-center gap-2 font-mono text-[15px] tracking-[0.01em] text-ink-faint">
+        <Icon icon={Link01Icon} className="size-4" />
         {booking.link}
       </p>
 

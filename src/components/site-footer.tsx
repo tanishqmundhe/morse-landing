@@ -1,7 +1,7 @@
 import { footer } from "@/content/site";
 import { Logo } from "./logo";
 import { UnifiedMachinesLogo } from "./unified-machines-logo";
-import { WRAP } from "./ui";
+import { UNDERLINE, WRAP } from "./ui";
 
 /**
  * The footer: the mark and a line on the left, three short columns beside it,
@@ -26,7 +26,7 @@ export function SiteFooter() {
               <ul className="mt-4 flex flex-col gap-2.5">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-[17px] text-ink-soft transition-colors hover:text-ink">
+                    <a href={link.href} className={`${UNDERLINE} text-[17px] text-ink-soft transition-colors duration-300 hover:text-ink`}>
                       {link.label}
                     </a>
                   </li>

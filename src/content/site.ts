@@ -160,8 +160,8 @@ export const showcase = {
  */
 export const extras = {
   eyebrow: "In the call",
-  title: "Everything else",
-  titleMuted: "you’d expect, done properly.",
+  title: "Everything you’d expect,",
+  titleMuted: "done properly.",
   body: "The small things that make a call feel easy, each one as considered as the big ones.",
   items: [
     { id: "captions", title: "Captions, translated as you speak", body: "Speak Hindi or Marathi; everyone in the call reads it in English." },
@@ -201,7 +201,7 @@ export const booking = {
   eyebrow: "Booking pages",
   title: "One link, and your",
   titleMuted: "calendar does the rest.",
-  body: "Share it once. People pick from the times you actually have free, in their own time zone, and the meeting lands on your week with a Morse link.",
+  body: "Share it once. People pick from the times you have free, in their own time zone, and it lands on your week with a Morse link.",
   link: "onmorse.com/priya",
   points: [
     "Meeting types from 15 to 90 minutes",

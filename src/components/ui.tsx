@@ -65,3 +65,17 @@ export function Heading({
 export const H2 = "text-[38px]/[1.1] sm:text-[48px]/[1.06] xl:text-[56px]/[1.05]";
 /** A section's opening line. Everything else on the page is 17px. */
 export const LEAD = "text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]";
+
+/**
+ * The page's unhurried curve: quick to leave, long to arrive. Everything that
+ * opens, lifts or draws itself in uses it, so the whole page settles the same
+ * way rather than each piece easing to its own taste.
+ */
+export const EASE = "cubic-bezier(0.22,1,0.36,1)";
+
+/**
+ * A line that draws itself under a link from the left, and retreats the way it
+ * came. On a text link rather than a button — buttons already answer a press.
+ */
+export const UNDERLINE =
+  "relative inline-block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 focus-visible:after:scale-x-100";

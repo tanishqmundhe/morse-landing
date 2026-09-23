@@ -95,12 +95,12 @@ export function Features() {
   return (
     <section id="features" className={`${SECTION} scroll-mt-24`} aria-label="Everything else">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:justify-between 2xl:max-w-[1360px]">
-        <div className="lg:max-w-[620px]">
+        <div className="lg:max-w-[700px]">
           <Eyebrow className="mb-5">{extras.eyebrow}</Eyebrow>
           <Heading lead={extras.title} muted={extras.titleMuted} className={H2} />
         </div>
         <div className="flex items-end gap-8">
-          <p className={`${LEAD} max-w-[400px]`}>{extras.body}</p>
+          <p className={`${LEAD} max-w-[340px]`}>{extras.body}</p>
           <div className="hidden shrink-0 gap-2 sm:flex">
             <button className={button} onClick={() => step(-1)} disabled={edges.start} aria-label="Previous">
               <Icon icon={ArrowLeft01Icon} className="size-5" />

@@ -3,59 +3,91 @@
 import { useId, useState } from "react";
 import { Add01Icon } from "@hugeicons/core-free-icons";
 import { faq } from "@/content/site";
-import { Eyebrow, H2, Heading, Icon, SECTION, WRAP } from "./ui";
+import { EASE, Eyebrow, H2, Heading, Icon, SECTION, UNDERLINE, WRAP } from "./ui";
 
 /**
- * Section 7: the questions, centred, to settle into the same rhythm as the
- * booking section above and the closing below. One answer is open at a time;
- * it opens by height (a 0fr → 1fr grid row, which animates smoothly whatever
- * the answer's length) while the plus turns into a cross.
+ * Section 7: the questions. One answer is open at a time, and the open row
+ * lifts onto its own raised panel rather than colouring itself in — depth here
+ * is luminance, never a tint (contract #5). Sage lands only on the control,
+ * which is the one thing you press.
+ *
+ * The opening is slow on purpose: a 0fr → 1fr grid row over 560ms on the
+ * page's own curve, so the answer unfolds rather than snapping open. Numbers
+ * run down the left so a long list still reads as a list.
  */
 export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   const id = useId();
 
   return (
-    <section id="questions" className={`${WRAP} ${SECTION} scroll-mt-24 text-center`}>
-      <Eyebrow className="mb-5">{faq.eyebrow}</Eyebrow>
-      <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
+    <section id="questions" className={`${WRAP} ${SECTION} scroll-mt-24`}>
+      <div className="text-center">
+        <Eyebrow className="mb-5">{faq.eyebrow}</Eyebrow>
+        <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
+      </div>
 
-      <div className="mx-auto mt-16 max-w-[860px] text-left">
+      <div className="mx-auto mt-16 max-w-[900px]">
         {faq.items.map((item, i) => {
           const on = open === i;
           return (
-            <div key={item.q} className={i ? "border-t border-hairline" : ""}>
-              <h3>
-                <button
-                  onClick={() => setOpen(on ? null : i)}
-                  aria-expanded={on}
-                  aria-controls={`${id}-${i}`}
-                  className="flex w-full items-center justify-between gap-10 py-7 text-left"
-                >
-                  <span className="text-[22px]/[1.3] text-ink sm:text-[25px]/[1.3]">{item.q}</span>
-                  <Icon
-                    icon={Add01Icon}
-                    className={`size-[22px] shrink-0 text-ink-soft transition-transform duration-300 ease-out ${on ? "rotate-45" : ""}`}
-                  />
-                </button>
-              </h3>
+            <div key={item.q} className="border-t border-hairline">
               <div
-                id={`${id}-${i}`}
-                role="region"
-                className={`grid transition-[grid-template-rows,opacity] duration-400 ease-out ${on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                className={`rounded-[20px] transition-[background-color,box-shadow] duration-500 ${on ? "bg-raised shadow-raised" : "bg-transparent"}`}
+                style={{ transitionTimingFunction: EASE }}
               >
-                <p className="overflow-hidden">
-                  <span className="block max-w-[66ch] pb-7 text-[17px]/[1.6] text-ink-soft sm:text-[18px]/[1.6]">{item.a}</span>
-                </p>
+                <h3>
+                  <button
+                    onClick={() => setOpen(on ? null : i)}
+                    aria-expanded={on}
+                    aria-controls={`${id}-${i}`}
+                    className="group flex w-full items-center gap-5 px-5 py-7 text-left sm:gap-8 sm:px-7"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`hidden w-9 shrink-0 font-mono text-label tabular-nums transition-colors duration-500 sm:block ${on ? "text-ink-soft" : "text-ink-faint"}`}
+                      style={{ transitionTimingFunction: EASE }}
+                    >
+                      {String(i + 1).padStart(3, "0")}
+                    </span>
+                    <span
+                      className={`flex-1 text-[22px]/[1.3] transition-colors duration-500 sm:text-[25px]/[1.3] ${on ? "text-ink" : "text-ink-soft group-hover:text-ink"}`}
+                      style={{ transitionTimingFunction: EASE }}
+                    >
+                      {item.q}
+                    </span>
+                    <span
+                      className={`grid size-10 shrink-0 place-items-center rounded-full transition-[background-color,color,transform] duration-500 ${
+                        on ? "bg-action text-action-foreground" : "bg-overlay text-ink-soft group-hover:bg-overlay-hover group-hover:text-ink"
+                      }`}
+                      style={{ transitionTimingFunction: EASE, transform: on ? "rotate(135deg)" : "rotate(0deg)" }}
+                    >
+                      <Icon icon={Add01Icon} className="size-[19px]" />
+                    </span>
+                  </button>
+                </h3>
+
+                <div
+                  id={`${id}-${i}`}
+                  role="region"
+                  className={`grid transition-[grid-template-rows,opacity] duration-[560ms] ${on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                  style={{ transitionTimingFunction: EASE }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="max-w-[72ch] px-5 pb-8 text-[17px]/[1.65] text-ink-soft sm:pr-16 sm:pl-[92px] sm:text-[18px]/[1.65]">
+                      {item.a}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           );
         })}
+        <div className="border-t border-hairline" />
       </div>
 
-      <p className="mt-12 text-[18px] text-ink-soft">
+      <p className="mt-12 text-center text-[18px] text-ink-soft">
         {faq.more}{" "}
-        <a href={`mailto:${faq.email}`} className="text-ink underline-offset-4 hover:underline">
+        <a href={`mailto:${faq.email}`} className={`${UNDERLINE} text-ink`}>
           {faq.email}
         </a>
       </p>

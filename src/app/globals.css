@@ -100,10 +100,6 @@
     from { opacity: 0; transform: translateY(3px); filter: blur(3px); }
     to { opacity: 1; transform: none; filter: none; }
   }
-  @keyframes fill {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
   @keyframes fade-out {
     to { opacity: 0; visibility: hidden; }
   }
@@ -125,6 +121,18 @@
   font-family: "Excalifont";
   src: url("/fonts/Excalifont-Latin.woff2") format("woff2");
   font-display: swap;
+}
+
+/*
+ * A bar filling over the length of a scene: the hero card's timeline and the
+ * showcase screens' progress. Both set it from JavaScript, because the
+ * duration is a constant in the component — so it has to live out here.
+ * Inside @theme, Tailwind drops any keyframes it can't see a utility for, and
+ * these two animations silently never run.
+ */
+@keyframes fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* Section 4: the booking film breathes rather than sitting still. */

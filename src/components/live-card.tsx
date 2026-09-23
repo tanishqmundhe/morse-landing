@@ -84,7 +84,9 @@ export function LiveCard({ className = "" }: { className?: string }) {
         </p>
       </div>
 
-      <div key={scene.id} className="mt-3.5 min-h-[152px]" aria-live="polite">
+      {/* Keyed, so each scene plays from its own first frame. The fade keeps
+          the handover soft instead of snapping one scene onto the next. */}
+      <div key={scene.id} className="mt-3.5 min-h-[152px] animate-rise" aria-live="polite">
         {scene.id === "notes" && (
           <>
             <Said speaker={notes.speaker} text={notes.text} />
