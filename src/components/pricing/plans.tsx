@@ -68,7 +68,7 @@ export function Plans() {
 
   return (
     <>
-      <div className="mt-10 flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
         <p className="text-[26px]/[1.2] font-light text-ink sm:text-[30px]/[1.18]">{billing.title}</p>
         <Toggle yearly={yearly} onChange={setYearly} />
       </div>

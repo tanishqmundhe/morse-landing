@@ -364,9 +364,9 @@ export const footer = {
 export const pricing = {
   eyebrow: "Pricing",
   title: "Pricing and plans.",
-  // The booking film, which appears nowhere else on this page. The closing
-  // band below already has ringed-meadow, and signal opens the home page.
-  film: { src: "/films/ascii-wood.mp4", poster: "/films/ascii-wood-poster.jpg" },
+  // Open sky, for a page about there being nothing hidden. It appears nowhere
+  // else: ringed-meadow closes this page, and signal opens the home one.
+  film: { src: "/films/clouds-loop.mp4", poster: "/films/clouds-poster.jpg" },
   lede: "Whether it is you and a calendar or a room that meets all week, the price is one number and the notes are always included.",
   billing: {
     title: "How you'd like to pay",

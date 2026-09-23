@@ -15,14 +15,13 @@ import { EASE, Eyebrow, H2, Heading, Icon, SECTION, UNDERLINE, WRAP } from "./ui
  * page's own curve, so the answer unfolds rather than snapping open. Numbers
  * run down the left so a long list still reads as a list.
  */
-export function Faq({ lead, className = SECTION }: { lead?: React.ReactNode; className?: string }) {
+export function Faq({ className = SECTION }: { className?: string }) {
   const [open, setOpen] = useState<number | null>(null);
   const id = useId();
 
   return (
     <section id="questions" className={`${WRAP} ${className} scroll-mt-24`}>
-      {lead}
-      <div className={`text-center ${lead ? "mt-10" : ""}`}>
+      <div className="text-center">
         <Eyebrow className="mb-5">{faq.eyebrow}</Eyebrow>
         <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
       </div>

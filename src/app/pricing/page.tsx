@@ -3,11 +3,10 @@ import { Closing } from "@/components/closing";
 import { Faq } from "@/components/faq";
 import { Film } from "@/components/film";
 import { Compare } from "@/components/pricing/compare";
-import { Marker } from "@/components/pricing/marker";
 import { Plans } from "@/components/pricing/plans";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { H2, Heading, LEAD, WRAP } from "@/components/ui";
+import { Eyebrow, H2, Heading, LEAD, WRAP } from "@/components/ui";
 import { pricing } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -26,8 +25,9 @@ const FIRST = "pt-28 lg:pt-40 2xl:pt-48";
 
 /**
  * The pricing page, laid out as aeye.framer.ai/pricing lays one out: a plain
- * title, numbered markers between the parts, three plans, then every line of
- * them side by side, then the questions and the way in.
+ * title, three plans, then every line of them side by side, then the questions
+ * and the way in. The numbered markers its version puts between the parts are
+ * not our register; each part opens with the page's own eyebrow instead.
  *
  * Every price on this page is a placeholder — see the note on `pricing` in
  * site.ts. What the plans list is real.
@@ -46,7 +46,7 @@ export default function Page() {
               stays bright to the right, and the header reads over the top. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.142_0.008_55/0.95)_0%,oklch(0.142_0.008_55/0.82)_38%,oklch(0.142_0.008_55/0.45)_66%,transparent_88%),linear-gradient(0deg,oklch(0.142_0.008_55/0.85)_0%,transparent_55%)]"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.142_0.008_55/0.96)_0%,oklch(0.142_0.008_55/0.9)_42%,oklch(0.142_0.008_55/0.52)_72%,transparent_94%),linear-gradient(0deg,oklch(0.142_0.008_55/0.88)_0%,transparent_58%)]"
           />
           <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-canvas/85 to-transparent" />
           {/* Narrow screens put the copy over the brightest part of the film. */}
@@ -59,25 +59,25 @@ export default function Page() {
         </section>
 
         <section className={`${WRAP} ${FIRST} ${PART}`}>
-          <Marker n={1} of={4} label="The plans" />
+          <Eyebrow className="mb-5">The plans</Eyebrow>
           <Plans />
         </section>
 
         <section className={`${WRAP} ${PART}`}>
-          <Marker n={2} of={4} label={pricing.compare.eyebrow} />
-          <Heading lead={pricing.compare.title} muted={pricing.compare.titleMuted} className={`${H2} mt-10`} />
+          <Eyebrow className="mb-5">{pricing.compare.eyebrow}</Eyebrow>
+          <Heading lead={pricing.compare.title} muted={pricing.compare.titleMuted} className={H2} />
           <Compare />
         </section>
 
         <section className={`${WRAP} ${PART}`}>
-          <Marker n={3} of={4} label={pricing.voices.eyebrow} />
-          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <Eyebrow className="mb-5">{pricing.voices.eyebrow}</Eyebrow>
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
             <Heading lead={pricing.voices.title} muted={pricing.voices.titleMuted} className={H2} />
             <p className={`${LEAD} lg:self-end`}>{pricing.voices.body}</p>
           </div>
         </section>
 
-        <Faq className={PART} lead={<Marker n={4} of={4} label="Questions" />} />
+        <Faq className={PART} />
 
         <Closing />
       </main>
