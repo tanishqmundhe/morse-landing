@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { nav } from "@/content/site";
 import { Logo } from "./logo";
@@ -11,32 +12,45 @@ import { Icon, PRIMARY } from "./ui";
  * takes the page colour so it reads over anything. The pill's highlight
  * follows the section on screen and slides between links.
  */
+/** "/#product" points at #product on the home page; "/pricing" is its own page. */
+const sectionOf = (href: string) => (href.startsWith("/#") ? href.slice(1) : null);
+
 export function SiteHeader() {
-  const [solid, setSolid] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const path = usePathname();
+  const onHome = path === "/";
+  // Away from the home page there is no film to stay clear of.
+  const [solid, setSolid] = useState(!onHome);
+  const [seen, setSeen] = useState<string | null>(null);
   const [mark, setMark] = useState<{ x: number; w: number } | null>(null);
   const [menu, setMenu] = useState(false);
   const links = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
     const onScroll = () => {
-      setSolid(window.scrollY > window.innerHeight * 0.75);
+      setSolid(!onHome || window.scrollY > window.innerHeight * 0.75);
       setMenu(false);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    // Off the home page there are no sections to watch; the route is the answer.
+    if (!onHome) return () => window.removeEventListener("scroll", onScroll);
+
     // A section is current while it crosses the band a third of the way down.
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(`#${e.target.id}`);
+        for (const e of entries) if (e.isIntersecting) setSeen(`/#${e.target.id}`);
       },
       { rootMargin: "-33% 0px -66% 0px" },
     );
-    const targets = nav.links.map((l) => document.querySelector(l.href)).filter(Boolean) as Element[];
+    const targets = nav.links
+      .map((l) => sectionOf(l.href))
+      .filter((s): s is string => s !== null)
+      .map((s) => document.querySelector(s))
+      .filter(Boolean) as Element[];
     targets.forEach((t) => io.observe(t));
     // Above the first section, nothing is current.
-    const top = new IntersectionObserver(([e]) => e.isIntersecting && setActive(null), { rootMargin: "0px 0px -60% 0px" });
+    const top = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(null), { rootMargin: "0px 0px -60% 0px" });
     const hero = document.querySelector("main > section");
     if (hero) top.observe(hero);
 
@@ -45,7 +59,11 @@ export function SiteHeader() {
       io.disconnect();
       top.disconnect();
     };
-  }, []);
+  }, [onHome, path]);
+
+  // On the home page the current link is whatever section you're looking at;
+  // anywhere else it's simply the page you're on.
+  const active = onHome ? seen : path;
 
   useLayoutEffect(() => {
     const el = active ? links.current[active] : null;
@@ -60,7 +78,7 @@ export function SiteHeader() {
       }`}
     >
       <div className="flex h-[68px] items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10">
-        <a href="#" aria-label="Morse, back to top" className="text-ink">
+        <a href={onHome ? "#" : "/"} aria-label={onHome ? "Morse, back to top" : "Morse, home"} className="text-ink">
           <Logo className="h-[26px] w-auto sm:h-[30px]" />
         </a>
 

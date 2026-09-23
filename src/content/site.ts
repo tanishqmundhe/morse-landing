@@ -21,10 +21,11 @@ export const meta = {
 export const nav = {
   // In page order, so the highlight moves one way as you scroll.
   links: [
-    { label: "Product", href: "#product" },
-    { label: "Features", href: "#features" },
-    { label: "Booking", href: "#booking" },
-    { label: "Questions", href: "#questions" },
+    { label: "Product", href: "/#product" },
+    { label: "Features", href: "/#features" },
+    { label: "Booking", href: "/#booking" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Questions", href: "/#questions" },
   ],
   cta: { label: "Open Morse", href: links.app },
 };
@@ -185,16 +186,37 @@ export const extras = {
  * ten automatic languages plus eight more, 16 backgrounds in four sets, seven
  * camera styles, eleven note templates.
  */
-export const numbers = {
-  eyebrow: "Counted",
-  title: "Small print, worth reading.",
+/**
+ * The band between the features and the booking page: the things Morse does
+ * without being watched. Every line here is checked against the app — no bot
+ * attendee, Google-only sign-in, and the counts from the settings screens.
+ */
+export const quiet = {
+  eyebrow: "The quiet part",
+  title: "Nothing you",
+  titleMuted: "have to watch.",
   items: [
-    { value: 18, label: "languages understood", note: "Ten without a setting, eight more when you ask" },
-    { value: 16, label: "backgrounds", note: "Cozy home, nature, stylized and fun" },
-    { value: 7, label: "camera styles", note: "Warm, Film, Mono and four more" },
-    { value: 11, label: "note templates", note: "Standup, 1:1, client meeting, retrospective…" },
+    {
+      id: "bot",
+      title: "No bot joins your call.",
+      body: "Morse transcribes the meeting itself, so no extra attendee turns up in the room. Recording is visible to everyone while it runs.",
+    },
+    {
+      id: "google",
+      title: "It lives in your Google account.",
+      body: "Google sign-in, your own calendar, your own Drive. Nothing is kept anywhere you can\u2019t reach it.",
+    },
+    {
+      id: "counts",
+      // Rendered as "18 languages, 16 backgrounds, 11 note templates."
+      counts: [
+        { value: 18, label: "languages," },
+        { value: 16, label: "backgrounds," },
+        { value: 11, label: "note templates." },
+      ],
+      body: "Ten languages understood without a setting, eight more when you ask. Seven camera styles, and a template for each kind of meeting.",
+    },
   ],
-  works: "Works with Google Calendar, Google Drive and Google sign-in.",
 };
 
 export const booking = {
@@ -276,22 +298,172 @@ export const closing = {
   cta: { label: "Open Morse", href: links.app },
 };
 
+/**
+ * The footer, arranged as a grid: a note and the mark on the left, the pages
+ * and the accounts to the right, and how to reach us underneath them.
+ *
+ * TODO before launch \u2014 the five social accounts are placeholders and point
+ * nowhere; swap in the real handles or drop the ones that don\u2019t exist. The
+ * sign-up form has no list behind it and opens a mail draft instead.
+ */
 export const footer = {
+  loop: {
+    title: "Stay in the loop.",
+    body: "Release notes and the odd thing we learned about meetings. No more than once a month.",
+    placeholder: "Your email",
+    action: "Join",
+    // Until there is a list, the form writes the mail for you.
+    mailto: "hello@neuralarc.ai",
+    subject: "Add me to the Morse list",
+  },
+  pages: {
+    title: "Pages",
+    links: [
+      { label: "Product", href: "/#product" },
+      { label: "Features", href: "/#features" },
+      { label: "Booking", href: "/#booking" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Questions", href: "/#questions" },
+      { label: "Open Morse", href: links.app },
+      { label: "Booking page", href: links.app },
+    ],
+  },
+  social: {
+    title: "Follow us",
+    // Placeholders. Real handles needed before this goes anywhere.
+    links: [
+      { label: "X", icon: "x", href: "#" },
+      { label: "LinkedIn", icon: "linkedin", href: "#" },
+      { label: "Instagram", icon: "instagram", href: "#" },
+      { label: "YouTube", icon: "youtube", href: "#" },
+      { label: "GitHub", icon: "github", href: "#" },
+    ],
+  },
+  touch: {
+    title: "Get in touch",
+    body: "Questions about Morse, or about working with us.",
+    email: "hello@neuralarc.ai",
+  },
   line: "Video meetings that write themselves down.",
-  columns: [
-    { title: "The page", links: nav.links },
-    {
-      title: "Morse",
-      links: [
-        { label: "Open Morse", href: links.app },
-        { label: "Booking page", href: links.app },
-      ],
-    },
-    {
-      title: "Say hello",
-      links: [{ label: "hello@neuralarc.ai", href: "mailto:hello@neuralarc.ai" }],
-    },
+  legal: [
+    { label: "Privacy", href: "#" },
+    { label: "Terms", href: "#" },
   ],
   maker: "A product by",
 };
 
+/**
+ * The pricing page. Layout follows aeye.framer.ai/pricing; the words are ours.
+ *
+ * TODO before launch — every price, limit and plan name here is invented.
+ * Morse has no published pricing yet. What each plan *lists* is real: every
+ * line is a feature the app ships, so the page can be shown without claiming
+ * anything the product can't do. Replace the numbers, not the features.
+ * The quotes in `voices` are placeholders and say so.
+ */
+export const pricing = {
+  eyebrow: "Pricing",
+  title: "Pricing and plans.",
+  lede: "Whether it is you and a calendar or a room that meets all week, the price is one number and the notes are always included.",
+  billing: {
+    title: "How you'd like to pay",
+    monthly: "Monthly",
+    yearly: "Yearly",
+    save: "Save 20%",
+    per: "/month",
+    note: "Billed yearly",
+  },
+  plans: [
+    {
+      id: "solo",
+      name: "Solo",
+      tagline: "For one calendar and the meetings on it.",
+      price: { monthly: 0, yearly: 0 },
+      cta: "Start free",
+      includesLead: "Includes:",
+      includes: ["Meetings with notes and action items", "One booking page", "Google Calendar and Drive", "Ten languages, understood without a setting"],
+    },
+    {
+      id: "pro",
+      name: "Pro",
+      tagline: "For people whose week is mostly meetings.",
+      popular: "Most chosen",
+      price: { monthly: 12, yearly: 10 },
+      cta: "Start free trial",
+      includesLead: "Everything in Solo, plus:",
+      includes: [
+        "Teleprompter: answers from your notes, mid-call",
+        "Follow-ups booked from the call, with your approval",
+        "All eighteen languages and live translation",
+        "Every note template, and the whiteboard",
+      ],
+    },
+    {
+      id: "studio",
+      name: "Studio",
+      tagline: "For a team that lives in the same calendar.",
+      price: { monthly: 24, yearly: 20 },
+      cta: "Start free trial",
+      includesLead: "Everything in Pro, plus:",
+      includes: [
+        "Shared Knowledge, across everyone's meetings",
+        "Mind maps from a whole month of notes",
+        "All sixteen backgrounds and seven camera styles",
+        "Priority support",
+      ],
+    },
+  ],
+  compare: {
+    eyebrow: "Compare plans",
+    title: "Every line,",
+    titleMuted: "side by side.",
+    groups: [
+      {
+        title: "In the meeting",
+        note: "What happens while you are talking.",
+        rows: [
+          { label: "Notes and action items", values: ["Yes", "Yes", "Yes"] },
+          { label: "Teleprompter, answering from your notes", values: ["—", "Yes", "Yes"] },
+          { label: "Live captions, translated", values: ["—", "Yes", "Yes"] },
+          { label: "Whiteboard and annotation", values: ["—", "Yes", "Yes"] },
+        ],
+      },
+      {
+        title: "Afterwards",
+        note: "What the meeting leaves behind.",
+        rows: [
+          { label: "Summary, decisions and owners", values: ["Yes", "Yes", "Yes"] },
+          { label: "Note templates", values: ["Standup and 1:1", "All eleven", "All eleven"] },
+          { label: "Recording and transcript kept", values: ["30 days", "12 months", "No limit"] },
+          { label: "Knowledge, searched across meetings", values: ["Your own", "Your own", "Shared"] },
+        ],
+      },
+      {
+        title: "Booking",
+        note: "How other people get on your calendar.",
+        rows: [
+          { label: "Booking pages", values: ["One", "Unlimited", "Unlimited"] },
+          { label: "Meeting lengths", values: ["30 min", "15 to 90 min", "15 to 90 min"] },
+          { label: "Your hours and your holidays", values: ["—", "Yes", "Yes"] },
+          { label: "Ten minutes to undo", values: ["Yes", "Yes", "Yes"] },
+        ],
+      },
+      {
+        title: "The room",
+        note: "How the call looks and sounds.",
+        rows: [
+          { label: "Languages understood", values: ["Ten", "Eighteen", "Eighteen"] },
+          { label: "Backgrounds", values: ["Four", "Sixteen", "Sixteen"] },
+          { label: "Camera styles", values: ["—", "Seven", "Seven"] },
+          { label: "Reactions and raised hands", values: ["Yes", "Yes", "Yes"] },
+        ],
+      },
+    ],
+  },
+  voices: {
+    eyebrow: "Voices",
+    title: "Nobody has said",
+    titleMuted: "anything yet.",
+    body: "This is where the first people to use Morse will go. Nothing here is a real quote — we would rather leave the space empty than fill it with someone who doesn't exist.",
+  },
+};

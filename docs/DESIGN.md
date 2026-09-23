@@ -87,9 +87,11 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
      - **18 languages:** each in its own script, rolling past a band and resting on each.
      - **Mind map:** after the notes page's own mind map. All three branches set off together, a beat apart, each growing its points.
    - **Replaced:** the earlier "One meeting, start to finish" tab section, which repeated section 2. The nav's "How it works" link became "Features".
-5. **Counted (`numbers.tsx`):** a quiet band between the features and the booking page. Four figures — 18 languages, 16 backgrounds, 7 camera styles, 11 note templates — each over a hairline, counting up once when the band arrives and then left alone (`useLoop`'s `repeat: 0`). Beside the heading, one line: what Morse works with (Google Calendar, Drive and sign-in), in words rather than borrowed logos.
+5. **The quiet part (`quiet.tsx`):** a band between the features and the booking page, about what Morse does while nobody watches it: no bot joins the call, it lives in your own Google account, and the counts (18 languages, 16 backgrounds, 11 note templates). Three facts over hairlines, beside a two-line heading.
+   - The only motion is the three figures in the last line, counting up once on arrival and then left alone (`useLoop`'s `repeat: 0`) — a section about things you don't have to watch shouldn't keep moving.
+   - **Replaced** the earlier "Counted" band: four counters over hairlines was a stats strip pretending to be a section, and the page still never said what using Morse is shaped like.
 6. **Booking (`#booking`, `booking-page.tsx`):** section 4, the booking page as the app draws one (`booking/booking-shell.tsx`), framed centred.
-   - **Above:** "One link, and your calendar does the rest.", one line under it, and the page's own link as a quiet chip (`onmorse.com/priya`). Nothing else sits above the cards — no second host header.
+   - **Above:** "One link, and your calendar does the rest.", one line under it (two lines at every width), and the page's own link in mono (`onmorse.com/priya`) — the reader sees the shape of their own. It was a capsule, which read as a button it isn't; capsules are for pressing. Nothing else sits above the cards — no second host header.
    - **The cards:** two near-square cards (9:10 from `lg`), the app's `ascii-wood` film looping in one (inset 8px, the card's corners, drifting 1 → 1.045 over 18s so it breathes) and the form in the other.
    - **Below:** the three points in one quiet row.
    - **The form plays itself,** each step pushing the last one out sideways as `booking-flow.tsx` does: a day, the times in the guest's zone, name and email, booked.
@@ -99,15 +101,35 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.
 7. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
-9. **Questions (`#questions`, `faq.tsx`):** section 7, centred, so the end of the page keeps the booking section's rhythm.
-   - "A few things you might be wondering." over a 860px column of questions at 25px, hairlines between them.
-   - One answer is open at a time. It opens by height (a `0fr → 1fr` grid row, which eases smoothly whatever the answer's length) while the plus turns into a cross.
+9. **Questions (`#questions`, `faq.tsx`):** section 7. The heading is centred, so the end of the page keeps the booking section's rhythm; the list is not.
+   - "A few things you might be wondering." over a 900px column of questions at 25px, numbered `001`… in mono down the left, hairlines between them.
+   - One answer is open at a time. The open row lifts onto a raised panel with a dot field over it (`.dots`) and **square** corners — it reads as a sheet pulled out of the list, not a rounded card. Depth is luminance; sage lands only on the control, which is the one thing you press.
+   - It opens by height (a `0fr → 1fr` grid row, which eases smoothly whatever the answer's length) over 560ms on the page's curve, while the plus turns 135° into a cross. The answer's left edge lines up with the question's: 96px, being the row's 28px padding, the 36px number and the 32px gap.
+   - `lead` and `className` let the pricing page reuse it under its own marker.
    - Each question is a real button carrying `aria-expanded` and `aria-controls`, so it works from the keyboard and reads correctly aloud.
    - "Still wondering?" and a mail link close the section. The address is the one Morse's own mail comes from; confirm it before launch.
 10. **Closing (`closing.tsx`):** section 8. The app's ringed-meadow film fills a band inset 14px, `rounded-[30px]`, at least 620px tall from `lg` — the page opens on a film and closes on one. Over it, centred: the mark as a sign-off, the two-tone line ("Less meeting admin. / More meeting of minds.") and Open Morse, its arrow nudging on hover. A top-to-bottom scrim keeps the words at AA over the film.
-11. **Footer (`site-footer.tsx`):** the mark and one line on the left, three short columns beside it (the page, Morse, say hello), then a rule and the year with "A product by" and the Unified Machines lockup. It stacks on a phone.
+11. **Footer (`site-footer.tsx`):** a grid, after the arrangement on aeye.framer.ai — a note and the mark on the left, the pages and the accounts beside them, and how to reach us underneath. Cells are divided by the page's hairline, not a drawn rule, so the arrangement reads without the grid shouting.
+   - **The mark** runs the full width of its cell, which puts its left edge on the same line as the note and the form above it. It's sized by the column rather than by eye, which is what was wrong before.
+   - **Stay in the loop:** an email field and a sage Join capsule. There is no list behind it yet, so rather than swallow the address and say nothing it writes the mail for you and lets you send it.
+   - **Follow us:** each account is an icon, a dashed leader line, the name and an arrow that lifts up and right on hover.
+   - **Every link** draws a line in from the left on hover and lets it retreat the way it came (`UNDERLINE`, on the shared curve).
+   - Under it all: the year, Privacy and Terms, and "A product by" with the Unified Machines lockup.
+
+## Pricing (`/pricing`)
+
+Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Every price, limit and plan name is invented** — Morse has no published pricing. What each plan *lists* is real, so the page can be shown without claiming anything the app can't do. Replace the numbers, not the features.
+
+- **Title** over the same dot field the open question uses, closed by a hairline.
+- **Markers (`pricing/marker.tsx`):** `N.01/04 — THE PLANS ————` between the parts. Mono and ink-faint: signposting, not a heading.
+- **Plans (`pricing/plans.tsx`):** monthly/yearly, the highlight sliding between them as the nav's does. Three cards; the chosen one is lifted by luminance (`bg-float`) rather than outlined, and takes the sage button. Pennies are set back so the number reads first; £0 reads "Free".
+- **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
+- **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
+- **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
 ## Motion
 
+- **One curve.** `EASE` in `ui.tsx` (`cubic-bezier(0.22, 1, 0.36, 1)` — quick to leave, long to arrive) is used by everything that opens, lifts, slides or draws itself in, so the whole page settles the same way instead of each piece easing to its own taste.
+- **Links** draw a line in from the left on hover and let it retreat the way it came (`UNDERLINE`). Buttons don't: a capsule already answers a press.
 - **Scrolling** is eased by Lenis (`smooth-scroll.tsx`), driven from GSAP's ticker so the
   scroll and the card timelines settle in one frame. `lerp: 0.12` for the wheel; anchor links
   use a fixed 1.1s instead, so a jump to the last section doesn't drag. Lenis eases the real
@@ -119,6 +141,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 - **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).
 - **Films** pause while off screen and rest on their poster under reduced motion (`film.tsx`).
 - **Everything** respects `prefers-reduced-motion` (see the global rule in `globals.css`).
+- **Keyframes set from JavaScript must live outside `@theme`.** Tailwind drops any keyframes in that block it can't see a utility for, so `@keyframes fill` — used by the hero card's timeline and the showcase's progress bar, both from JS — was tree-shaken and neither animation ever ran. It now sits in plain CSS with `film-drift` and `.dots`.
 
 ## Copy rules
 
@@ -129,6 +152,10 @@ All copy lives in `src/content/site.ts` and uses the app's own words: "Notes", "
 - **Who can sign up?** Sign-in is Google only and currently limited to `@neuralarc.ai`. The CTA opens `https://onmorse.com` (`links.app`). Change it once public access or a waitlist exists.
 - **Hero image:** the crop shows a real person's name and title ("Aniket, CEO, Neural Arc"). Replace it with a demo-data capture before launch if that isn't wanted.
 - **No OG image or canonical URL yet.** Both depend on the landing page's final domain.
+- **Social accounts.** The five in the footer are placeholders pointing nowhere. Swap in the real handles, or drop the ones that don't exist.
+- **The mailing list.** "Stay in the loop" has nothing behind it; the form opens a mail draft to `hello@neuralarc.ai`. Wire it to a list, or keep the draft.
+- **Privacy and Terms** are linked from the footer and don't exist yet.
+- **Pricing is invented.** Every price, limit and plan name on `/pricing` is a placeholder. The features each plan lists are real.
 
 ## History
 

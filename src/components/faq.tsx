@@ -15,13 +15,14 @@ import { EASE, Eyebrow, H2, Heading, Icon, SECTION, UNDERLINE, WRAP } from "./ui
  * page's own curve, so the answer unfolds rather than snapping open. Numbers
  * run down the left so a long list still reads as a list.
  */
-export function Faq() {
+export function Faq({ lead, className = SECTION }: { lead?: React.ReactNode; className?: string }) {
   const [open, setOpen] = useState<number | null>(null);
   const id = useId();
 
   return (
-    <section id="questions" className={`${WRAP} ${SECTION} scroll-mt-24`}>
-      <div className="text-center">
+    <section id="questions" className={`${WRAP} ${className} scroll-mt-24`}>
+      {lead}
+      <div className={`text-center ${lead ? "mt-10" : ""}`}>
         <Eyebrow className="mb-5">{faq.eyebrow}</Eyebrow>
         <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
       </div>
@@ -32,7 +33,7 @@ export function Faq() {
           return (
             <div key={item.q} className="border-t border-hairline">
               <div
-                className={`rounded-[20px] transition-[background-color,box-shadow] duration-500 ${on ? "bg-raised shadow-raised" : "bg-transparent"}`}
+                className={`transition-[background-color,box-shadow] duration-500 ${on ? "dots bg-raised shadow-raised" : "bg-transparent"}`}
                 style={{ transitionTimingFunction: EASE }}
               >
                 <h3>
@@ -73,7 +74,9 @@ export function Faq() {
                   style={{ transitionTimingFunction: EASE }}
                 >
                   <div className="overflow-hidden">
-                    <p className="max-w-[72ch] px-5 pb-8 text-[17px]/[1.65] text-ink-soft sm:pr-16 sm:pl-[92px] sm:text-[18px]/[1.65]">
+                    {/* 96px lines the answer up with the question: the row's
+                        28px padding, the 36px number, and the 32px gap. */}
+                    <p className="max-w-[72ch] px-5 pb-8 text-[17px]/[1.65] text-ink-soft sm:pr-16 sm:pl-[96px] sm:text-[18px]/[1.65]">
                       {item.a}
                     </p>
                   </div>

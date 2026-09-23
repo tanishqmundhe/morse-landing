@@ -135,6 +135,17 @@
   to { transform: scaleX(1); }
 }
 
+/*
+ * A dot grid, for a panel that should read as a drawing surface rather than a
+ * plain card — the open question, where it marks the one row you're reading.
+ * Faint enough to be texture, not pattern.
+ */
+.dots {
+  background-image: radial-gradient(oklch(0.956 0.013 64 / 0.075) 1px, transparent 1px);
+  background-size: 13px 13px;
+  background-position: 0 0;
+}
+
 /* Section 4: the booking film breathes rather than sitting still. */
 @keyframes film-drift {
   0%, 100% { transform: scale(1); }
