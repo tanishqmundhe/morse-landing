@@ -11,8 +11,12 @@ import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
  *
  *   strip   cells of 200 × 132 inside the 1200 column, hairline divided,
  *           each logo centred and clipped
- *   band    1200 × 280 over a fine dot field, `· · ·  >` held at the left edge
- *           and `<  · · ·` at the right, one line of mono between them
+ *   band    a dot field with `· · ·  >` held at the left edge and `<  · · ·`
+ *           at the right, one line of mono between them
+ *
+ * Theirs is 280 tall at 1200 wide. Ours is shorter, and stays shorter as the
+ * screen grows: the line is one row, and a taller band on a wide panel is just
+ * a bigger empty rectangle with the same sentence floating in it.
  *
  * Theirs is six fixed cells and nothing moves. Ours scrolls the strip instead,
  * because the list of tools is longer than a row and will grow: a marquee
@@ -97,7 +101,7 @@ export function Replaces() {
           </div>
 
           {/* The band holds still: the brackets are the frame. */}
-          <div className="dots flex h-[200px] items-center justify-between gap-6 px-6 sm:px-8 lg:h-[260px] 3xl:h-[300px]">
+          <div className="dots flex h-[132px] items-center justify-between gap-6 px-6 sm:px-8 lg:h-[164px] 3xl:h-[180px]">
             <Brackets side="left" />
             <p className="flex min-w-0 items-center gap-4 truncate font-mono text-[20px] tracking-[-0.04em] text-ink sm:text-[26px] lg:text-[30px] 3xl:text-[34px]">
               <LogoMark className="size-6 shrink-0 lg:size-7" />
