@@ -15,7 +15,7 @@ export const links = {
 export const meta = {
   title: "Morse — Video meetings that take their own notes",
   description:
-    "Video meetings with notes, action items and a teleprompter that answers from your notes, plus booking pages and a calendar synced with Google. One workspace, by Unified Machines.",
+    "Video meetings that take their own notes and action items, answer questions from your notes while you talk, and book the follow-up before anyone hangs up. Booking pages and a Google-synced calendar included.",
 };
 
 export const nav = {
@@ -163,7 +163,7 @@ export const extras = {
   eyebrow: "In the call",
   title: "Everything you’d expect,",
   titleMuted: "done properly.",
-  body: "The small things that make a call feel easy, each one as considered as the big ones.",
+  body: "Six more things Morse does while the call is running.",
   items: [
     { id: "captions", title: "Captions, translated as you speak", body: "Speak Hindi or Marathi; everyone in the call reads it in English." },
     { id: "languages", title: "18 languages", body: "Ten understood without a setting, eight more when you ask." },
@@ -204,12 +204,12 @@ export const quiet = {
     {
       id: "google",
       title: "It keeps one calendar, not two.",
-      body: "You sign in with Google, and Morse writes meetings onto the calendar you already keep. No second calendar to check, and nothing to move across.",
+      body: "You sign in with Google, and Morse writes meetings onto the calendar you already keep, in among everything else that is on it.",
     },
     {
       id: "api",
       title: "Claude can use it as you.",
-      body: "Make a token in Settings and a script \u2014 or an AI agent \u2014 drives Morse over its own API: your meetings, notes, knowledge and booking. It acts as you, so it expires, and you can revoke it.",
+      body: "Make a token in Settings, and a script or an AI agent can drive Morse over its own API: your meetings, notes, knowledge and booking. It acts as you, so it expires, and you can revoke it.",
     },
     {
       id: "counts",
@@ -314,8 +314,8 @@ export const closing = {
  */
 export const footer = {
   loop: {
-    title: "Stay in the loop.",
-    body: "Release notes and the odd thing we learned about meetings. No more than once a month.",
+    title: "Once a month, at most.",
+    body: "Release notes, and the odd thing we learned about meetings.",
     placeholder: "Your email",
     action: "Join",
     // Until there is a list, the form writes the mail for you.
@@ -373,7 +373,7 @@ export const pricing = {
   // Open sky, for a page about there being nothing hidden. It appears nowhere
   // else: ringed-meadow closes this page, and signal opens the home one.
   film: { src: "/films/clouds-loop.mp4", poster: "/films/clouds-poster.jpg" },
-  lede: "Whether it is you and a calendar or a room that meets all week, the price is one number and the notes are always included.",
+  lede: "One price a month, per person. Notes, action items and a booking page are in every plan, including the free one.",
   billing: {
     title: "How you'd like to pay",
     monthly: "Monthly",
@@ -473,6 +473,6 @@ export const pricing = {
     eyebrow: "Voices",
     title: "Nobody has said",
     titleMuted: "anything yet.",
-    body: "This is where the first people to use Morse will go. Nothing here is a real quote — we would rather leave the space empty than fill it with someone who doesn't exist.",
+    body: "The first people to use Morse will go here. We would rather leave the space empty than fill it with quotes from people who don't exist.",
   },
 };
