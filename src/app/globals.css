@@ -147,12 +147,12 @@
 }
 
 /*
- * The ticker under the hero. The track holds four copies of the line, so
- * moving it a quarter of its width lands exactly on the next copy and the
- * loop is seamless. Paused for anyone who asked for less motion.
+ * The strip under the hero. The track is the list twice over, so moving it
+ * half its width lands exactly on the second copy and the loop is seamless.
+ * Paused for anyone who asked for less motion.
  */
-@keyframes marquee { to { transform: translateX(-25%); } }
-.marquee { animation: marquee 38s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { animation: marquee 46s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
 
 /* Section 4: the booking film breathes rather than sitting still. */

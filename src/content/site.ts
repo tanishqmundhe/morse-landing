@@ -93,9 +93,8 @@ export const replaces = {
   title: "Five subscriptions,",
   titleMuted: "one meeting.",
   body: "The call, the notetaker, the scheduling link, the whiteboard and the captions are all the same meeting.",
-  /** The marquee carries the list; the strip carries the tools. */
-  ticker: ["The call", "The notetaker", "The scheduling link", "The whiteboard", "The captions"],
-  one: "One Morse",
+  /** Held between the brackets in the band, as the reference holds its line. */
+  line: "Five subscriptions → one meeting",
 };
 
 /**
@@ -220,7 +219,7 @@ export const quiet = {
   items: [
     { id: "bot", title: "No bot in the room", body: "Morse transcribes the call itself. Nobody extra turns up." },
     { id: "google", title: "One calendar, not two", body: "Meetings land on the Google calendar you already keep." },
-    { id: "api", title: "Claude can use it", body: "A token lets a script or an agent drive Morse as you." },
+    { id: "api", title: "There’s an API", body: "A token lets a script, or an AI agent, use Morse as you." },
     { id: "counts", title: "Eighteen languages", body: "Ten without a setting, eight more when you ask." },
   ],
 };

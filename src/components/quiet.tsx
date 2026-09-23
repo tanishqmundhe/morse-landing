@@ -75,7 +75,9 @@ export function Quiet() {
           </div>
 
           {/* One block, cut into four by a hairline of the raised colour. */}
-          <div className="mt-14 overflow-hidden rounded-[20px] bg-raised p-px lg:mt-16">
+          {/* Square, and lined in `hairline` — `raised` is a surface colour and
+              barely reads as a rule against the canvas. */}
+          <div className="mt-14 border border-hairline bg-hairline lg:mt-16">
             <div className="grid gap-px lg:grid-cols-4">
               {quiet.items.map((item, i) => {
                 // This card's quarter of the run, 0 to 1.
@@ -116,11 +118,11 @@ export function Quiet() {
                       {item.title}
                     </p>
 
-                    <div className="mt-auto flex justify-end pt-8">
+                    <div className="mt-auto flex justify-end pt-7">
                       <HugeiconsIcon
                         icon={ICONS[item.id as keyof typeof ICONS]}
-                        className="size-16"
-                        strokeWidth={1.4}
+                        className="size-12"
+                        strokeWidth={1.1}
                         aria-hidden="true"
                         style={{ color: "color-mix(in oklch, var(--ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                       />
