@@ -120,7 +120,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 
 Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Every price, limit and plan name is invented** — Morse has no published pricing. What each plan *lists* is real, so the page can be shown without claiming anything the app can't do. Replace the numbers, not the features.
 
-- **Title** over the same dot field the open question uses, closed by a hairline.
+- **Title** over the `ascii-wood` film — the page opens on a film as the home page does. That film appears nowhere else here: `ringed-meadow` closes this page and `signal` opens the home one. Scrims hold the left dark and let the film stay bright to the right; measured worst-case contrast over the whole text area is 7.9:1 for the title and 6.5:1 for the lede. A hairline closes the band.
 - **Markers (`pricing/marker.tsx`):** `N.01/04 — THE PLANS ————` between the parts. Mono and ink-faint: signposting, not a heading.
 - **Plans (`pricing/plans.tsx`):** monthly/yearly, the highlight sliding between them as the nav's does. Three cards; the chosen one is lifted by luminance (`bg-float`) rather than outlined, and takes the sage button. Pennies are set back so the number reads first; £0 reads "Free".
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
