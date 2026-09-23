@@ -121,7 +121,7 @@ export function Quiet() {
 
                     {/* Fixed, not a minimum: the four rails sit on one line. */}
                     <p
-                      className="relative mt-8 h-[52px] text-[16px]/[1.6] text-ink-soft"
+                      className="relative mt-8 h-[52px] text-[16px]/[1.6] text-ink-soft 3xl:h-[58px] 3xl:text-[17px]/[1.65]"
                       style={{
                         opacity: "var(--on)",
                         transform: "translateY(calc((1 - var(--on)) * 6px))",
@@ -147,7 +147,7 @@ export function Quiet() {
                     </div>
 
                     <p
-                      className="relative mt-6 text-[23px]/[1.2] font-light"
+                      className="relative mt-6 text-[23px]/[1.2] font-light 3xl:text-[26px]/[1.2]"
                       style={{ color: "color-mix(in oklch, var(--ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                     >
                       {item.title}
@@ -156,7 +156,7 @@ export function Quiet() {
                     <div className="relative mt-auto flex justify-end pt-7">
                       <HugeiconsIcon
                         icon={ICONS[item.id as keyof typeof ICONS]}
-                        className="size-12"
+                        className="size-12 3xl:size-14"
                         strokeWidth={1.1}
                         aria-hidden="true"
                         style={{ color: "color-mix(in oklch, var(--tint) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}

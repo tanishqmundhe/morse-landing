@@ -30,9 +30,13 @@ export function Hero() {
         {/* The header sits here, fixed; this keeps the copy clear of it. */}
         <div className="h-24 shrink-0" />
 
-        <div className="mt-auto flex flex-col gap-10 px-6 pb-8 sm:px-10 sm:pb-12 lg:flex-row lg:items-end lg:justify-between lg:px-14 lg:pb-16">
-          <div className="max-w-[900px]">
-            <h1 className="text-[52px]/[1.02] font-light tracking-[-0.035em] text-balance text-ink sm:text-[76px]/[1] xl:text-[92px]/[0.98]">
+        {/* Past a 24" panel the copy and the card stop being a pair: at 2560 they
+            sat 1254px apart, one on each edge. Capped and centred from 3xl. */}
+        <div className="mt-auto flex w-full flex-col gap-10 px-6 pb-8 sm:px-10 sm:pb-12 lg:flex-row lg:items-end lg:justify-between lg:px-14 lg:pb-16 3xl:mx-auto 3xl:max-w-[1680px] 3xl:pb-20 4xl:max-w-[1800px]">
+          {/* Wide enough that "Good conversations." still holds one line as the
+              type steps up — at 116px in a 900px column it broke into three. */}
+          <div className="max-w-[900px] 3xl:max-w-[1060px] 4xl:max-w-[1200px]">
+            <h1 className="text-[52px]/[1.02] font-light tracking-[-0.035em] text-balance text-ink sm:text-[76px]/[1] xl:text-[92px]/[0.98] 3xl:text-[104px]/[0.98] 4xl:text-[116px]/[0.97]">
               <span className="block animate-enter" style={at(350)}>
                 {hero.title}
               </span>
@@ -40,7 +44,7 @@ export function Hero() {
                 {hero.titleMuted}
               </span>
             </h1>
-            <p className="mt-6 max-w-[520px] animate-enter text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]" style={at(700)}>
+            <p className="mt-6 max-w-[520px] animate-enter text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55] 3xl:max-w-[580px] 3xl:text-[22px]/[1.55]" style={at(700)}>
               {hero.lede}
             </p>
             <div className="mt-9 flex animate-enter flex-wrap items-center gap-3" style={at(850)}>

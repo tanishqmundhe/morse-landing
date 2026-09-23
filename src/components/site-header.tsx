@@ -77,7 +77,8 @@ export function SiteHeader() {
         menu ? "rounded-[28px] bg-canvas/95 shadow-float backdrop-blur-md" : solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
       }`}
     >
-      <div className="flex h-[68px] items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10">
+      {/* Capped with the hero, or the mark and the CTA drift to the edges. */}
+      <div className="mx-auto flex h-[68px] w-full items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10 3xl:max-w-[1680px] 4xl:max-w-[1800px]">
         <a href={onHome ? "#" : "/"} aria-label={onHome ? "Morse, back to top" : "Morse, home"} className="text-ink">
           <Logo className="h-[26px] w-auto sm:h-[30px]" />
         </a>

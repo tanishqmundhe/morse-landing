@@ -37,8 +37,32 @@ scaled artwork, and don't count). Section leads use `LEAD`; everything else is 1
 
 `SECTION` (`ui.tsx`) is the one rhythm between the hero and the closing:
 112px on phones, 160 from `lg`, 192 from `2xl`. The hero and closing are
-full-bleed bands inset 14px instead. Content sits in `WRAP` (1200px, 1360 on
-2xl); the booking cards keep their own 1000px, as the app's page does.
+full-bleed bands inset 14px instead. Content sits in `WRAP`; the booking
+cards keep their own 1000px, as the app's page does.
+
+## Big screens
+
+Two breakpoints past Tailwind's `2xl`, declared in `@theme`:
+
+| | CSS px | Panel |
+| --- | --- | --- |
+| `3xl` | 1920 | a 24″ at 1×, or a 32″ 4K at 2× |
+| `4xl` | 2560 | a 32″ 1440p, or a 32″ 4K at 1.5× |
+
+**The column** goes 1200 → 1360 (`2xl`) → 1480 (`3xl`) → 1560 (`4xl`), and
+`--page` follows it so the features row starts on the same line.
+
+**The full-bleed rows are the real problem on a big panel, not the column.**
+The hero and the header sit edge to edge, so at 2560 the headline and the live
+card were **1254px apart**, one on each side, and the mark and the CTA 2204px
+apart. Both rows are now capped at 1680 (`3xl`) / 1800 (`4xl`) and centred; the
+hero gap settles at 388px and stops growing. Measured before and after.
+
+**The ladder steps up** so the page doesn't read small on a large panel: h1
+92 → 104 → 116, `H2` 56 → 64 → 72, `LEAD` 20 → 22. Line length stays at 52–53
+characters throughout, and every heading that has to hold two lines still does,
+at 1280, 1440, 1920, 2560 and 3440 — the columns those headings sit in were
+widened to match the type, or "done properly." dropped to a third line.
 
 ## Films
 

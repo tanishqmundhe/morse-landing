@@ -79,6 +79,14 @@
   --text-label--letter-spacing: 1.6px;
   --text-label--font-weight: 600;
 
+  /*
+   * Two steps past Tailwind's 2xl, for the desks this gets read on. A 24"
+   * panel is 1920 CSS px, and a 32" is usually 2560 (1440p native, or 4K at
+   * 1.5×) — a 4K 32" at 2× lands on 1920 and picks up the first step.
+   */
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 160rem;
+
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --animate-blink: blink 1.2s ease-in-out infinite;
@@ -196,6 +204,12 @@
 
 @media (min-width: 96rem) {
   :root { --page: 1360px; }
+}
+@media (min-width: 120rem) {
+  :root { --page: 1480px; }
+}
+@media (min-width: 160rem) {
+  :root { --page: 1560px; }
 }
 
 @layer base {

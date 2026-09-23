@@ -34,7 +34,7 @@ const MARKS = true;
  */
 function Cell({ brand }: { brand: Brand }) {
   return (
-    <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip border-r border-hairline px-4 text-ink-faint lg:h-[132px] lg:w-[200px]">
+    <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip border-r border-hairline px-4 text-ink-faint lg:h-[132px] lg:w-[200px] 3xl:h-[148px] 3xl:w-[224px]">
       {MARKS && (
         <svg
           viewBox={brand.viewBox}
@@ -97,9 +97,9 @@ export function Replaces() {
           </div>
 
           {/* The band holds still: the brackets are the frame. */}
-          <div className="dots flex h-[200px] items-center justify-between gap-6 px-6 sm:px-8 lg:h-[260px]">
+          <div className="dots flex h-[200px] items-center justify-between gap-6 px-6 sm:px-8 lg:h-[260px] 3xl:h-[300px]">
             <Brackets side="left" />
-            <p className="flex min-w-0 items-center gap-4 truncate font-mono text-[20px] tracking-[-0.04em] text-ink sm:text-[26px] lg:text-[30px]">
+            <p className="flex min-w-0 items-center gap-4 truncate font-mono text-[20px] tracking-[-0.04em] text-ink sm:text-[26px] lg:text-[30px] 3xl:text-[34px]">
               <LogoMark className="size-6 shrink-0 lg:size-7" />
               {replaces.line}
             </p>

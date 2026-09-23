@@ -8,7 +8,7 @@ import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 export const CARD = "rounded-[28px] bg-raised shadow-raised";
 /** One rhythm for every section between the hero and the closing. */
 export const SECTION = "py-28 lg:py-40 2xl:py-48";
-export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 2xl:max-w-[1360px]";
+export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 2xl:max-w-[1360px] 3xl:max-w-[1480px] 4xl:max-w-[1560px]";
 
 /** Capsules only (contract #8). Sage is spent on the one thing to press. */
 // Pressing gives a little: the capsule sinks by 3% and springs back.
@@ -62,9 +62,9 @@ export function Heading({
 }
 
 /** The ladder: hero 92, closing 72, sections 56, cards 28. */
-export const H2 = "text-[38px]/[1.1] sm:text-[48px]/[1.06] xl:text-[56px]/[1.05]";
+export const H2 = "text-[38px]/[1.1] sm:text-[48px]/[1.06] xl:text-[56px]/[1.05] 3xl:text-[64px]/[1.04] 4xl:text-[72px]/[1.03]";
 /** A section's opening line. Everything else on the page is 17px. */
-export const LEAD = "text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55]";
+export const LEAD = "text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55] 3xl:text-[22px]/[1.55]";
 
 /**
  * The page's unhurried curve: quick to leave, long to arrive. Everything that
