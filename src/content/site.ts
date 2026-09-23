@@ -84,11 +84,11 @@ export const hero = {
  */
 export const replaces = {
   eyebrow: "Instead of",
-  title: "Seven subscriptions,",
-  titleMuted: "one meeting.",
-  body: "The call, the notes, the recording, the transcript, the assistant, the whiteboard and the booking link are all the same meeting.",
+  title: "Morse replaces",
+  titleMuted: "all seven of these.",
+  body: "The call, the notes, the recording, the transcript, the in-call assistant, the whiteboard and the booking link. One app, one login.",
   /** Held between the brackets in the band, as the reference holds its line. */
-  line: "Seven subscriptions → one meeting",
+  line: "Seven jobs → one app",
 };
 
 /**

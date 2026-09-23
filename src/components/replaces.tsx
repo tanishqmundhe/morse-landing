@@ -28,14 +28,21 @@ import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
  */
 const MARKS = true;
 
-/** The name always; the mark only where the icon set has one. */
+/**
+ * The mark and the name. `svg` is markup we generated into the repo from the
+ * three icon sets, not anything fetched at runtime, so injecting it is safe.
+ */
 function Cell({ brand }: { brand: Brand }) {
   return (
     <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip border-r border-hairline px-4 text-ink-faint lg:h-[132px] lg:w-[200px]">
-      {MARKS && brand.path && (
-        <svg viewBox="0 0 24 24" className="size-5 shrink-0" fill="currentColor" aria-hidden="true">
-          <path d={brand.path} />
-        </svg>
+      {MARKS && (
+        <svg
+          viewBox={brand.viewBox}
+          className="size-[22px] shrink-0"
+          fill="currentColor"
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{ __html: brand.svg }}
+        />
       )}
       <span className="truncate text-[16px]">{brand.name}</span>
     </div>
