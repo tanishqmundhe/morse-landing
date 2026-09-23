@@ -90,17 +90,12 @@ export const hero = {
  */
 export const replaces = {
   eyebrow: "Instead of",
-  title: "Five tabs",
-  titleMuted: "become one.",
-  body: "The call, the notetaker, the scheduling link, the whiteboard and the captions are all the same meeting. Morse treats them that way.",
-  items: [
-    { kind: "The video call", tools: "Zoom, Google Meet, Teams" },
-    { kind: "The notetaker", tools: "Otter, Fireflies, Granola" },
-    { kind: "The scheduling link", tools: "Calendly, Cal.com" },
-    { kind: "The whiteboard", tools: "Miro, FigJam" },
-    { kind: "Translated captions", tools: "usually a paid add-on" },
-  ],
-  one: "Morse is all five, in the meeting itself.",
+  title: "Five subscriptions,",
+  titleMuted: "one meeting.",
+  body: "The call, the notetaker, the scheduling link, the whiteboard and the captions are all the same meeting.",
+  /** The marquee carries the list; the strip carries the tools. */
+  ticker: ["The call", "The notetaker", "The scheduling link", "The whiteboard", "The captions"],
+  one: "One Morse",
 };
 
 /**
@@ -223,26 +218,10 @@ export const quiet = {
   title: "Nothing you",
   titleMuted: "have to watch.",
   items: [
-    {
-      id: "bot",
-      title: "No bot in the room",
-      body: "Morse transcribes the call itself, so no extra attendee turns up. Recording is visible to everyone while it runs.",
-    },
-    {
-      id: "google",
-      title: "One calendar, not two",
-      body: "You sign in with Google, and meetings land on the calendar you already keep, in among everything else on it.",
-    },
-    {
-      id: "api",
-      title: "Claude can use it",
-      body: "A token in Settings lets a script or an AI agent drive Morse as you. It acts as you, so it expires and you can revoke it.",
-    },
-    {
-      id: "counts",
-      title: "Eighteen languages",
-      body: "Ten without a setting, eight more when you ask, and sixteen backgrounds behind eleven note templates.",
-    },
+    { id: "bot", title: "No bot in the room", body: "Morse transcribes the call itself. Nobody extra turns up." },
+    { id: "google", title: "One calendar, not two", body: "Meetings land on the Google calendar you already keep." },
+    { id: "api", title: "Claude can use it", body: "A token lets a script or an agent drive Morse as you." },
+    { id: "counts", title: "Eighteen languages", body: "Ten without a setting, eight more when you ask." },
   ],
 };
 
