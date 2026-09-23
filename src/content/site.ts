@@ -83,7 +83,7 @@ export const hero = {
  * is words and chips, the chips being small pieces of the product.
  */
 type Piece = { text: string } | { chip: Chip; label: string };
-export type Chip = "call" | "transcript" | "teleprompter" | "booking" | "globe" | "question" | "note" | "done" | "calendar" | "google";
+export type Chip = "call" | "transcript" | "teleprompter" | "booking" | "globe" | "question" | "note" | "done" | "calendar" | "google" | "upload";
 
 export const showcase = {
   statement: [
@@ -145,8 +145,8 @@ export const showcase = {
       line: [
         { text: "And the answers come from your notes," },
         { chip: "note", label: "Knowledge" },
-        { text: "with files and Google Drive folders brought in." },
-        { chip: "google", label: "Google Drive" },
+        { text: "with whole documents dropped in and read." },
+        { chip: "upload", label: "PDF, Word, Excel" },
       ],
     },
   ] as { id: string; line: Piece[] | "statement" | null }[],
@@ -203,8 +203,13 @@ export const quiet = {
     },
     {
       id: "google",
-      title: "It lives in your Google account.",
-      body: "Google sign-in, your own calendar, your own Drive. Nothing is kept anywhere you can\u2019t reach it.",
+      title: "It keeps one calendar, not two.",
+      body: "You sign in with Google, and Morse writes meetings onto the calendar you already keep. No second calendar to check, and nothing to move across.",
+    },
+    {
+      id: "api",
+      title: "Claude can use it as you.",
+      body: "Make a token in Settings and a script \u2014 or an AI agent \u2014 drives Morse over its own API: your meetings, notes, knowledge and booking. It acts as you, so it expires, and you can revoke it.",
     },
     {
       id: "counts",
@@ -232,7 +237,7 @@ export const booking = {
   ],
   page: {
     host: "Priya Shah",
-    role: "Product lead, Neural Arc",
+    role: "Product lead",
     bio: "Happy to talk through onboarding, pricing or anything half-formed.",
     film: { src: "/films/ascii-wood.mp4", poster: "/films/ascii-wood-poster.jpg" },
     type: "Intro call",
@@ -265,8 +270,9 @@ export const faq = {
   title: "A few things you",
   titleMuted: "might be wondering.",
   more: "Still wondering?",
-  // The address Morse's own mail comes from; confirm before launch.
-  email: "hello@neuralarc.ai",
+  // White-labelled with the rest of the app. This inbox has to exist
+  // before the page ships — see the note in docs/DESIGN.md.
+  email: "hello@onmorse.com",
   items: [
     {
       q: "What is Morse?",
@@ -313,7 +319,7 @@ export const footer = {
     placeholder: "Your email",
     action: "Join",
     // Until there is a list, the form writes the mail for you.
-    mailto: "hello@neuralarc.ai",
+    mailto: "hello@onmorse.com",
     subject: "Add me to the Morse list",
   },
   pages: {
@@ -342,7 +348,7 @@ export const footer = {
   touch: {
     title: "Get in touch",
     body: "Questions about Morse, or about working with us.",
-    email: "hello@neuralarc.ai",
+    email: "hello@onmorse.com",
   },
   line: "Video meetings that write themselves down.",
   legal: [

@@ -6,6 +6,7 @@ import {
   CheckListIcon,
   ClosedCaptionIcon,
   Globe02Icon,
+  CloudUploadIcon,
   GoogleIcon,
   Note01Icon,
   SparklesIcon,
@@ -133,6 +134,7 @@ const ICONS: Partial<Record<ChipKind, IconSvgElement>> = {
   note: Note01Icon,
   done: CheckListIcon,
   google: GoogleIcon,
+  upload: CloudUploadIcon,
 };
 
 function Chip({ chip, label }: { chip: ChipKind; label: string }) {

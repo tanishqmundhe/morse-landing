@@ -140,8 +140,24 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
   Touch stays native (Lenis's default) and `respectReducedMotion` drops smoothing to 1:1.
 - **Buttons:** capsules sink to 97% when pressed, over 150ms (`active:scale-[0.97]`).
 - **Films** pause while off screen and rest on their poster under reduced motion (`film.tsx`).
+- **No `filter` inside the showcase row.** The screens are drawn at 1120×700 and `scale()`d to fit, and a filtered element gets rastered at its layout size and stretched. The calendar's dropped-in follow-up used `animate-enter`, which blurs on the way in, and stayed soft; it uses `animate-rise` now.
 - **Everything** respects `prefers-reduced-motion` (see the global rule in `globals.css`).
 - **Keyframes set from JavaScript must live outside `@theme`.** Tailwind drops any keyframes in that block it can't see a utility for, so `@keyframes fill` — used by the hero card's timeline and the showcase's progress bar, both from JS — was tree-shaken and neither animation ever ran. It now sits in plain CSS with `film-drift` and `.dots`.
+
+## White label
+
+The page carries no Unified Machines or Neural Arc branding except the maker
+line in the footer. The twelve profile assets in `public/app/` (six avatars,
+six backgrounds) were redrawn from the app's own palette with the **Morse**
+mark in place of the Neural Arc one — same six colours, sampled from the
+originals. The booking host has no company, and every address is
+`@onmorse.com`.
+
+## Claims corrected against the app
+
+- **No Google Drive.** The showcase said Knowledge takes "files and Google Drive folders". `migrations/0030_knowledge_files.py` names `drive` as a source value but marks it "for milestone 3" — it isn't shipped. The line is now "whole documents dropped in and read", with the real upload types.
+- **Nothing "lives in your Google account".** Morse keeps notes, transcripts and recordings itself; what's true is Google-only sign-in and meetings written onto the calendar you already keep.
+- **Tokens are not BYOK.** Morse issues *you* a token so a script or an AI agent can drive Morse as you (Settings → API tokens, `Authorization: Bearer mp_…`). There is no way to give Morse your own model key; the provider is server-side. The copy must not promise scopes or rate limits: a token is all-or-nothing and neither exists yet.
 
 ## Copy rules
 
@@ -151,6 +167,7 @@ All copy lives in `src/content/site.ts` and uses the app's own words: "Notes", "
 
 - **Who can sign up?** Sign-in is Google only and currently limited to `@neuralarc.ai`. The CTA opens `https://onmorse.com` (`links.app`). Change it once public access or a waitlist exists.
 - **Hero image:** the crop shows a real person's name and title ("Aniket, CEO, Neural Arc"). Replace it with a demo-data capture before launch if that isn't wanted.
+- **`hello@onmorse.com` has to exist.** The page white-labels away from `@neuralarc.ai`; this inbox is used in the footer, the questions and the sign-up form and must be live before launch.
 - **No OG image or canonical URL yet.** Both depend on the landing page's final domain.
 - **Social accounts.** The five in the footer are placeholders pointing nowhere. Swap in the real handles, or drop the ones that don't exist.
 - **The mailing list.** "Stay in the loop" has nothing behind it; the form opens a mail draft to `hello@neuralarc.ai`. Wire it to a list, or keep the draft.

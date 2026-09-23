@@ -1,16 +1,23 @@
 "use client";
 
 import {
+  ArrowDown01Icon,
+  Building03Icon,
   Calendar03Icon,
   CallEnd01Icon,
   Cancel01Icon,
+  CloudUploadIcon,
   ComputerScreenShareIcon,
+  Database01Icon,
+  Folder01Icon,
   Message01Icon,
   Mic01Icon,
   MoreHorizontalIcon,
   PauseIcon,
+  Search01Icon,
   SmileIcon,
   SparklesIcon,
+  SquareLock02Icon,
   Tick02Icon,
   UserAdd01Icon,
   UserGroupIcon,
@@ -388,7 +395,11 @@ export function CalendarScreen({ active }: { active: boolean }) {
           {events.map((e) => (
             <span
               key={e.title}
-              className={`absolute rounded-[10px] border-l-[3px] px-2.5 py-1.5 text-[13px]/[1.3] text-ink ${e.drop && active ? "animate-enter" : ""}`}
+              /* `animate-rise`, not `animate-enter`: enter blurs on the way in,
+                 and a filter inside the row's scale() makes the browser raster
+                 this one block at its layout size and then stretch it, so it
+                 stayed soft next to everything around it. */
+              className={`absolute rounded-[10px] border-l-[3px] px-2.5 py-1.5 text-[13px]/[1.3] text-ink ${e.drop && active ? "animate-rise" : ""}`}
               style={{
                 left: `calc(40px + 8px + (100% - 40px - 8px * 5) / 5 * ${e.d} + 8px * ${e.d})`,
                 width: `calc((100% - 40px - 8px * 5) / 5)`,
@@ -532,54 +543,132 @@ export function HomeScreen() {
   );
 }
 
-/** Knowledge: the notes the teleprompter answers from. Sits at the row's end. */
+/**
+ * Knowledge, as the page really is (frontend/components/knowledge/*): a centred
+ * header, the "Adding to" strip, the Add context / OR / Upload files pair, then
+ * the folders. The earlier rebuild invented an "Add note" button, a persistent
+ * search bar, photo covers on the folders and a "Recent" list — none of which
+ * the app has. Folders count "items", carry an Active switch and say who can
+ * see them, and Global is always first.
+ */
+const FOLDERS: [string, string, string, string, boolean][] = [
+  ["Global", "42 items", "building", "Default", true],
+  ["Acme", "12 items", "folder", "Sales +2", true],
+  ["Hiring", "9 items", "lock", "Only you", false],
+];
+
+function FolderTile({ kind }: { kind: string }) {
+  const icon = kind === "building" ? Building03Icon : kind === "lock" ? SquareLock02Icon : Folder01Icon;
+  return (
+    <span className="grid size-12 shrink-0 place-items-center rounded-[16px] bg-sunken text-ink-soft shadow-sunken">
+      <Icon icon={icon} className="size-6" />
+    </span>
+  );
+}
+
 export function KnowledgeScreen({ active }: { active: boolean }) {
-  const folders: [string, string, string][] = [
-    ["Acme", "12 notes", "ember"],
-    ["Onboarding research", "8 notes", "lagoon"],
-    ["Pricing", "5 notes", "sage"],
-    ["Hiring", "9 notes", "lilac"],
-  ];
   return (
     <Frame>
-      <div className="flex h-11 items-center justify-between">
-        <span className="text-[24px] font-light text-ink">Knowledge</span>
-        <span className="rounded-full bg-action px-4 py-1.5 text-[14px] font-medium text-action-foreground">Add note</span>
+      {/* The centred header the page actually opens with. */}
+      <div className="flex flex-col items-center text-center">
+        <span className="grid size-14 place-items-center rounded-full bg-raised text-ink shadow-raised">
+          <Icon icon={Database01Icon} className="size-6" />
+        </span>
+        <p className="mt-3 text-[34px]/[1.15] font-light tracking-[-0.6px] text-ink">Knowledge</p>
+        <p className="mt-1.5 max-w-[60ch] text-[15px]/[1.45] text-ink-soft">
+          What the in-meeting teleprompter answers from. Logins and passwords belong in the Vault, which it never reads.
+        </p>
       </div>
-      <div className="mt-4 flex h-12 items-center rounded-full bg-raised px-5 text-[16px]" key={active ? "on" : "off"}>
-        {active ? (
-          <span className="text-ink">
-            <Written text="Acme renewal" delay={400} step={90} />
+
+      <div className="mt-4 flex items-center gap-3 text-[15px]">
+        <span className="text-ink-soft">Adding to</span>
+        <span className="flex items-center gap-2 rounded-full bg-raised px-3.5 py-1.5 text-ink shadow-raised">
+          <Icon icon={Folder01Icon} className="size-4 text-ink-soft" />
+          Acme
+          <Icon icon={ArrowDown01Icon} className="size-4 text-ink-faint" />
+        </span>
+        <span className="text-ink-faint">You and Sales and 1 person can see this.</span>
+      </div>
+
+      {/* Add context · OR · Upload files */}
+      <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+        <div className="rounded-[22px] bg-raised p-4 shadow-raised">
+          <p className="text-[17px] text-ink">Add context</p>
+          <p className="mt-0.5 text-[14px] text-ink-faint">Type or paste anything the teleprompter should know.</p>
+          <div className="mt-3 h-[76px] rounded-[16px] bg-sunken px-3.5 py-2.5 text-[14px]/[1.45] shadow-sunken">
+            {active ? (
+              <span className="text-ink">
+                <Written text="This year’s rate is fixed until March, with two extra seats." delay={700} step={70} />
+              </span>
+            ) : (
+              <span className="text-ink-faint">Pricing, a security answer, notes on a client, a whole document…</span>
+            )}
+          </div>
+          <div className="mt-2.5 flex items-center text-[13px] text-ink-faint">
+            <span className="tabular-nums">0 / 200,000</span>
+            <span className="ml-auto flex gap-2">
+              <span className="rounded-full px-3 py-1 text-ink-soft">Preview</span>
+              <span className="rounded-full bg-overlay px-3 py-1 text-ink">Save</span>
+            </span>
+          </div>
+        </div>
+
+        <span className="grid size-9 place-items-center rounded-full bg-raised text-[13px] text-ink-faint shadow-raised">OR</span>
+
+        <div className="rounded-[22px] bg-raised p-4 shadow-raised">
+          <p className="text-[17px] text-ink">Upload files</p>
+          <p className="mt-0.5 text-[14px] text-ink-faint">PDF, Word, Excel, CSV, text or Markdown, up to 20 MB each.</p>
+          <div className="mt-3 flex h-[76px] flex-col items-center justify-center rounded-[16px] bg-sunken text-center shadow-sunken">
+            <Icon icon={CloudUploadIcon} className="size-6 text-ink-faint" />
+            <p className="mt-1.5 text-[14px] text-ink-soft">Drag and drop files here</p>
+            <p className="text-[13px] text-ink-faint">or click to browse</p>
+          </div>
+          <div className="mt-2.5 flex text-[13px]">
+            <span className="ml-auto rounded-full bg-overlay px-3 py-1 text-ink">+ Add files</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Folders */}
+      <div className="mt-4 flex items-center gap-3">
+        <p className="text-[19px] text-ink">
+          Folders <span className="text-[15px] text-ink-faint">5</span>
+        </p>
+        <Icon icon={Search01Icon} className="size-[18px] text-ink-soft" />
+        <span className="ml-auto flex items-center gap-2 text-[14px]">
+          <span className="flex rounded-full bg-raised p-1">
+            {["Rows", "Cards"].map((v) => (
+              <span key={v} className={`rounded-full px-3 py-1 ${v === "Cards" ? "bg-overlay text-ink" : "text-ink-soft"}`}>
+                {v}
+              </span>
+            ))}
           </span>
-        ) : (
-          <span className="text-ink-faint">Search your notes</span>
-        )}
+          <span className="rounded-full bg-raised px-3.5 py-1.5 text-ink-soft">Newest</span>
+          <span className="rounded-full bg-action px-4 py-1.5 font-medium text-action-foreground">+ New folder</span>
+        </span>
       </div>
-      <div className="mt-5 grid grid-cols-4 gap-3">
-        {folders.map(([n, c, col]) => (
-          <div key={n} className="overflow-hidden rounded-[22px] bg-raised">
-            <div className="h-24 bg-cover bg-center" style={{ backgroundImage: `url(/app/bg-${col}.webp)` }} />
-            <div className="px-4 py-3">
-              <p className="text-[17px] text-ink">{n}</p>
-              <p className="text-[14px] text-ink-faint">{c}</p>
+
+      <div className="mt-3 grid grid-cols-3 gap-3">
+        {FOLDERS.map(([name, count, kind, reach, on], i) => (
+          <div
+            key={name}
+            className={`rounded-[22px] bg-raised p-3.5 shadow-raised transition-shadow duration-500 ${
+              active && i === 1 ? "shadow-[0_0_0_2px_var(--action)] delay-[1400ms]" : ""
+            }`}
+          >
+            <FolderTile kind={kind} />
+            <p className="mt-3 text-[17px] text-ink">{name}</p>
+            <p className="text-[14px] text-ink-faint">{count}</p>
+            <div className="mt-3 flex items-center gap-2">
+              <span className={`flex h-5 w-9 items-center rounded-full px-0.5 ${on ? "bg-action" : "bg-overlay"}`}>
+                <span className={`size-4 rounded-full bg-canvas transition-transform ${on ? "translate-x-4" : ""}`} />
+              </span>
+              <span className="text-[13px] text-ink-soft">{on ? "Active" : "Off"}</span>
+              <span className="ml-auto rounded-full bg-overlay px-2.5 py-0.5 text-[13px] text-ink-soft">{reach}</span>
             </div>
           </div>
         ))}
       </div>
-      <p className="mt-6 font-mono text-label text-ink-faint uppercase">Recent</p>
-      {[
-        ["Acme renewal notes", "Renewal terms, seat counts and what we promised in August."],
-        ["Second-meeting nudge", "Why people drop off after sign-up, from twelve interviews."],
-        ["Pricing for 2027", "Draft tiers and the questions still open."],
-      ].map(([t, d], i) => (
-        <div
-          key={t}
-          className={`mt-2 rounded-[18px] bg-raised px-5 py-3.5 transition-shadow duration-500 ${active && i === 0 ? "shadow-[0_0_0_2px_var(--action)] delay-[1200ms]" : ""}`}
-        >
-          <p className="text-[17px] text-ink">{t}</p>
-          <p className="text-[14px] text-ink-faint">{d}</p>
-        </div>
-      ))}
     </Frame>
   );
 }

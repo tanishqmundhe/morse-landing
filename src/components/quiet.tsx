@@ -1,15 +1,15 @@
 "use client";
 
-import { EyeIcon, ShieldKeyIcon, SparklesIcon } from "@hugeicons/core-free-icons";
+import { Calendar03Icon, EyeIcon, Key01Icon, SparklesIcon } from "@hugeicons/core-free-icons";
 import { quiet } from "@/content/site";
 import { useLoop } from "./features/timeline";
 import { EASE, Eyebrow, H2, Heading, Icon, SECTION, WRAP } from "./ui";
 
-const ICONS = { bot: EyeIcon, google: ShieldKeyIcon, counts: SparklesIcon };
+const ICONS = { bot: EyeIcon, google: Calendar03Icon, api: Key01Icon, counts: SparklesIcon };
 
 /**
  * The band between the features and the booking page: what Morse does while
- * nobody is looking at it. Three plain facts over hairlines, with the counts
+ * nobody is looking at it. Four plain facts over hairlines, with the counts
  * folded into the last one rather than given a stats band of their own.
  *
  * The only motion is those three figures, counting up once when the section
