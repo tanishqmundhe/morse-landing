@@ -15,19 +15,38 @@ import { EASE, Eyebrow, H2, Heading, Icon, SECTION, UNDERLINE, WRAP } from "./ui
  * page's own curve, so the answer unfolds rather than snapping open. Numbers
  * run down the left so a long list still reads as a list.
  */
-export function Faq({ className = SECTION }: { className?: string }) {
+/** The shape site.ts holds a question list in. `slug`, where a page sets one,
+ *  becomes the row's own anchor — a question worth citing is worth linking. */
+export type FaqContent = {
+  eyebrow: string;
+  title: string;
+  titleMuted: string;
+  more: string;
+  email: string;
+  items: { q: string; a: string; slug?: string }[];
+};
+
+export function Faq({
+  className = SECTION,
+  content = faq,
+  id: sectionId = "questions",
+}: {
+  className?: string;
+  content?: FaqContent;
+  id?: string;
+}) {
   const [open, setOpen] = useState<number | null>(null);
   const id = useId();
 
   return (
-    <section id="questions" className={`${WRAP} ${className} scroll-mt-24`}>
+    <section id={sectionId} className={`${WRAP} ${className} scroll-mt-24`}>
       <div className="text-center">
-        <Eyebrow className="mb-5">{faq.eyebrow}</Eyebrow>
-        <Heading lead={faq.title} muted={faq.titleMuted} className={H2} />
+        <Eyebrow className="mb-5">{content.eyebrow}</Eyebrow>
+        <Heading lead={content.title} muted={content.titleMuted} className={H2} />
       </div>
 
       <div className="mx-auto mt-16 max-w-[900px]">
-        {faq.items.map((item, i) => {
+        {content.items.map((item, i) => {
           const on = open === i;
           return (
             <div key={item.q} className="border-t border-hairline">
@@ -88,9 +107,9 @@ export function Faq({ className = SECTION }: { className?: string }) {
       </div>
 
       <p className="mt-12 text-center text-[18px] text-ink-soft">
-        {faq.more}{" "}
-        <a href={`mailto:${faq.email}`} className={`${UNDERLINE} text-ink`}>
-          {faq.email}
+        {content.more}{" "}
+        <a href={`mailto:${content.email}`} className={`${UNDERLINE} text-ink`}>
+          {content.email}
         </a>
       </p>
     </section>

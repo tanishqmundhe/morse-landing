@@ -19,13 +19,12 @@ export const meta = {
 };
 
 export const nav = {
-  // In page order, so the highlight moves one way as you scroll.
+  // Pages, not anchors. Features, Booking and Questions were all anchors into
+  // the home page, which made a site of one page look like a site of six.
   links: [
-    { label: "Product", href: "/#product" },
-    { label: "Features", href: "/#features" },
-    { label: "Booking", href: "/#booking" },
+    { label: "Product", href: "/" },
     { label: "Pricing", href: "/pricing" },
-    { label: "Questions", href: "/#questions" },
+    { label: "Developers", href: "/developers" },
   ],
   cta: { label: "Open Morse", href: links.app },
 };
@@ -466,5 +465,201 @@ export const pricing = {
     title: "Nobody has said",
     titleMuted: "anything yet.",
     body: "The first people to use Morse will go here. We would rather leave the space empty than fill it with quotes from people who don't exist.",
+  },
+};
+
+export const developers = {
+  eyebrow: "The API",
+  title: "Everything the app does,",
+  titleMuted: "a script can do too.",
+  lede: "One personal access token, and Morse answers to a script, a cron job, or an AI agent — as you, with exactly your permissions.",
+
+  /** The 50-word definition, for anything that quotes one line of this page. */
+  overview:
+    "The Morse API lets a script or an AI agent do anything you can do in the Morse app, authenticated with a personal access token. It covers meetings, transcripts, notes, knowledge, voice notes and live event streams. Tokens are made in Settings, act as you, and can be revoked at any time.",
+  // The same day, twice: one for the page, one for the structured data. Change
+  // both together.
+  updated: "24 September 2026",
+  updatedISO: "2026-09-24",
+
+  /**
+   * What a token reaches, by what the thing is rather than by its path.
+   *
+   * This replaced a nine-row ledger of "app action -> the call for it". That
+   * table restated the hero at length and did the reference's job, which is the
+   * one job this page decided not to do. Six cards keep the coverage the ledger
+   * was there to prove and leave the routes where they belong.
+   */
+  reaches: {
+    eyebrow: "The surface",
+    title: "Six things a token",
+    titleMuted: "can get at.",
+    body: "Everything the app reads or writes, a token reads or writes too. The app has no private back door \u2014 it calls the same routes.",
+    /**
+     * Two lines each. The first is what the thing is; the second is the sharper
+     * fact about it, and appears in its place under the pointer. Both are true
+     * of the current API (docs/API.md) — the second is not a teaser, it is the
+     * detail someone about to build on it would want next.
+     */
+    items: [
+      {
+        title: "Meetings",
+        body: "List them, search across them, and schedule one and invite people to it in a single call.",
+        more: "The search runs over every meeting you were in, not only the ones you arranged.",
+      },
+      {
+        title: "Transcripts",
+        body: "What was said in a finished meeting, in full, with who said it.",
+        more: "Or while it is still running \u2014 the same transcript, arriving a line at a time.",
+      },
+      {
+        title: "Notes",
+        body: "The minutes and the action items Morse wrote for a meeting once it ended.",
+        more: "A meeting with nothing written yet answers 404, so a script can tell the two apart.",
+      },
+      {
+        title: "Knowledge",
+        body: "Your folders, and new notes filed into them.",
+        more: "The company folder too, if your account is allowed to write to it.",
+      },
+      {
+        title: "Voice notes",
+        body: "Yours, newest first, and the audio behind each one.",
+        more: "Audio goes straight to storage on the way in; it never passes through Morse\u2019s server.",
+      },
+      {
+        title: "Live feeds",
+        body: "The lobby, the transcript and the notes as they change, streamed while a meeting runs.",
+        more: "A browser\u2019s EventSource cannot send a header, so this one wants a server or a script.",
+      },
+    ],
+    note: "Every route, with its parameters and schemas, is published as an OpenAPI document.",
+  },
+
+  start: {
+    eyebrow: "Getting one",
+    title: "Three steps,",
+    titleMuted: "about a minute.",
+    steps: [
+      {
+        title: "Settings \u2192 API tokens",
+        body: "In Morse, open Settings and choose New token.",
+      },
+      {
+        title: "Name it, and set when it expires",
+        body: "Name it after whatever will use it \u2014 \u201cClaude\u201d, \u201cNotion sync\u201d. Expiry is 30, 60 or 90 days, a day you pick, or never.",
+      },
+      {
+        title: "Copy it \u2014 it is shown once",
+        body: "It starts mp_ and is 49 characters. Morse keeps only a fingerprint and the last four, so it cannot show it to you again.",
+      },
+    ],
+    /**
+     * The terminal under the steps. `env` is already on screen; `command` types
+     * itself and `response` arrives after it (developers.tsx).
+     *
+     * Every field in `response` is a real one on the API's Meeting model
+     * (backend/morse/meetings.py) — id, code, title, scheduled_at,
+     * duration_minutes. The values are made up and the caption says so. Adding
+     * a field here that the model does not have would be inventing an API.
+     */
+    terminal: {
+      label: "Then, from anywhere",
+      env: ["export MORSE=https://onmorse.com/api", "export MORSE_TOKEN=mp_\u2026"],
+      command: 'curl -H "Authorization: Bearer $MORSE_TOKEN" $MORSE/meetings',
+      response: [
+        "[",
+        '  {',
+        '    "id": "mtg_8f21c4",',
+        '    "code": "hqf-mkze-rdt",',
+        '    "title": "Pricing review",',
+        '    "scheduled_at": "2026-10-02T10:30:00+05:30",',
+        '    "duration_minutes": 30',
+        "  }",
+        "]",
+      ],
+      caption: "The field names are the API\u2019s own. The values are an example.",
+    },
+  },
+
+  limits: {
+    eyebrow: "The edges",
+    title: "What a token",
+    titleMuted: "will not do.",
+    body: "Listed because you should know before you build, not after.",
+    items: [
+      { title: "Manage other tokens", body: "Listing, making and revoking tokens happens in Settings, never over the API." },
+      { title: "Connect Google Calendar", body: "Google needs a person to click Allow. Once connected, reading and writing events works with a token." },
+      { title: "Sign in, or sign out", body: "A token already is a sign-in. Signing out of a browser does not touch it." },
+      { title: "Act as a guest", body: "Guest routes are for people without an account. Your token acts as you, a member." },
+      { title: "Run inside a web page", body: "The API sends no CORS headers, so another site\u2019s page cannot call it. Use a server, a script or an agent." },
+    ],
+  },
+
+  agent: {
+    eyebrow: "Agents",
+    title: "Hand it to",
+    titleMuted: "an assistant.",
+    body: "A token is all an AI agent needs. Give it one with the instructions below and it will read the spec, then work in your account \u2014 asking first before anything that emails people or deletes something.",
+    /**
+     * Required, not decorative. The orbit shows marks belonging to other
+     * companies, and the only claim it may make is the true one: these can all
+     * speak HTTP, so they can all use a token. Claude is the one Morse
+     * documents (docs/API.md, section 8). None of the rest is an integration,
+     * a partnership or an endorsement, and the page has to say so where the
+     * logos are, not in a footer somewhere.
+     */
+    disclaimer:
+      "Any agent that can make an HTTP request can use a token \u2014 there is nothing to install and nothing to approve. The agent marks on this page belong to their owners and mean no affiliation or endorsement; Claude is the one Morse writes instructions for.",
+  },
+
+  cta: {
+    primary: { label: "Make a token", href: "/login" },
+    secondary: { label: "Read the reference", href: "https://onmorse.com/api/docs" },
+  },
+
+  faq: {
+    eyebrow: "Questions",
+    title: "What developers",
+    titleMuted: "ask first.",
+    more: "Something not answered?",
+    email: "hello@onmorse.com",
+    items: [
+      {
+        slug: "does-morse-have-an-api",
+        q: "Does Morse have an API?",
+        a: "Yes. Everything you can do in the Morse app you can do from a script or an AI agent, using a personal access token. The base URL is https://onmorse.com/api, and every route is published as a machine-readable OpenAPI document.",
+      },
+      {
+        slug: "how-to-get-an-api-key",
+        q: "How do I get a Morse API key?",
+        a: "Open Settings \u2192 API tokens in Morse and choose New token. Name it, choose when it expires, then copy it. The token starts mp_, is 49 characters long, and is shown exactly once.",
+      },
+      {
+        slug: "what-a-token-can-do",
+        q: "What can a Morse API token do?",
+        a: "It acts as you. It reaches your meetings, transcripts, notes, knowledge, voice notes and live feeds, and it can schedule meetings and invite people. If you are an admin, it reaches the admin pages too.",
+      },
+      {
+        slug: "works-with-ai-agents",
+        q: "Does the Morse API work with AI agents?",
+        a: "Yes. Morse publishes a block of instructions you paste into an assistant along with your token. It then fetches the OpenAPI document and calls routes in your account, asking you before anything irreversible.",
+      },
+      {
+        slug: "call-from-a-browser",
+        q: "Can I call the Morse API from a browser?",
+        a: "No. The API sends no CORS headers, so a web page on another site cannot call it. Call it from a server, a script or an agent instead. A browser\u2019s EventSource also cannot send the header live feeds need.",
+      },
+      {
+        slug: "when-a-token-expires",
+        q: "When does a Morse API token expire?",
+        a: "Whenever you chose: 30, 60 or 90 days, a day you pick, or never. A token left unused for a year stops working. Revoke one in Settings and it stops on its next request.",
+      },
+      {
+        slug: "uploading-files",
+        q: "How do I upload a file through the API?",
+        a: "In three steps: ask Morse where to put the file, send it straight to storage, then tell Morse it is there. Files never pass through Morse\u2019s own server. Photos, voice-note audio and knowledge files all work this way.",
+      },
+    ],
   },
 };

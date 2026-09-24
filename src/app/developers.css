@@ -1,0 +1,487 @@
+/*
+ * /developers — the parts of it that cannot be utilities: a row that turns
+ * its line over a word at a time, the orbit's generated keyframes, and the
+ * syntax mapping. Ported from the app's marketing.css (Neural-Arc/morse,
+ * feat/developers-page) and re-pointed at this site's tokens.
+ */
+
+/* ── /developers: the index of what a token reaches ─────────────────────────
+   Six names at display size, read down, divided by the page's own hairline.
+   No container: the typography is the section.
+
+   A row arrives as the reader reaches it, each observed on its own
+   (developers.tsx), so the scroll is the stagger and no row is ever blank while
+   it is being read. Opacity and transform only — nothing here changes a box.
+
+   Under the pointer the row steps in from the left, its name takes its colour
+   and its line lifts from faint to ink-soft. One colour at a time, the one
+   being pointed at: six lit at once was the version that read as a grid of
+   chips however it was tinted.
+
+   The tints are the six sampled out of public/profile-backgrounds, the same
+   ones the orbit's orbs wear, so the page's two colour moments agree. Sage is
+   not among them — it marks the things you press.
+
+   `prefers-reduced-motion` collapses every transition (globals.css §7.2), and
+   the <noscript> block on the page shows every row outright. */
+.dv-row {
+  --tint: var(--action-ink);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 620ms var(--ease),
+    transform 620ms var(--ease);
+}
+.dv-row[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+
+.dv-row-in {
+  transition: padding-left 520ms var(--ease);
+}
+.dv-name {
+  color: var(--ink-soft);
+  transition: color 480ms var(--ease);
+}
+
+/* ── The line that turns over ────────────────────────────────────────────────
+   fancycomponents.dev's letter-3d-swap motion — a 90° turn about the horizontal
+   through a perspective, staggered along the line — which is also what
+   captions.tsx does on the home page.
+
+   Not its two-faced box, though: a box has one width and the two lines do not
+   share one, so every word overlapped the word it was turning into. The old
+   line turns out and the new one turns in instead, and neither needs to know
+   anything about the other. A word at a time, not a letter: its own docs call
+   a letter at a time impractical for a passage this long.
+
+   Both lines sit in one grid cell, so the cell is as tall as the taller and the
+   turn costs no layout. The perspective is in each word's own transform, so
+   every one turns about its own centre rather than sharing a vanishing point
+   with the whole line. */
+.dv-stack > * {
+  grid-area: 1 / 1;
+}
+
+.dv-w {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  transition:
+    transform 520ms var(--ease),
+    opacity 380ms var(--ease);
+  transition-delay: calc(var(--i) * 18ms);
+}
+
+.dv-out .dv-w {
+  color: var(--ink-faint);
+  transform: perspective(600px) rotateX(0deg);
+  opacity: 1;
+}
+.dv-in .dv-w {
+  color: var(--ink-soft);
+  transform: perspective(600px) rotateX(-90deg);
+  opacity: 0;
+}
+
+.dv-row:hover .dv-out .dv-w {
+  transform: perspective(600px) rotateX(90deg);
+  opacity: 0;
+}
+.dv-row:hover .dv-in .dv-w {
+  transform: perspective(600px) rotateX(0deg);
+  opacity: 1;
+  /* A beat behind the line leaving, so the two do not cross in the middle. */
+  transition-delay: calc(var(--i) * 18ms + 140ms);
+}
+
+/* Hover on the row, not the name: the whole line is the target, which at this
+   size is a band the width of the column rather than six words. */
+.dv-row:hover .dv-row-in {
+  padding-left: 1.5rem;
+}
+.dv-row:hover .dv-name {
+  color: var(--tint);
+}
+
+
+/* ── /developers: the terminal's syntax colours ─────────────────────────────
+   The same mapping the API's own reference uses (api-docs/app/globals.css),
+   onto the same chart series, so a request looks the same on both surfaces.
+   Names follow the `--syn-*` convention it established.
+
+   No highlighter library here: the two snippets are fixed content in site.ts,
+   and a grammar engine to colour six lines of them would be absurd. The
+   tokeniser in developers.tsx is a dozen regexes. */
+:root {
+  /* Code is small text, so every accent here is the text-safe variant; in dark
+     those collapse back onto the neon and the mapping does not change. */
+  --syn-keyword: var(--understood-ink); /* export                   */
+  --syn-command: var(--action-ink); /* the program being run    */
+  --syn-string: var(--ink-soft); /* quoted text, and flags   */
+  --syn-key: var(--understood-ink); /* a JSON field name        */
+  --syn-number: var(--signal-ink); /* numbers                  */
+  --syn-punct: var(--ink-faint); /* brackets, commas, colons */
+}
+
+.syn-keyword { color: var(--syn-keyword); }
+.syn-command { color: var(--syn-command); }
+.syn-string { color: var(--syn-string); }
+.syn-key { color: var(--syn-key); }
+.syn-number { color: var(--syn-number); }
+.syn-punct { color: var(--syn-punct); }
+/* A variable stays ink: it is the one thing in the sample the reader replaces. */
+.syn-var { color: var(--ink); }
+
+/* ── /developers: the agent orbit ───────────────────────────────────────────
+   Eight agents on one tilted ellipse, a step apart, turning round the mark.
+   The run itself is rolled 14° off level, so it reads as a plane seen at an
+   angle rather than a flat band across the middle of the box.
+
+   The whole run is one keyframe list on one element per orb, because no element
+   may carry both a static transform and a transform animation — the animation
+   wins and the placement is lost. So position, size, brightness and the mark's
+   own colour all live in the same list, which keeps them in step by
+   construction.
+
+   `cqw` throughout, against `container-type: size` on the field, so the ellipse
+   keeps its shape at any width. Both radii are in cqw rather than one in cqh,
+   so the field's height can be trimmed to the band the run occupies.
+
+   Depth, all keyed to how near the front an orb is:
+     · it grows, 0.52 to 1.34. An earlier pass ran 0.84 to 1.12 over 34s —
+       about a pixel a second, and it read as nothing moving at all.
+     · its gradient saturates and brightens, nearly grey at the back.
+     · it passes behind the mark on the far half and in front on the near half.
+
+   The mark on it flips from bone to a warm near-black as its gradient
+   brightens, per orb, from the measurements in agent-marks.ts. A bone mark on
+   citrus or lilac at full brightness was invisible. The flip is a smoothstep
+   over a fifth of the run rather than a slow blend, because a linear crossfade
+   spends half its time as a mid-grey, which reads against nothing. */
+@keyframes ag-orbit {
+  0% {
+    translate: 38.81cqw 9.68cqw;
+    scale: 0.930;
+    opacity: 0.690;
+    z-index: 1;
+    filter: saturate(0.630) brightness(0.755);
+    color: color-mix(in oklab, var(--fg-front) 35.2%, var(--ink));
+  }
+  3.571% {
+    translate: 37.03cqw 12.67cqw;
+    scale: 1.021;
+    opacity: 0.759;
+    z-index: 4;
+    filter: saturate(0.739) brightness(0.823);
+    color: color-mix(in oklab, var(--fg-front) 99.4%, var(--ink));
+  }
+  7.143% {
+    translate: 33.39cqw 15.03cqw;
+    scale: 1.108;
+    opacity: 0.825;
+    z-index: 4;
+    filter: saturate(0.843) brightness(0.887);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  10.71% {
+    translate: 28.08cqw 16.64cqw;
+    scale: 1.186;
+    opacity: 0.883;
+    z-index: 4;
+    filter: saturate(0.936) brightness(0.945);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  14.29% {
+    translate: 21.36cqw 17.41cqw;
+    scale: 1.251;
+    opacity: 0.932;
+    z-index: 4;
+    filter: saturate(1.013) brightness(0.993);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  17.86% {
+    translate: 13.57cqw 17.31cqw;
+    scale: 1.299;
+    opacity: 0.969;
+    z-index: 4;
+    filter: saturate(1.071) brightness(1.030);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  21.43% {
+    translate: 5.10cqw 16.34cqw;
+    scale: 1.330;
+    opacity: 0.992;
+    z-index: 4;
+    filter: saturate(1.108) brightness(1.052);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  25% {
+    translate: -3.63cqw 14.55cqw;
+    scale: 1.340;
+    opacity: 1.000;
+    z-index: 4;
+    filter: saturate(1.120) brightness(1.060);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  28.57% {
+    translate: -12.17cqw 12.04cqw;
+    scale: 1.330;
+    opacity: 0.992;
+    z-index: 4;
+    filter: saturate(1.108) brightness(1.052);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  32.14% {
+    translate: -20.11cqw 8.91cqw;
+    scale: 1.299;
+    opacity: 0.969;
+    z-index: 4;
+    filter: saturate(1.071) brightness(1.030);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  35.71% {
+    translate: -27.04cqw 5.35cqw;
+    scale: 1.251;
+    opacity: 0.932;
+    z-index: 4;
+    filter: saturate(1.013) brightness(0.993);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  39.29% {
+    translate: -32.61cqw 1.51cqw;
+    scale: 1.186;
+    opacity: 0.883;
+    z-index: 4;
+    filter: saturate(0.936) brightness(0.945);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  42.86% {
+    translate: -36.54cqw -2.40cqw;
+    scale: 1.108;
+    opacity: 0.825;
+    z-index: 4;
+    filter: saturate(0.843) brightness(0.887);
+    color: color-mix(in oklab, var(--fg-front) 100.0%, var(--ink));
+  }
+  46.43% {
+    translate: -38.65cqw -6.20cqw;
+    scale: 1.021;
+    opacity: 0.759;
+    z-index: 4;
+    filter: saturate(0.739) brightness(0.823);
+    color: color-mix(in oklab, var(--fg-front) 99.4%, var(--ink));
+  }
+  50% {
+    translate: -38.81cqw -9.68cqw;
+    scale: 0.930;
+    opacity: 0.690;
+    z-index: 4;
+    filter: saturate(0.630) brightness(0.755);
+    color: color-mix(in oklab, var(--fg-front) 35.2%, var(--ink));
+  }
+  53.57% {
+    translate: -37.03cqw -12.67cqw;
+    scale: 0.839;
+    opacity: 0.621;
+    z-index: 1;
+    filter: saturate(0.521) brightness(0.687);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  57.14% {
+    translate: -33.39cqw -15.03cqw;
+    scale: 0.752;
+    opacity: 0.555;
+    z-index: 1;
+    filter: saturate(0.417) brightness(0.623);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  60.71% {
+    translate: -28.08cqw -16.64cqw;
+    scale: 0.674;
+    opacity: 0.497;
+    z-index: 1;
+    filter: saturate(0.324) brightness(0.565);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  64.29% {
+    translate: -21.36cqw -17.41cqw;
+    scale: 0.609;
+    opacity: 0.448;
+    z-index: 1;
+    filter: saturate(0.247) brightness(0.517);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  67.86% {
+    translate: -13.57cqw -17.31cqw;
+    scale: 0.561;
+    opacity: 0.411;
+    z-index: 1;
+    filter: saturate(0.189) brightness(0.480);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  71.43% {
+    translate: -5.10cqw -16.34cqw;
+    scale: 0.530;
+    opacity: 0.388;
+    z-index: 1;
+    filter: saturate(0.152) brightness(0.458);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  75% {
+    translate: 3.63cqw -14.55cqw;
+    scale: 0.520;
+    opacity: 0.380;
+    z-index: 1;
+    filter: saturate(0.140) brightness(0.450);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  78.57% {
+    translate: 12.17cqw -12.04cqw;
+    scale: 0.530;
+    opacity: 0.388;
+    z-index: 1;
+    filter: saturate(0.152) brightness(0.458);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  82.14% {
+    translate: 20.11cqw -8.91cqw;
+    scale: 0.561;
+    opacity: 0.411;
+    z-index: 1;
+    filter: saturate(0.189) brightness(0.480);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  85.71% {
+    translate: 27.04cqw -5.35cqw;
+    scale: 0.609;
+    opacity: 0.448;
+    z-index: 1;
+    filter: saturate(0.247) brightness(0.517);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  89.29% {
+    translate: 32.61cqw -1.51cqw;
+    scale: 0.674;
+    opacity: 0.497;
+    z-index: 1;
+    filter: saturate(0.324) brightness(0.565);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  92.86% {
+    translate: 36.54cqw 2.40cqw;
+    scale: 0.752;
+    opacity: 0.555;
+    z-index: 1;
+    filter: saturate(0.417) brightness(0.623);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  96.43% {
+    translate: 38.65cqw 6.20cqw;
+    scale: 0.839;
+    opacity: 0.621;
+    z-index: 1;
+    filter: saturate(0.521) brightness(0.687);
+    color: color-mix(in oklab, var(--fg-front) 0.0%, var(--ink));
+  }
+  100% {
+    translate: 38.81cqw 9.68cqw;
+    scale: 0.930;
+    opacity: 0.690;
+    z-index: 1;
+    filter: saturate(0.630) brightness(0.755);
+    color: color-mix(in oklab, var(--fg-front) 35.2%, var(--ink));
+  }
+}
+
+/* The centre, breathing. Three pixels over seven seconds: the core is what the
+   whole picture is arranged around, and an anchor that wanders costs the
+   composition its fixed point — so this is meant to be noticed only once. */
+@keyframes ag-hover {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -3px; }
+}
+
+.ag-field {
+  /* The unit the ellipse is written in. Without this, cqw falls back to the
+     viewport and every orb lands half a screen away. */
+  container-type: size;
+}
+
+.ag-field {
+  /* One number for the orb. Its size used to be a Tailwind class on the element
+     and its centring a matching negative margin here, which meant two places to
+     change and a silent offset if they ever disagreed. */
+  --orb: 68px;
+}
+@media (width >= 40rem) {
+  .ag-field {
+    --orb: 80px;
+  }
+}
+
+.ag-orb {
+  width: var(--orb);
+  height: var(--orb);
+  /* Centred on the field by margin, not by translate: the animation needs the
+     transform to itself. */
+  margin: calc(var(--orb) / -2) 0 0 calc(var(--orb) / -2);
+  background-position: 35% 55%;
+  background-repeat: no-repeat;
+  /* Zoomed and offset because the file is a wide crop with the avatar's own
+     asterisk in its top-right corner; this lands on the gradient and leaves the
+     mark outside the circle. */
+  background-size: 190%;
+  animation: ag-orbit linear infinite;
+}
+/* ── The mark at the centre ──────────────────────────────────────────────
+   It was `canvas` with a hairline, which is the page's own colour: against
+   eight lit gradients the subject of the picture read as a hole in it. Lifted
+   onto a real surface with a brighter rim and a pool of light behind it, so it
+   is the thing the orbit is arranged around rather than a gap. Luminance, not
+   a tint — depth in this system is always light (contract #5). */
+.ag-core {
+  background: var(--float);
+  border-color: color-mix(in oklab, var(--ink) 22%, var(--hairline));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ink) 6%, transparent),
+    0 2px 22px -6px color-mix(in oklab, var(--ink) 20%, transparent);
+  animation: ag-hover 7s ease-in-out infinite;
+}
+/* The pool of light, as its own layer so only it is soft-edged. */
+.ag-core::before {
+  content: "";
+  position: absolute;
+  inset: -52%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--ink) 9%, transparent),
+    transparent 66%
+  );
+}
+
+/* Nothing stops for the pointer. Holding the rings still made an orb a target
+   worth reaching for, which is only worth having if there is something to
+   reach it for — and the name it used to show has gone to the accessibility
+   tree, where a name belongs. The run is a picture, not a control. */
+
+/* The animation is what places an orb, so switching it off has to put the eight
+   back where they belong — hence the resting position on each. Held at a middle
+   brightness, dark enough that every mark reads in bone without the flip. */
+@media (prefers-reduced-motion: reduce) {
+  .ag-orb {
+    animation: none;
+    translate: var(--rest-x) var(--rest-y);
+    scale: 1;
+    opacity: 1;
+    filter: saturate(0.8) brightness(0.72);
+    color: var(--ink);
+  }
+  .ag-core {
+    animation: none;
+  }
+}
+
