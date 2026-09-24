@@ -40,6 +40,7 @@ export const nav = {
         { label: "The quiet part", note: "What Morse does while nobody watches.", href: "/#quiet" },
         { label: "Booking pages", note: "One link, and your calendar does the rest.", href: "/#booking" },
         { label: "On your phone", note: "The iOS app.", href: "/#app" },
+        { label: "Agents and the API", note: "A token lets a script, or an agent, use Morse as you.", href: "/#agents" },
         { label: "Who uses Morse", note: "The teams already running their calls on it.", href: "/#used-by" },
         { label: "Questions", note: "The things people ask first.", href: "/#questions" },
       ],
