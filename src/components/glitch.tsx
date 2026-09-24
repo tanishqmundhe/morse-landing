@@ -20,20 +20,28 @@ export function GlitchBand({
   delay = 0,
   className = "absolute inset-0 size-full object-cover",
   sizes = "100vw",
+  onStage = false,
 }: {
   /** The stem, as Artwork takes it: "signal" covers both skies. */
   src: string;
   delay?: number;
   className?: string;
   sizes?: string;
+  /** For the places that stay black-skied in both themes, like the hero: one
+   *  copy of the dark picture rather than a CSS-switched pair. */
+  onStage?: boolean;
 }) {
   // `alt` stays spelled out on each element: through a spread the linter
   // cannot see it, and a decorative image with no alt is a real defect.
   const common = { "aria-hidden": true as const, width: 1600, height: 1067, sizes };
+  const at = { animationDelay: `${delay}s` };
+  if (onStage) {
+    return <Image {...common} alt="" src={`/art/${src}.webp`} className={`${className} glitch-band`} style={at} />;
+  }
   return (
     <>
-      <Image {...common} alt="" src={`/art/${src}-light.webp`} className={`${className} glitch-band dark:hidden`} style={{ animationDelay: `${delay}s` }} />
-      <Image {...common} alt="" src={`/art/${src}.webp`} className={`${className} glitch-band hidden dark:block`} style={{ animationDelay: `${delay}s` }} />
+      <Image {...common} alt="" src={`/art/${src}-light.webp`} className={`${className} glitch-band dark:hidden`} style={at} />
+      <Image {...common} alt="" src={`/art/${src}.webp`} className={`${className} glitch-band hidden dark:block`} style={at} />
     </>
   );
 }

@@ -20,7 +20,8 @@ function AppleMark() {
  *
  * The panel is gone. The picture spans the page edge to edge and runs the full
  * height of the first screen, in its black-sky form in both themes — this is
- * the one place that stays dark when the page is light, the way the app keeps
+ * one of two places that stay dark when the page is light (the used-by band is
+ * the other), the way the app keeps
  * video dark in both.
  *
  * On it, side by side: the promise on the left, the meeting on the right,

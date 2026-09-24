@@ -208,6 +208,17 @@ export const extras = {
  * without being watched. Every line here is checked against the app — no bot
  * attendee, Google-only sign-in, and the counts from the settings screens.
  */
+/**
+ * The companies running their meetings on Morse. Their marks and what each
+ * one does live in `components/company-marks.ts`; this is only the framing.
+ */
+export const usedBy = {
+  eyebrow: "Who uses Morse",
+  title: "The teams already",
+  titleMuted: "running their calls on it.",
+  body: "Seven companies building AI products, using Morse for the meetings that build them.",
+};
+
 export const quiet = {
   eyebrow: "The quiet part",
   title: "Nothing you",

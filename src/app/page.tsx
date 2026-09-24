@@ -9,6 +9,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Quiet } from "@/components/quiet";
 import { Replaces } from "@/components/replaces";
 import { Showcase } from "@/components/showcase/showcase";
+import { UsedBy } from "@/components/used-by";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <Showcase />
         <Features />
         <Quiet />
+        <UsedBy />
         <BookingPage />
         <AppSection />
         <Faq />

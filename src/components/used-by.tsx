@@ -1,0 +1,115 @@
+import Image from "next/image";
+import { usedBy } from "@/content/site";
+import { COMPANIES, type Company } from "./company-marks";
+import { GlitchBand } from "./glitch";
+import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
+
+/**
+ * Who is running their meetings on Morse.
+ *
+ * A dark band, black-skied in both themes like the hero, with the seven marks
+ * reversed out of it. The heading is centred and sits on paper above the band,
+ * because contract #2e holds: a card may sit on the artwork, loose text may
+ * not — and here the artwork is scrimmed to 80% anyway, which is the only
+ * reason marks can be read on it at all.
+ *
+ * **Every mark carries its name.** Not one of these is a logo anybody
+ * recognises, so a bare row would be decoration claiming to be proof. The name
+ * is set in the page's own mono label — at `ink/80`, not `ink-soft`, because
+ * over the brightest part of the picture `ink-soft` measures 4.2:1 and this
+ * text is small. That settles what a scraped logo
+ * wall usually gets wrong: two of the seven publish mark-plus-wordmark
+ * lockups and five publish marks alone, and mixing those in one row reads as
+ * carelessness. Marks only, names in Plex, one weight throughout.
+ *
+ * Nothing here links out. These are companies vouching for Morse, not
+ * partners being advertised, and a row of seven outbound links at the foot of
+ * the page is a row of seven ways to leave it.
+ */
+
+/** One company's mark, on a fixed line so seven different shapes share a
+ *  baseline and the names below them land level. */
+function Mark({ company, base }: { company: Company; base: number }) {
+  const height = Math.round(base * company.scale);
+  if (company.mask) {
+    // No vector artwork exists for this one; the mask paints currentColor
+    // through the PNG's alpha, which recolours with the theme as an <img>
+    // would not. Width is the source's 4:3, so it is never stretched.
+    return (
+      <span
+        aria-hidden="true"
+        className="block bg-current"
+        style={{
+          height,
+          width: Math.round(height * 1.33),
+          maskImage: `url(${company.mask})`,
+          WebkitMaskImage: `url(${company.mask})`,
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          maskPosition: "center",
+          WebkitMaskPosition: "center",
+        }}
+      />
+    );
+  }
+  return (
+    <svg
+      viewBox={company.viewBox}
+      height={height}
+      aria-hidden="true"
+      className="w-auto"
+      style={{ height }}
+      dangerouslySetInnerHTML={{ __html: company.svg ?? "" }}
+    />
+  );
+}
+
+export function UsedBy() {
+  return (
+    <section id="used-by" className={`${WRAP} ${SECTION} scroll-mt-24`}>
+      <div className="mx-auto max-w-[760px] text-center">
+        <Eyebrow className="mb-5">{usedBy.eyebrow}</Eyebrow>
+        <Heading lead={usedBy.title} muted={usedBy.titleMuted} className={H2} />
+        <p className={`${LEAD} mx-auto mt-6 max-w-[52ch]`}>{usedBy.body}</p>
+      </div>
+
+      {/* Black-skied in both themes, so `on-stage` swaps the text ramp with it
+          rather than leaving light-mode ink on a dark picture. */}
+      <div className="on-stage relative isolate mt-14 overflow-hidden rounded-[22px] sm:rounded-[26px] lg:mt-16">
+        <Image
+          src="/art/current.webp"
+          alt=""
+          aria-hidden="true"
+          width={1600}
+          height={1067}
+          sizes="(max-width: 1280px) 100vw, 1200px"
+          className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]"
+        />
+        <GlitchBand src="current" onStage delay={4.6} className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]" />
+        {/* `object-[center_72%]` because the picture's middle band is its
+            darkest — cropping there gave a flat olive rectangle with no
+            artwork visible in it at all. 72% lands on the lit mesa and the
+            ground below it, which is the half worth showing.
+
+            The scrim is flat rather than a gradient: the marks sit right
+            across the width, so every one of them needs the same ground under
+            it, and a gradient would leave one end of the row paler than the
+            other. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.19_0.002_90/0.82)]" />
+
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-12 px-8 py-16 sm:grid-cols-4 sm:px-10 lg:flex lg:items-start lg:justify-between lg:gap-5 lg:px-12 lg:py-20">
+          {COMPANIES.map((company) => (
+            <li key={company.name} className="flex flex-col items-center gap-4 text-ink">
+              <span className="grid h-11 place-items-center">
+                <Mark company={company} base={32} />
+              </span>
+              <span className="text-center font-mono text-label text-ink/80">{company.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

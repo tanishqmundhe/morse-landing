@@ -55,7 +55,14 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       swap();
       return;
     }
-    document.startViewTransition(swap);
+    // The browser aborts a transition it cannot run — the tab hidden, another
+    // one already in flight — and rejects `ready` when it does. Nothing is
+    // broken when that happens (the class has changed either way, which is the
+    // part that matters), but an unhandled rejection puts an InvalidStateError
+    // in the console, so it is swallowed deliberately rather than by accident.
+    const transition = document.startViewTransition(swap);
+    transition.ready.catch(() => {});
+    transition.finished.catch(() => {});
   };
 
   return (
