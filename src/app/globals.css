@@ -343,3 +343,70 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/*
+ * The glitch.
+ *
+ * The artwork's own scan-echo, which is baked into those pixels and cannot be
+ * animated out of them — so this is the same idea rebuilt as motion: a few
+ * horizontal slices jump sideways, and the channels separate by a pixel or
+ * two while they do. It is a rip in the signal, which is what a page about
+ * carrying a conversation should glitch like.
+ *
+ * Three rules keep it from becoming noise:
+ *   · it is brief — 700ms, never a loop that runs forever;
+ *   · it is rare — on arrival, or on a deliberate hover, never idling;
+ *   · it never moves layout. Slices are clip-path and translate only.
+ */
+@keyframes glitch-slice {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: none; }
+  8%  { clip-path: inset(18% 0 62% 0); transform: translateX(-6px); }
+  16% { clip-path: inset(54% 0 28% 0); transform: translateX(5px); }
+  24% { clip-path: inset(8% 0 80% 0);  transform: translateX(3px); }
+  32% { clip-path: inset(72% 0 12% 0); transform: translateX(-4px); }
+  40% { clip-path: inset(34% 0 50% 0); transform: translateX(2px); }
+  48%, 100% { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes glitch-chroma {
+  0%, 100% { text-shadow: none; opacity: 1; }
+  10% { text-shadow: -2px 0 var(--signal), 2px 0 var(--understood); }
+  22% { text-shadow: 2px 0 var(--signal), -2px 0 var(--understood); opacity: 0.92; }
+  36% { text-shadow: -1px 0 var(--signal), 1px 0 var(--understood); }
+  50%, 100% { text-shadow: none; opacity: 1; }
+}
+
+/* A word, a mark, a heading — anything that should tear once as it lands. */
+.glitch {
+  position: relative;
+  animation: glitch-chroma 700ms steps(1, end) 1 both;
+}
+.glitch::after {
+  content: attr(data-glitch);
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  background: inherit;
+  animation: glitch-slice 700ms steps(1, end) 1 both;
+  pointer-events: none;
+}
+
+/* On a deliberate hover, rather than on arrival. */
+.glitch-hover:hover {
+  animation: glitch-chroma 560ms steps(1, end) 1 both;
+}
+
+/* A panel's own tear: a band of the picture, displaced, every so often. */
+@keyframes glitch-band {
+  0%, 92%, 100% { opacity: 0; transform: translateX(0); clip-path: inset(40% 0 58% 0); }
+  93% { opacity: 0.85; transform: translateX(-9px); clip-path: inset(22% 0 74% 0); }
+  95% { opacity: 0.7;  transform: translateX(7px);  clip-path: inset(61% 0 33% 0); }
+  97% { opacity: 0.8;  transform: translateX(-5px); clip-path: inset(44% 0 52% 0); }
+  99% { opacity: 0; transform: translateX(0); }
+}
+.glitch-band { animation: glitch-band 9s steps(1, end) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch, .glitch::after, .glitch-hover:hover, .glitch-band { animation: none; }
+  .glitch::after { display: none; }
+  .glitch-band { opacity: 0; }
+}

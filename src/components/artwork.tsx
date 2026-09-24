@@ -43,6 +43,9 @@ export function Artwork({
     >
       <Image src={`/art/${src}-light.webp`} alt={alt} width={1600} height={1067} priority={priority} sizes="100vw" className={`${layer} dark:hidden`} />
       <Image src={`/art/${src}.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} hidden dark:block`} />
+      {/* The panel's own tear: a band of the picture, displaced, rarely. */}
+      <Image src={`/art/${src}-light.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} glitch-band dark:hidden`} />
+      <Image src={`/art/${src}.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} glitch-band hidden dark:block`} />
       <MorseRule />
       {children}
     </figure>

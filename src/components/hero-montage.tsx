@@ -54,6 +54,25 @@ export function HeroMontage() {
       tl.to(q("[data-note]"), { opacity: 1, y: 0, duration: 0.5, stagger: 0.35, ease: "power2.out" }, 5.0);
       tl.to(el("[data-writing]"), { opacity: 0, duration: 0.4 }, 6.4);
 
+      // The room reacts while Priya is still talking.
+      tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.7 }, 0);
+      q("[data-emoji]").forEach((e, i) => {
+        const at = 2.0 + i * 0.45;
+        tl.to(e, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, at);
+        tl.to(e, { y: -86, duration: 2.0, ease: "power1.out" }, at);
+        tl.to(e, { opacity: 0, duration: 0.7, ease: "power1.in" }, at + 1.3);
+      });
+
+      // Arjun wants in before he answers.
+      tl.set(el("[data-hand]"), { opacity: 0, y: 8, scale: 0.9 }, 0);
+      tl.to(el("[data-hand]"), { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2)" }, 2.6);
+      tl.to(el("[data-hand]"), { opacity: 0, duration: 0.35 }, 4.1);
+
+      // Somebody asks something, and the teleprompter answers from the notes.
+      tl.set(el("[data-prompt]"), { opacity: 0, y: 14, scale: 0.97 }, 0);
+      tl.to(el("[data-prompt]"), { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power2.out" }, 8.2);
+      tl.to(el("[data-prompt]"), { opacity: 0, y: -10, duration: 0.45, ease: "power1.in" }, 11.6);
+
       // The action item lands and is taken.
       tl.to(el("[data-tick]"), { scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 7.0);
 
@@ -86,7 +105,21 @@ export function HeroMontage() {
         <span data-clock className="font-mono text-[12px] text-ink-faint tabular-nums">00:04</span>
       </div>
 
-      <div className="grid grid-cols-[1fr_190px]">
+      <div className="relative grid grid-cols-[1fr_190px]">
+        {/* The teleprompter, answering out of the notes mid-call. */}
+        <div
+          data-prompt
+          className="pointer-events-none absolute bottom-3 left-3 z-10 w-[300px] rounded-[13px] bg-float p-3 shadow-float"
+        >
+          <p className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.08em] text-understood-ink uppercase">
+            <span className="size-1.5 rounded-full bg-understood" />
+            Teleprompter
+          </p>
+          <p className="mt-1.5 text-[12px]/[1.45] text-ink">
+            This year&rsquo;s rate, fixed until March, with two extra seats.
+          </p>
+          <p className="mt-1.5 text-[10px] text-ink-faint">From Acme renewal notes</p>
+        </div>
         {/* Left: what was said, then what was written from it. */}
         <div className="flex min-h-[290px] flex-col gap-3 border-r border-hairline p-4 3xl:min-h-[330px]">
           {TRANSCRIPT.map((line, i) => (
@@ -118,13 +151,39 @@ export function HeroMontage() {
         </div>
 
         {/* Right: the people, all the way through. */}
-        <div className="flex flex-col gap-1.5 p-2">
+        <div className="relative flex flex-col gap-1.5 p-2">
           {(["ember", "lagoon", "sage"] as const).map((colour, i) => (
             <div key={colour} className="relative aspect-[4/3] overflow-hidden rounded-[11px] bg-sunken">
               <Cam colour={colour} />
               {i === 0 && <span aria-hidden="true" className="absolute inset-0 rounded-[11px] ring-2 ring-signal ring-inset" />}
+              {/* Arjun’s hand, on Arjun’s tile. */}
+              {i === 1 && (
+                <span
+                  data-hand
+                  className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-full bg-canvas/85 px-2 py-0.5 text-[10px] text-ink backdrop-blur-sm"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- a tiny pixel SVG */}
+                  <img src="/emoji/raising-hands.svg" alt="" className="size-3" />
+                  Hand up
+                </span>
+              )}
             </div>
           ))}
+
+          {/* Reactions rise over the person who is talking. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-y-2 right-2 w-[190px]">
+            {["red-heart", "thumbs-up", "fire", "clapping-hands"].map((e, i) => (
+              // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs
+              <img
+                key={e}
+                data-emoji
+                src={`/emoji/${e}.svg`}
+                alt=""
+                className="absolute size-6"
+                style={{ left: `${12 + i * 26}%`, top: "34%" }}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

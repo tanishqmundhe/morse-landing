@@ -325,6 +325,7 @@ export const footer = {
       { label: "Features", href: "/#features" },
       { label: "Booking", href: "/#booking" },
       { label: "Pricing", href: "/pricing" },
+      { label: "Developers", href: "/developers" },
       { label: "Questions", href: "/#questions" },
       { label: "Open Morse", href: links.app },
       { label: "Booking page", href: links.app },

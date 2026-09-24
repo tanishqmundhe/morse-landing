@@ -44,8 +44,12 @@ export function Hero() {
           <span className="block animate-enter" style={at(120)}>
             {hero.title}
           </span>
+          {/* One tear, on the line that lands second. `data-glitch` is what the
+              displaced copy draws; it is decorative, so it stays out of the tree. */}
           <span className="block animate-enter text-ink-soft" style={at(260)}>
-            {hero.titleMuted}
+            <span className="glitch inline-block" data-glitch={hero.titleMuted} style={at(900)}>
+              {hero.titleMuted}
+            </span>
           </span>
         </h1>
 
