@@ -30,6 +30,9 @@ export const nav = {
 };
 
 export const hero = {
+  /** Under the buttons. Stated as fact, not sold — the Mac line is a promise,
+   *  so it says "coming soon" and nothing more until there is a date. */
+  platforms: { ios: "Available on iPhone", mac: "macOS coming soon" },
   title: "Good conversations.",
   titleMuted: "Real progress.",
   lede: "Video calls that write the meeting down for you, answer questions from your notes while you talk, and book the next meeting before anyone hangs up.",

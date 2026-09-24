@@ -15,11 +15,11 @@ export function Closing() {
   return (
     <section className="p-2.5 sm:p-3.5">
       <Artwork
-        src="/art/voices.webp"
-        alt="Infrared streaks rising over a dark ridge, in lime and turquoise above coral ground."
+        src="voices"
+        alt="Infrared streaks rising over a ridge, in lime and turquoise above coral ground."
         className="grid min-h-[480px] place-items-center px-5 py-20 lg:min-h-[600px]"
       >
-        <div className="on-stage w-full max-w-[600px] rounded-[22px] bg-float/90 px-8 py-12 text-center shadow-float backdrop-blur-md sm:px-12">
+        <div className="w-full max-w-[600px] rounded-[22px] bg-float/90 px-8 py-12 text-center shadow-float backdrop-blur-md sm:px-12">
           <LogoMark className="mx-auto size-11 text-ink-soft" title="" />
           <Heading
             lead={closing.title}

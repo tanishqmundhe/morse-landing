@@ -2,7 +2,6 @@
 
 import { replaces } from "@/content/site";
 import { BRANDS, type Brand } from "./brand-marks";
-import Image from "next/image";
 import { LogoMark } from "./logo";
 import { Eyebrow, H2, Heading, LEAD, WRAP } from "./ui";
 
@@ -39,7 +38,7 @@ const MARKS = true;
  */
 function Cell({ brand }: { brand: Brand }) {
   return (
-    <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip border-r border-hairline px-4 text-ink-soft transition-colors duration-300 lg:h-[132px] lg:w-[200px] 3xl:h-[148px] 3xl:w-[224px]">
+    <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip relative border-r border-hairline px-4 text-ink-soft transition-colors duration-300 lg:h-[132px] lg:w-[200px] 3xl:h-[148px] 3xl:w-[224px]">
       {MARKS && (
         <svg
           viewBox={brand.viewBox}
@@ -79,14 +78,11 @@ function Brackets({ side }: { side: "left" | "right" }) {
 
 export function Replaces() {
   return (
-    <section className="on-stage relative isolate overflow-hidden px-2.5 py-24 sm:px-3.5 lg:py-32" aria-label="What Morse stands in for">
-      {/* A dark beat between two light ones. The logos were grey on grey; on
-          this ground they light up, and the artwork gives the band the depth
-          it was missing without asking the copy to do the work. */}
-      <div aria-hidden="true" className="absolute inset-2.5 -z-20 overflow-hidden rounded-[30px] bg-stage sm:inset-3.5">
-        <Image src="/art/current.webp" alt="" width={1600} height={1067} sizes="100vw" className="size-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-stage/55 via-stage/78 to-stage/92" />
-      </div>
+    <section className="px-2.5 py-24 sm:px-3.5 lg:py-32" aria-label="What Morse stands in for">
+      {/* No picture here. This sits directly under the hero's panel, and a
+          second image against the first read as two slabs rather than as a
+          page. The colour comes from the strip instead: the mark crossing the
+          middle takes the accent and lets it go again. */}
       <div className={WRAP}>
         <div className="max-w-[720px]">
           <Eyebrow className="mb-5">{replaces.eyebrow}</Eyebrow>
@@ -94,9 +90,18 @@ export function Replaces() {
           <p className={`${LEAD} mt-6`}>{replaces.body}</p>
         </div>
 
-        <div className="mt-14 overflow-hidden rounded-[24px] border border-hairline bg-canvas/50 backdrop-blur-sm lg:mt-16">
+        <div className="mt-14 overflow-hidden rounded-[24px] border border-hairline bg-sunken lg:mt-16">
           {/* The strip runs; the list is longer than the column. */}
-          <div className="overflow-hidden border-b border-hairline [mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)]">
+          <div className="relative isolate overflow-hidden border-b border-hairline [mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)]">
+            {/* A lit centre, behind the marks rather than over them. A
+                mix-blend-mode tint was the first try and it painted a solid
+                block: blending needs the backdrop in the same stacking
+                context, and a marquee track full of transformed children is
+                not that. A glow underneath cannot fail the same way. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-[38%] -translate-x-1/2 bg-[radial-gradient(60%_140%_at_50%_50%,var(--action),transparent_72%)] opacity-25 dark:opacity-30"
+            />
             <div className="marquee flex w-max">
               {[0, 1].map((k) => (
                 <div key={k} className="flex" aria-hidden={k > 0}>
