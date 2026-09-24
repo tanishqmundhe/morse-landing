@@ -2,7 +2,7 @@
  * Every word on the landing page lives here. Components only lay it out.
  *
  * Every claim is checked against the app (Neural-Arc/morse, feat/neural-cal).
- * Use the app's own names: "Notes" for the minutes, "Teleprompter" for the
+ * Use the app's own names: "Notes" for the minutes, "Morse Intelligence" for the
  * copilot tab, "booking page". Never describe a feature the app doesn't ship.
  * A "\n" becomes a line break where the string is rendered.
  */
@@ -57,8 +57,8 @@ export const hero = {
         result: { lead: "Action item", text: "Launch brief · Jamie · Fri" },
       },
       {
-        id: "teleprompter",
-        label: "Teleprompter",
+        id: "intelligence",
+        label: "Morse Intelligence",
         speaker: "Daniel",
         question: "What did we agree with Acme on pricing?",
         answer: "This year’s rate, fixed until March, with two extra seats.",
@@ -101,7 +101,7 @@ export const replaces = {
  * is words and chips, the chips being small pieces of the product.
  */
 type Piece = { text: string } | { chip: Chip; label: string };
-export type Chip = "call" | "transcript" | "teleprompter" | "booking" | "globe" | "question" | "note" | "done" | "calendar" | "google" | "upload";
+export type Chip = "call" | "transcript" | "intelligence" | "booking" | "globe" | "question" | "note" | "done" | "calendar" | "google" | "upload";
 
 export const showcase = {
   statement: [
@@ -110,7 +110,7 @@ export const showcase = {
     { text: "that writes everything down," },
     { chip: "transcript", label: "Transcript" },
     { text: "answers what you’re asked," },
-    { chip: "teleprompter", label: "From Acme notes" },
+    { chip: "intelligence", label: "From Acme notes" },
     { text: "and books what comes next." },
     { chip: "booking", label: "Thu, 2:00 pm" },
   ] as Piece[],
@@ -132,12 +132,12 @@ export const showcase = {
       ],
     },
     {
-      id: "teleprompter",
+      id: "intelligence",
       line: [
         { text: "Someone asks about Acme" },
         { chip: "question", label: "Sofia asked" },
         { text: "and the answer is already in front of you." },
-        { chip: "teleprompter", label: "From Acme notes" },
+        { chip: "intelligence", label: "From Acme notes" },
       ],
     },
     {
@@ -437,7 +437,7 @@ export const comparison = {
     ],
     total: { job: "Stack total", buy: "Zoom + Calendly + a notetaker", pay: "~$34–40" },
     ours: [
-      { job: "Morse Pro", buy: "Video, notes, booking and the teleprompter", plan: "pro" },
+      { job: "Morse Pro", buy: "Video, notes, booking and Morse Intelligence", plan: "pro" },
       { job: "Morse Studio", buy: "The same, plus shared Knowledge across the team", plan: "studio" },
     ],
   },
@@ -502,7 +502,7 @@ export const pricing = {
       cta: "Start free trial",
       includesLead: "Everything in Solo, plus:",
       includes: [
-        "Teleprompter: answers from your notes, mid-call",
+        "Morse Intelligence: answers from your notes, mid-call",
         "Follow-ups booked from the call, with your approval",
         "All eighteen languages and live translation",
         "Every note template, and the whiteboard",
@@ -533,7 +533,7 @@ export const pricing = {
         note: "What happens while you are talking.",
         rows: [
           { label: "Notes and action items", values: ["Yes", "Yes", "Yes"] },
-          { label: "Teleprompter, answering from your notes", values: ["—", "Yes", "Yes"] },
+          { label: "Morse Intelligence, answering from your notes", values: ["—", "Yes", "Yes"] },
           { label: "Live captions, translated", values: ["—", "Yes", "Yes"] },
           { label: "Whiteboard and annotation", values: ["—", "Yes", "Yes"] },
         ],

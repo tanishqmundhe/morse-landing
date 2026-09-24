@@ -24,7 +24,7 @@ import {
   RoomScreen,
   SCREEN_H,
   SCREEN_W,
-  TeleprompterScreen,
+  IntelligenceScreen,
 } from "./screens";
 
 /**
@@ -36,7 +36,7 @@ import {
  * 3. Scrolling moves the row sideways. Whatever is in the middle plays, and the
  *    line above becomes that screen's own line, in the same words-and-chips voice.
  *
- * The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge.
+ * The row runs Home, Room, Booking, Morse Intelligence, Notes, Calendar, Knowledge.
  * It opens on Room with Home fading off to the left, and every screen from
  * Room to Knowledge takes the middle before the section lets go. The row has
  * half a screen of padding after Knowledge so it can be centred.
@@ -83,8 +83,8 @@ function screenFor(id: string, active: boolean) {
       return <RoomScreen active={active} />;
     case "booking":
       return <BookingScreen active={active} />;
-    case "teleprompter":
-      return <TeleprompterScreen active={active} />;
+    case "intelligence":
+      return <IntelligenceScreen active={active} />;
     case "notes":
       return <NotesScreen active={active} />;
     case "calendar":
@@ -128,7 +128,7 @@ const LIT = "clamp(0, var(--lit, 99) - var(--i, 0), 1)";
 
 const ICONS: Partial<Record<ChipKind, IconSvgElement>> = {
   transcript: ClosedCaptionIcon,
-  teleprompter: SparklesIcon,
+  intelligence: SparklesIcon,
   booking: Calendar03Icon,
   calendar: Calendar03Icon,
   globe: Globe02Icon,

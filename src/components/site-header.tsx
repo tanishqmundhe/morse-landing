@@ -61,7 +61,7 @@ export function SiteHeader() {
       }`}
     >
       {/* Capped with the hero, or the mark and the CTA drift to the edges. */}
-      <div className="mx-auto flex h-[68px] w-full items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10 3xl:max-w-[1680px] 4xl:max-w-[1800px]">
+      <div className="relative mx-auto flex h-[68px] w-full items-center justify-between gap-6 px-5 sm:h-[76px] sm:px-8 lg:px-10 3xl:max-w-[1680px] 4xl:max-w-[1800px]">
         <a href={onHome ? "#" : "/"} aria-label={onHome ? "Morse, back to top" : "Morse, home"} className="text-ink">
           <Logo className="glitch-hover h-[26px] w-auto sm:h-[30px]" />
         </a>
@@ -69,7 +69,12 @@ export function SiteHeader() {
         {/* Plain links. A pill inside a pill inside the header bar was three
             nested rounded boxes for three words; the page marks its current
             place with a rule under the word, the way the footer marks a link. */}
-        <nav aria-label="Main" className="relative hidden items-center gap-8 md:flex">
+        {/* Centred on the bar, not on what the logo and the buttons leave over.
+            As a flex item between them it sat 43px left of centre at every
+            width, because the actions are 193px wide against the logo's 107 and
+            `justify-between` splits the difference. It is still the containing
+            block for its own underline. */}
+        <nav aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {nav.links.map((link) => (
             <a
               key={link.href}

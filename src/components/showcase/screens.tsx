@@ -160,7 +160,7 @@ function Stage({ speaking }: { speaking: Who }) {
 
 function Controls() {
   // 44px, as the app's `BASE` is. Order, icons and the one divider are the
-  // app's too: mic, camera, share, react, hand │ chat, people, teleprompter,
+  // app's too: mic, camera, share, react, hand │ chat, people, intelligence,
   // more, leave. The hand was missing here, which put the divider a button
   // early and left the room with no way to do the thing the hero animates —
   // "Daniel raised a hand" with no hand button under it.
@@ -179,7 +179,7 @@ function Controls() {
             <Icon icon={ic} className="size-5" />
           </span>
         ))}
-        {/* The teleprompter, open — the app's `SELECTED`, which is the ink
+        {/* Morse Intelligence, open — the app's `SELECTED`, which is the ink
             swapped for the ground rather than an accent. */}
         <span className={`${round} !bg-ink !text-canvas`}>
           <Icon icon={SparklesIcon} className="size-5" />
@@ -228,43 +228,116 @@ export function RoomScreen({ active }: { active: boolean }) {
   );
 }
 
-/** The room with the Teleprompter open: a heard question answered, then an offer to book. */
-export function TeleprompterScreen({ active }: { active: boolean }) {
+/**
+ * The room with Morse Intelligence open.
+ *
+ * Built to the handoff spec of 24 September 2026, whose one rule is: **the
+ * notification carries the live moment, the panel keeps the record.** Anything
+ * you must read right now is over the stage at full size; anything you might
+ * want later is a line in the panel. Nothing tries to be both.
+ *
+ * Two things changed from what was here before, and both come straight out of
+ * that rule:
+ *
+ * 1. **There is a notification over the stage.** Answers used to appear only
+ *    in the 300px panel, at 14px, beside the person still talking. The spec
+ *    puts the live answer top-centre of the stage on `float`, at 19/1.45 in
+ *    300 weight, because the reader has one glance to spare.
+ * 2. **A collapsed row leads with the answer, not the question.** The reader
+ *    was in the room and heard the question asked; it is the least informative
+ *    thing on the card. The one line they get should be the part they do not
+ *    already know.
+ *
+ * Marker dots carry state and never carry it alone: sage for an answer, faint
+ * for nothing found, coral for an offer waiting on a decision. Coral is
+ * reserved for what is live — never for a resolved answer.
+ */
+export function IntelligenceScreen({ active }: { active: boolean }) {
   return (
     <Frame>
       <RoomBar />
       <div className="mt-2.5 flex min-h-0 flex-1 gap-3">
         <Transcript active={false} />
-        <Stage speaking="daniel" />
-        <Panel title="Teleprompter" width={300}>
-          <p className="mt-[18px] font-mono text-label text-ink-faint uppercase">Heard in the meeting</p>
-          <div key={active ? "on" : "off"}>
-            <div className="mt-2.5 rounded-[16px] bg-sunken p-3.5 shadow-sunken">
-              <p className="text-[14px]/[1.4] text-ink-soft">
-                <b className="font-medium text-ink">Sofia</b> asked “What did we promise Acme on the renewal?”
-              </p>
-              <p className="mt-2 text-[18px]/[1.42] text-ink">
-                {active ? <Written text="This year’s rate, fixed until March, with two extra seats." delay={500} step={70} /> : "This year’s rate, fixed until March, with two extra seats."}
-              </p>
-              <p className={`mt-2 text-[13px] text-ink-faint ${active ? "animate-rise" : ""}`} style={at(1400)}>
-                From Acme renewal notes
-              </p>
+
+        {/* The stage carries the live answer, top-centre. */}
+        <div className="relative isolate min-w-0 flex-1">
+          <Stage speaking="daniel" />
+          <div
+            key={active ? "on" : "off"}
+            className={`absolute top-3 left-1/2 z-10 w-[420px] -translate-x-1/2 rounded-[22px] bg-float p-4 shadow-float ${active ? "animate-rise" : ""}`}
+            style={at(300)}
+          >
+            <p className="pr-8 text-[14px]/[1.4] text-ink-soft">
+              <b className="font-medium text-ink">Sofia Ferrer</b> asked &ldquo;What did we promise Acme on the renewal?&rdquo; &middot; now
+            </p>
+            <p className="mt-1.5 text-[19px]/[1.45] font-light text-ink">
+              {active ? <Written text="This year’s rate, fixed until March, with two extra seats." delay={700} step={62} /> : "This year’s rate, fixed until March, with two extra seats."}
+            </p>
+            <p className={`mt-1.5 text-[14px]/[1.4] text-ink-faint ${active ? "animate-rise" : ""}`} style={at(2600)}>
+              From Acme renewal notes
+            </p>
+            <span className="absolute top-2.5 right-2.5 grid size-8 place-items-center rounded-full text-ink-faint">
+              <Icon icon={Cancel01Icon} className="size-3.5" />
+            </span>
+          </div>
+        </div>
+
+        {/* The panel keeps the record: status, then one scrolling flow, then
+            the composer. Exactly one scroll region — that is what stops the
+            composer being squeezed out. */}
+        <Panel title="Morse Intelligence" width={300}>
+          <div className="mt-2.5 flex shrink-0 gap-2.5 rounded-[14px] bg-overlay px-3 py-2 text-[13px]/[1.4] text-ink-soft">
+            <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-action" />
+            <span>
+              <b className="font-medium text-ink">The host has you on.</b> Answered for you, Sofia and Daniel &mdash; 3 people.
+            </span>
+          </div>
+
+          <div key={active ? "on" : "off"} className="mt-2 flex min-h-0 flex-1 flex-col gap-1.5 overflow-hidden">
+            {/* Collapsed: the answer's first line, not the question. */}
+            <div className="flex shrink-0 items-center gap-2.5 rounded-[13px] px-2.5 py-1.5">
+              <span className="size-1.5 shrink-0 rounded-full bg-action" />
+              <span className="min-w-0 flex-1 truncate text-[14px] text-ink">This year&rsquo;s rate, fixed until March.</span>
+              <span className="shrink-0 text-[13px] text-ink-faint tabular-nums">4m</span>
             </div>
-            <div className={`mt-2.5 rounded-[16px] bg-sunken p-3.5 shadow-sunken ${active ? "animate-rise" : ""}`} style={at(2100)}>
-              <p className="text-[14px] text-ink-soft">
-                <b className="font-medium text-ink">Daniel</b> said “Let’s pick this up Thursday at two.”
-              </p>
-              <p className="mt-2 flex items-center gap-2 text-[16px] text-ink">
-                <Icon icon={Calendar03Icon} className="size-[17px]" /> Book a follow-up?
-              </p>
-              <p className="text-[14px] text-ink-soft">Thu, 2:00 – 2:30 pm · No clashes</p>
-              <div className="mt-3 flex gap-2">
-                <span className="grid h-9 flex-1 place-items-center rounded-full bg-action text-[14px] font-medium text-action-foreground">
-                  Book
+            <div className="flex shrink-0 items-center gap-2.5 rounded-[13px] px-2.5 py-1.5">
+              <span className="size-1.5 shrink-0 rounded-full bg-ink-faint" />
+              <span className="min-w-0 flex-1 truncate text-[14px] text-ink-faint">Nothing in your notes &mdash; &ldquo;What happened last March?&rdquo;</span>
+              <span className="shrink-0 text-[13px] text-ink-faint tabular-nums">3m</span>
+            </div>
+
+            {/* The offer waits on a decision, so it never collapses. */}
+            <div className={`shrink-0 rounded-[16px] bg-sunken p-3 shadow-sunken ${active ? "animate-rise" : ""}`} style={at(2100)}>
+              <p className="text-[14px] font-medium text-ink-soft">Book a follow-up?</p>
+              <p className="text-[15px]/[1.35] font-medium text-ink">Acme &mdash; renewal follow-up</p>
+              <p className="text-[14px]/[1.45] text-ink">Thursday 26 September, 2:00&ndash;2:30 pm</p>
+              <div className="mt-2.5 flex gap-2">
+                <span className="grid h-8 flex-1 place-items-center rounded-full bg-action text-[13px] font-medium text-action-foreground">
+                  Book and invite
                 </span>
-                <span className="grid h-9 flex-1 place-items-center rounded-full bg-overlay text-[14px] text-ink">Don’t book</span>
+                <span className="grid h-8 flex-1 place-items-center rounded-full text-[13px] text-ink-soft">Don&rsquo;t book</span>
               </div>
             </div>
+
+            {/* The landing flash: a notification whose time is up collapses
+                into its row and the row washes coral for about a second. It is
+                the answer to "where did that go?", and the only place a row is
+                ever tinted. */}
+            <div className="flex shrink-0 items-center gap-2.5 rounded-[13px] bg-signal/20 px-2.5 py-1.5">
+              <span className="size-1.5 shrink-0 rounded-full bg-action" />
+              <span className="min-w-0 flex-1 truncate text-[14px] text-ink">90 days by default. An admin can set 7 days to never.</span>
+              <span className="shrink-0 text-[13px] text-ink-faint tabular-nums">now</span>
+            </div>
+          </div>
+
+          <div className="mt-auto shrink-0 pt-2">
+            <div className="flex items-center gap-2 rounded-[22px] bg-sunken py-1.5 pr-1.5 pl-4 shadow-sunken">
+              <span className="flex-1 py-1 text-[14px] text-ink-faint">Ask Morse Intelligence</span>
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-overlay text-ink-faint">
+                <Icon icon={ArrowDown01Icon} className="size-4 rotate-180" />
+              </span>
+            </div>
+            <p className="mt-1.5 px-2 text-[12px]/[1.4] text-ink-faint">Only you see what you type here.</p>
           </div>
         </Panel>
       </div>
@@ -650,7 +723,7 @@ export function KnowledgeScreen({ active }: { active: boolean }) {
         </span>
         <p className="mt-3 text-[34px]/[1.15] font-light tracking-[-0.6px] text-ink">Knowledge</p>
         <p className="mt-1.5 max-w-[60ch] text-[15px]/[1.45] text-ink-soft">
-          What the in-meeting teleprompter answers from. Logins and passwords belong in the Vault, which it never reads.
+          What Morse Intelligence answers from in a meeting. Logins and passwords belong in the Vault, which it never reads.
         </p>
       </div>
 
@@ -668,7 +741,7 @@ export function KnowledgeScreen({ active }: { active: boolean }) {
       <div className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
         <div className="rounded-[22px] bg-raised p-4 shadow-raised">
           <p className="text-[17px] text-ink">Add context</p>
-          <p className="mt-0.5 text-[14px] text-ink-faint">Type or paste anything the teleprompter should know.</p>
+          <p className="mt-0.5 text-[14px] text-ink-faint">Type or paste anything Morse Intelligence should know.</p>
           <div className="mt-3 h-[76px] rounded-[16px] bg-sunken px-3.5 py-2.5 text-[14px]/[1.45] shadow-sunken">
             {active ? (
               <span className="text-ink">

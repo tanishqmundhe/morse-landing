@@ -110,7 +110,7 @@ export function UsedBy() {
             it, and a gradient would leave one end of the row paler than the
             other. Paper on the light page, ink on the dark one — the picture
             is texture under the marks either way, never a picture you read. */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.76)] dark:bg-[oklch(0.19_0.002_90/0.74)]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.55)] dark:bg-[oklch(0.19_0.002_90/0.7)]" />
 
         <ul className="grid grid-cols-2 gap-x-6 gap-y-12 px-8 py-16 sm:grid-cols-4 sm:px-10 lg:flex lg:items-start lg:justify-between lg:gap-5 lg:px-12 lg:py-20">
           {COMPANIES.map((company) => (

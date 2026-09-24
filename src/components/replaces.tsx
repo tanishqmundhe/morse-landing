@@ -112,8 +112,8 @@ export function Replaces() {
               ground the line is printed on rather than as a second panel,
               which is what a full-height picture here did. */}
           <div className="dots relative isolate flex h-[190px] items-center justify-between gap-6 overflow-hidden px-6 sm:px-8 lg:h-[240px] 3xl:h-[270px]">
-            <Image src="/art/memory-light.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 size-full object-cover opacity-25 dark:hidden" />
-            <Image src="/art/memory.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 hidden size-full object-cover opacity-35 dark:block" />
+            <Image src="/art/memory-light.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 size-full object-cover opacity-45 dark:hidden" />
+            <Image src="/art/memory.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 hidden size-full object-cover opacity-45 dark:block" />
             <GlitchBand src="memory" delay={1.5} className="absolute inset-0 -z-10 size-full object-cover opacity-25 dark:opacity-35" />
             <Brackets side="left" />
             <p className="flex min-w-0 items-center gap-4 truncate font-mono text-[20px] tracking-[-0.04em] text-ink sm:text-[26px] lg:text-[30px] 3xl:text-[34px]">

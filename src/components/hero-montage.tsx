@@ -9,7 +9,7 @@ import {
   RoomScreen,
   SCREEN_H,
   SCREEN_W,
-  TeleprompterScreen,
+  IntelligenceScreen,
 } from "./showcase/screens";
 
 /**
@@ -26,7 +26,7 @@ import {
  * the wrong screen.
  */
 
-const SCREENS = [RoomScreen, TeleprompterScreen, NotesScreen, BookingScreen, CalendarScreen] as const;
+const SCREENS = [RoomScreen, IntelligenceScreen, NotesScreen, BookingScreen, CalendarScreen] as const;
 /** Long enough to read a panel, short enough that the loop is not a wait. */
 const HOLD = 6.2;
 const RUN = SCREENS.length * HOLD;
@@ -67,7 +67,7 @@ export function HeroMontage() {
         tl.to(el(`[data-pop="${name}"]`), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.9)" }, at);
         tl.to(el(`[data-pop="${name}"]`), { opacity: 0, y: -14, duration: 0.45, ease: "power1.in" }, at + HOLD - 2.2);
       };
-      pop("answered", 1); // the teleprompter answering
+      pop("answered", 1); // Morse Intelligence answering
       pop("written", 2); // the notes writing themselves
       pop("booked", 3); // the follow-up going in
       pop("calendar", 4); // and landing on the calendar
@@ -83,7 +83,11 @@ export function HeroMontage() {
       className="pointer-events-none relative hidden lg:block"
       style={{ width: SCREEN_W * SCALE, height: SCREEN_H * SCALE }}
     >
-      {/*
+      {/* The pop-ups are glass too (`bg-float/78`, `backdrop-blur-xl`, a rim).
+          They were opaque `bg-float`, which put four solid slabs on top of the
+          artwork beside a window you can see through — the one thing in the
+          hero that did not belong to it.
+
         The frame goes translucent by overriding --canvas inside this subtree
         only: Frame paints with it, while the panels and chips on top keep
         their own opaque tokens. So the glass is the window, not its contents.
@@ -132,7 +136,7 @@ export function HeroMontage() {
           Daniel raised a hand
         </span>
 
-        <div data-pop="answered" className="absolute -top-12 left-2 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="answered" className="absolute -top-12 left-2 w-[300px] rounded-[20px] bg-float/78 p-4 shadow-float ring-1 ring-rim backdrop-blur-xl">
           <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
             <span className="size-2 rounded-full bg-understood" />
             Answered from your notes
@@ -140,7 +144,7 @@ export function HeroMontage() {
           <p className="mt-1.5 text-[13px] text-ink-soft">This year&rsquo;s rate, fixed until March.</p>
         </div>
 
-        <div data-pop="written" className="absolute -top-12 left-4 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="written" className="absolute -top-12 left-4 w-[300px] rounded-[20px] bg-float/78 p-4 shadow-float ring-1 ring-rim backdrop-blur-xl">
           <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
             <span className="grid size-5 place-items-center rounded-full bg-action">
               <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
@@ -152,12 +156,12 @@ export function HeroMontage() {
           <p className="mt-1.5 text-[13px] text-ink-soft">A summary, two decisions and three action items.</p>
         </div>
 
-        <div data-pop="booked" className="absolute -top-10 right-6 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="booked" className="absolute -top-10 right-6 w-[250px] rounded-[20px] bg-float/78 p-4 shadow-float ring-1 ring-rim backdrop-blur-xl">
           <p className="text-[15px] font-medium text-ink">Follow-up booked</p>
           <p className="mt-1 text-[13px] text-ink-soft">Thursday, 2:00 &ndash; 2:30 pm</p>
         </div>
 
-        <div data-pop="calendar" className="absolute -top-10 right-10 w-[268px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="calendar" className="absolute -top-10 right-10 w-[268px] rounded-[20px] bg-float/78 p-4 shadow-float ring-1 ring-rim backdrop-blur-xl">
           <p className="text-[15px] font-medium text-ink">On the calendar you keep</p>
           <p className="mt-1 text-[13px] text-ink-soft">Invites sent. No clashes.</p>
         </div>

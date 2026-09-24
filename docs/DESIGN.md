@@ -91,6 +91,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 1. **Header (`site-header.tsx`):** fixed, and glass at every scroll position — `backdrop-blur-xl backdrop-saturate-150` over `bg-canvas/55`, going to `/88` once the film has scrolled away. It used to be fully transparent over the hero, which left `ink-soft` links sitting on the arch's lime and all but invisible; the single scrim under the bar is not enough where the picture is brightest. Blurring and darkening the backdrop fixes it everywhere at once and stops the links changing legibility as you scroll.
    - No `.on-stage` over the hero any more: the hero takes the theme itself, so the bar is simply the page's own colours at every position.
    - The logo sits on the left and Open Morse (sage) on the right.
+   - **The links are centred on the bar, not on what is left over.** As a flex item between the logo and the buttons they sat 43px left of centre at every width, because the actions are 193px wide against the logo's 107 and `justify-between` splits the difference. They are absolutely centred now.
    - Between them, four links: **Features, Compare, Pricing, Developers.** "Product" was the home page's label and said nothing — every page here is about the product. Its highlight is a rule under the current word. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
 2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page — cells of 200 × 132 inside the column over a 280-tall dotted band, `· · ·  >` at the left edge and `<  · · ·` at the right. Theirs is six fixed cells and nothing moves; ours scrolls the strip and holds the band still, because the list is longer than a row and a marquee takes any number. Track is the list twice over, moving half its width, so the loop never jumps.
    - **Seven categories, each checked against the app** before it went on the page: the video call, the notetaker, the recording library, the transcription service, the in-call assistant, the whiteboard and the booking link. Twenty-one tools.
@@ -103,7 +104,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - **Entrance:** the page's one orchestrated moment. The film settles from 1.06×, the h1 lines, lede and buttons arrive at 350/500/700/850ms with a blur-to-sharp rise, and the card follows at 1150ms.
    - **Live card (`live-card.tsx`, `lg` and up):** one meeting, with a coral pulse and a live Recording timer. It plays three scenes, 6.5s each, with words written in one at a time:
      - Notes: what Priya said becomes an action item.
-     - Teleprompter: Daniel's question, answered from notes.
+     - Morse Intelligence: Daniel's question, answered from notes.
      - Follow-up: Book is pressed for you, then "Booked. Invites sent."
      - The segments underneath are the timeline and can be pressed to jump. Hovering holds the scene; with reduced motion nothing advances on its own.
    - The other three options (B Split stage, C Rooms, D Signal) are kept in `design/mockups/hero-options/index.html`.
@@ -111,7 +112,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - **Lighting:** the sentence sits centred on the screen and lights up word by word: "Morse is a video call [3 in call] that writes everything down, [Transcript] answers what you're asked, [From Acme notes] and books what comes next. [Thu, 2:00 pm]". Each chip plays its part as the light reaches it: the avatars slide together, and the booking chip turns sage. It's left-aligned Plex 300, 28/40/48/56px, in a column up to 1560px wide on 2xl.
    - **Rising:** once it's nearly lit, the sentence eases up to the top and the row of screens rises and fades in beneath it.
    - **Travelling:** scrolling moves the row sideways, resting on each screen in turn.
-     - The row runs Home, Room, Booking, Teleprompter, Notes, Calendar, Knowledge. It opens on Room with Home fading off to the left, and every screen from Room to Knowledge takes the middle before the section lets go. The row has half a screen of end padding so Knowledge can be centred. When Knowledge is in the middle, its search types "Acme renewal" and the matching note is outlined in sage.
+     - The row runs Home, Room, Booking, Morse Intelligence, Notes, Calendar, Knowledge. It opens on Room with Home fading off to the left, and every screen from Room to Knowledge takes the middle before the section lets go. The row has half a screen of end padding so Knowledge can be centred. When Knowledge is in the middle, its search types "Acme renewal" and the matching note is outlined in sage.
      - The line above belongs to the screen in the middle. The sentence stands for Room; each other screen has its own line in the same words-and-chips voice. Lines swap with a per-letter 3D roll (after Fancy Components' Letter 3D Swap): each letter is a small box turning on its horizontal axis, a chip turning as one piece. Moving forward, the old line rolls up and away while the new one rolls up into place, in a left-to-right wave (at most 14ms apart, 620ms each, with a slight spring). Moving back, both roll down. Lines are left-aligned and top-aligned in one cell, so a new line turns over on the same rows as the old one.
      - The middle screen plays its animation. The others step back by distance (scale down to 88%, opacity down to 45%), and the row's edges fade out through a mask.
    - **No chrome:** no counter, titles, progress bar or name tabs.
@@ -143,6 +144,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 5b. **Who uses Morse (`#used-by`, `used-by.tsx`):** seven companies, as their own marks, reversed out of a dark band. It sits after the quiet part and before booking — you have seen what it does, here is who does it with, now here is how to start.
    - **Centred heading on paper, marks on the band.** Contract #2e holds even at 82% scrim: a card may sit on the artwork, loose text may not.
    - **It takes the theme.** Cream sky and ink marks on a light page, black sky and paper marks on a dark one. It shipped black-skied in both, which left a dark slab in the middle of a cream page.
+   - **Not washed out.** The paper scrim came down from 0.88 to 0.55 (ink 0.74 → 0.70): at 0.88 the picture read as a pale smear and the comets barely showed. Marks still hold 7.5:1 light. The same complaint applied to the "Instead of" band, whose artwork went from 25% to 45% opacity.
    - **`object-[center_18%]`, for the comets.** The first crop chased luminance — the picture's middle band is its darkest — and landed on 72%, which is the water and the scrub: the half with nothing in it. The comets are the subject and they live in the top third. Scrim came down to 0.76 light / 0.74 dark to let them through; measured worst case, marks hold 10.9:1 light and 8.1:1 dark.
    - **`object-[center_72%]`.** The picture's middle band is its darkest, and cropping there gave a flat olive rectangle with no artwork in it at all. 72% lands on the lit mesa and the ground below.
    - **Every mark carries its name**, set in the page's own mono label. Not one of these is a logo anybody recognises, so a bare row would be decoration claiming to be proof.
@@ -160,7 +162,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - **Polish:** the day ripples under the pointer before it fills; the chosen time fills out from the middle with a growing circle; what's chosen stays in the header strip as the app's crumbs (`· Wed 23 · 10:30`); Confirm presses and reads "Booking…" for a beat; the check beside "You're booked in" draws itself; the undo row arrives after and counts down in real seconds; the pointer drifts slightly between steps so it never looks frozen.
    - **The pointer** measures its targets from the rendered page, so it lands on the day, the time, each field and the button at any card size.
 7. **Personal:** two cards.
-   - Teleprompter: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
+   - Morse Intelligence: a replay of `prompter-card.tsx`. The question, "Looking in your notes" with the three dots, the answer written in, then "From …". It plays once when it scrolls into view.
    - Make it yours: the five real accents (Sage, Patina, Dusk blue, Indigo, Plum) recolour a mini today panel.
 7. **Follow-up:** the app's proposal card. Book or Don't book, then the decided state and "Try again".
 9. **Questions (`#questions`, `faq.tsx`):** section 7. The heading is centred, so the end of the page keeps the booking section's rhythm; the list is not.
@@ -209,15 +211,40 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
 - **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
 - **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
+## Morse Intelligence
+
+**The feature is called Morse Intelligence, not the Teleprompter.** The handoff
+spec of 24 September 2026 flagged the name as the largest unresolved thing in
+it — one sparkle icon opened "Teleprompter and vault", while the tab called
+Teleprompter held heard answers, booking offers *and* a typed assistant, and a
+teleprompter to most people scrolls a script you read aloud. The name is now
+settled. Internal keys (`id: "intelligence"`, `chip: "intelligence"`) follow it,
+so nobody has to remember the old one.
+
+The screen (`showcase/screens.tsx`, `IntelligenceScreen`) is built to that
+spec, whose one rule is: **the notification carries the live moment, the panel
+keeps the record.** Anything you must read right now is over the stage at full
+size; anything you might want later is a line in the panel. Nothing tries to be
+both.
+
+- **There is a notification over the stage.** Answers used to appear only in the 300px panel, at 14px, beside the person still talking. It is top-centre on `float` now, at 19/1.45 in 300 weight, because the reader has one glance to spare. It carries who asked, the answer, and the source in `ink-faint`.
+- **A collapsed row leads with the answer, not the question.** The reader was in the room and heard the question asked, so it is the least informative thing on the card. The one line they get should be the part they do not already know.
+- **Marker dots carry state and never carry it alone:** sage for an answer, `ink-faint` for nothing found, coral for an offer. **Coral is reserved for what is live** — never for a resolved answer.
+- **The landing flash** is the one place a row is ever tinted: when a notification's time is up it collapses into its row and the row washes coral. It is the answer to "where did that go?"
+- **The offer never collapses** — it waits on a decision, so it keeps its buttons.
+- **One scroll region** in the panel: status line, then the flow, then the composer. That is what stops the composer being squeezed out.
+- Not built here: the queue stack, the stream-dropped state and the listening-empty state. They are in the spec and belong to the app, not to a mock of it.
+
 ## The mocks, against the app
 
 The screens in the hero and the showcase are drawings of a real product, so
 they are checked against it rather than designed. `~/Documents/Morse/frontend`
 is the source; when the two disagree, the app wins and the drawing changes.
 
-- **The control bar** (`showcase/screens.tsx`, `Controls`) is `control-bar.tsx`: 44px buttons, and the order mic, camera, share, react, hand │ chat, people, teleprompter, more, leave. The hand was missing, which put the one divider a button early and left the room with no way to do the thing the hero animates — "Daniel raised a hand" over a bar with no hand in it. Icons are the app's exact ones (`Mic02`, `Message02`, `UserMultiple02`, not the `01` variants), and an open panel takes `SELECTED`, which is the ink and the ground swapped, never an accent.
+- **The control bar** (`showcase/screens.tsx`, `Controls`) is `control-bar.tsx`: 44px buttons, and the order mic, camera, share, react, hand │ chat, people, Morse Intelligence, more, leave. The hand was missing, which put the one divider a button early and left the room with no way to do the thing the hero animates — "Daniel raised a hand" over a bar with no hand in it. Icons are the app's exact ones (`Mic02`, `Message02`, `UserMultiple02`, not the `01` variants), and an open panel takes `SELECTED`, which is the ink and the ground swapped, never an accent.
 - **The booking screen is one card moving through four steps**, not four panels at once. It drew a month and a times grid side by side with a "Booked" line under them, which is a product Morse does not have: in `booking-flow.tsx` the times replace the month, the form replaces the times, and the confirmation replaces the form. It now has the app's anatomy — header, picture card holding still, stepped form card — and runs on `.book-steps`, a CSS track timed to the montage's hold so it cannot drift from the clock the pop-ups use.
-- **Checked and matching:** panel titles (People, Chat, Teleprompter, Vault, Transcript), "Add people", "Recording".
+- **Checked and matching:** panel titles (People, Chat, Vault, Transcript), "Add people", "Recording".
+- **One deliberate divergence:** the app still calls the panel "Teleprompter". The landing page calls it **Morse Intelligence**, which is the settled name — the app has to catch up, not the page. If you are diffing the two, that one is on purpose.
 - **Not yet audited line by line:** the Notes, Calendar and Knowledge screens. They were built from the app but have not been re-read against it since.
 
 ## Depth
@@ -289,7 +316,7 @@ constructions the skill would flag, and both are brand lines the client chose.
 
 ## Copy rules
 
-All copy lives in `src/content/site.ts` and uses the app's own words: "Notes", "Teleprompter", "booking page". Every claim was checked against the code on 2026-09-22. Don't claim team or round-robin booking, payments, general "agentic workflows", or a script-reading teleprompter. None of them exist.
+All copy lives in `src/content/site.ts` and uses the app's own words: "Notes", "Morse Intelligence", "booking page". Every claim was checked against the code on 2026-09-22. Don't claim team or round-robin booking, payments, general "agentic workflows", or a script-reading teleprompter. None of them exist.
 
 ## Open questions
 
@@ -309,7 +336,7 @@ All copy lives in `src/content/site.ts` and uses the app's own words: "Notes", "
   - Invented fonts (Manrope, DM Sans), bordered cards and bold headlines.
   - Decorative unicode glyphs and a fake `╱` logo.
   - Sage used as decoration, and swatches (sand, lilac) that don't exist in the app.
-  - A script-reading teleprompter, which the app doesn't have.
+  - A script-reading Morse Intelligence, which the app doesn't have.
   - "Agentic workflows" overclaimed.
   - A tour dialog that repeated the page.
   - Every CTA looped back to its own page.

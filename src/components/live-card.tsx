@@ -105,7 +105,7 @@ export function LiveCard({ className = "" }: { className?: string }) {
           </>
         )}
 
-        {scene.id === "teleprompter" && (
+        {scene.id === "intelligence" && (
           <>
             <p className="text-[15px]/[1.45] text-ink-soft">
               <span className="font-medium text-ink">{prompter.speaker}</span> asked “{prompter.question}”
