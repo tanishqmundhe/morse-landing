@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { GlitchBand } from "./glitch";
 
 /**
  * The infrared artwork, in the frame it was designed for.
@@ -26,12 +27,15 @@ export function Artwork({
   alt,
   className = "",
   priority = false,
+  glitchDelay = 0,
   children,
 }: {
   src: string;
   alt: string;
   className?: string;
   priority?: boolean;
+  /** Staggers this panel's tear against the others on the page. */
+  glitchDelay?: number;
   children?: React.ReactNode;
 }) {
   // Absolute, so a panel can be a grid or a flex box for whatever sits on it
@@ -43,9 +47,8 @@ export function Artwork({
     >
       <Image src={`/art/${src}-light.webp`} alt={alt} width={1600} height={1067} priority={priority} sizes="100vw" className={`${layer} dark:hidden`} />
       <Image src={`/art/${src}.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} hidden dark:block`} />
-      {/* The panel's own tear: a band of the picture, displaced, rarely. */}
-      <Image src={`/art/${src}-light.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} glitch-band dark:hidden`} />
-      <Image src={`/art/${src}.webp`} alt="" aria-hidden="true" width={1600} height={1067} sizes="100vw" className={`${layer} glitch-band hidden dark:block`} />
+      {/* The panel's own tear. */}
+      <GlitchBand src={src} className={layer} delay={glitchDelay} />
       <MorseRule />
       {children}
     </figure>

@@ -415,7 +415,10 @@
   97% { opacity: 0.8;  transform: translateX(-5px); clip-path: inset(44% 0 52% 0); }
   99% { opacity: 0; transform: translateX(0); }
 }
-.glitch-band { animation: glitch-band 9s steps(1, end) infinite; }
+/* 4.5s, and the tear is the last 8% of it — about a third of a second.
+   Instances stagger with animation-delay (see glitch.tsx): every picture
+   tearing on the same beat reads as the page breaking. */
+.glitch-band { animation: glitch-band 4.5s steps(1, end) infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .glitch, .glitch::after, .glitch-hover:hover, .glitch-band { animation: none; }

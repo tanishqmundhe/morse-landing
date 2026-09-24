@@ -3,6 +3,7 @@
 import { ArrowLeft01Icon, Link01Icon } from "@hugeicons/core-free-icons";
 import { booking } from "@/content/site";
 import Image from "next/image";
+import { GlitchBand } from "./glitch";
 import { useLoop } from "./features/timeline";
 import { Eyebrow, H2, Heading, Icon, LEAD, SECTION, WRAP } from "./ui";
 
@@ -150,6 +151,7 @@ export function BookingPage() {
                   calendar beside it, and it takes the page's sky either way. */}
               <Image src="/art/current-light.webp" alt="" width={1600} height={1067} sizes="(min-width: 1024px) 500px, 100vw" className="size-full object-cover dark:hidden" />
               <Image src="/art/current.webp" alt="" width={1600} height={1067} sizes="(min-width: 1024px) 500px, 100vw" className="hidden size-full object-cover dark:block" />
+              <GlitchBand src="current" delay={3} sizes="(min-width: 1024px) 500px, 100vw" />
             </div>
           </div>
         </div>

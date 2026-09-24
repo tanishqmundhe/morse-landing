@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { hero } from "@/content/site";
+import { GlitchBand } from "./glitch";
 import { HeroMontage } from "./hero-montage";
 import { Icon, PRIMARY, SECONDARY } from "./ui";
 
@@ -41,6 +42,8 @@ export function Hero() {
         sizes="100vw"
         className="animate-film-in absolute inset-0 -z-20 size-full object-cover"
       />
+      {/* The hero tears first, and the rest of the page follows it. */}
+      <GlitchBand src="signal" className="absolute inset-0 -z-20 size-full object-cover" />
       {/* The scrim is heaviest where the words are and lets go by the middle,
           so the arch stays bright on the side nothing is written on. */}
       <div
