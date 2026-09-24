@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import {
   ArrowDown01Icon,
+  ArrowLeft01Icon,
   Building03Icon,
   Calendar03Icon,
   CallEnd01Icon,
@@ -10,8 +12,9 @@ import {
   ComputerScreenShareIcon,
   Database01Icon,
   Folder01Icon,
-  Message01Icon,
-  Mic01Icon,
+  HandIcon,
+  Message02Icon,
+  Mic02Icon,
   MoreHorizontalIcon,
   PauseIcon,
   Search01Icon,
@@ -20,9 +23,10 @@ import {
   SquareLock02Icon,
   Tick02Icon,
   UserAdd01Icon,
-  UserGroupIcon,
+  UserMultiple02Icon,
   Video01Icon,
 } from "@hugeicons/core-free-icons";
+import { booking } from "@/content/site";
 import { Icon } from "../ui";
 import { LogoMark } from "../logo";
 import { Written } from "../live-card";
@@ -141,7 +145,7 @@ function Stage({ speaking }: { speaking: Who }) {
     >
       <Cam colour={PEOPLE[who].colour} />
       <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-canvas/70 px-3 py-1 text-[14px] text-ink">
-        {big && <Icon icon={Mic01Icon} className="size-3.5" />}
+        {big && <Icon icon={Mic02Icon} className="size-3.5" />}
         {PEOPLE[who].name}
       </span>
     </div>
@@ -155,28 +159,35 @@ function Stage({ speaking }: { speaking: Who }) {
 }
 
 function Controls() {
-  const round = "grid size-[46px] place-items-center rounded-full bg-overlay text-ink";
+  // 44px, as the app's `BASE` is. Order, icons and the one divider are the
+  // app's too: mic, camera, share, react, hand │ chat, people, teleprompter,
+  // more, leave. The hand was missing here, which put the divider a button
+  // early and left the room with no way to do the thing the hero animates —
+  // "Daniel raised a hand" with no hand button under it.
+  const round = "grid size-11 place-items-center rounded-full bg-overlay text-ink";
   return (
     <div className="mt-2.5 flex justify-center">
       <div className="flex items-center gap-2 rounded-full bg-raised p-[7px]">
-        {[Mic01Icon, Video01Icon, ComputerScreenShareIcon, SmileIcon].map((ic, i) => (
+        {[Mic02Icon, Video01Icon, ComputerScreenShareIcon, SmileIcon, HandIcon].map((ic, i) => (
           <span key={i} className={round}>
             <Icon icon={ic} className="size-5" />
           </span>
         ))}
-        <span className="h-6 w-px bg-hairline" />
-        {[Message01Icon, UserGroupIcon].map((ic, i) => (
+        <span className="mx-1 h-6 w-px bg-hairline" />
+        {[Message02Icon, UserMultiple02Icon].map((ic, i) => (
           <span key={i} className={round}>
             <Icon icon={ic} className="size-5" />
           </span>
         ))}
+        {/* The teleprompter, open — the app's `SELECTED`, which is the ink
+            swapped for the ground rather than an accent. */}
         <span className={`${round} !bg-ink !text-canvas`}>
           <Icon icon={SparklesIcon} className="size-5" />
         </span>
         <span className={round}>
           <Icon icon={MoreHorizontalIcon} className="size-5" />
         </span>
-        <span className="grid h-[46px] w-[62px] place-items-center rounded-full bg-[oklch(0.7_0.17_25)] text-[oklch(0.2_0.03_25)]">
+        <span className="ml-1 grid h-11 w-16 place-items-center rounded-full bg-[oklch(0.7_0.17_25)] text-[oklch(0.2_0.03_25)]">
           <Icon icon={CallEnd01Icon} className="size-5" />
         </span>
       </div>
@@ -207,7 +218,7 @@ export function RoomScreen({ active }: { active: boolean }) {
                 <p className="text-[15px] text-ink">{name}</p>
                 <p className="text-[13px] text-ink-faint">{role}</p>
               </div>
-              <Icon icon={Mic01Icon} className={`size-[17px] ${who === "sofia" ? "text-signal-ink" : "text-ink-soft"}`} />
+              <Icon icon={Mic02Icon} className={`size-[17px] ${who === "sofia" ? "text-signal-ink" : "text-ink-soft"}`} />
             </div>
           ))}
         </Panel>
@@ -413,74 +424,144 @@ export function CalendarScreen({ active }: { active: boolean }) {
   );
 }
 
-/** The public booking page: a day, a time picked, then booked. */
+/**
+ * The public booking page, as the app actually draws one.
+ *
+ * Anatomy from `booking-shell.tsx`: who you are booking, then two near-square
+ * cards — the picture on the left, holding still, and the form on the right
+ * moving through its steps. **One step at a time.** This showed a calendar and
+ * a times grid side by side with a "Booked" line under them, which is a
+ * product Morse does not have: in the app the times replace the month, the
+ * form replaces the times, and the confirmation replaces the form.
+ *
+ * The strip above the steps is the app's own: back, the meeting type, the
+ * crumbs for what has been chosen so far, and the length on the right.
+ *
+ * The track is CSS (`.book-steps`), not GSAP — it runs for exactly the
+ * montage's hold and restarts with `active`, so it cannot drift from the
+ * clock the pop-ups run on.
+ */
 export function BookingScreen({ active }: { active: boolean }) {
-  const times = ["9:00", "10:30", "11:30", "2:00", "3:30", "4:30"];
+  const p = booking.page;
+  const WEEK = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  const FREE = [23, 24, 25, 28, 29, 30];
+  const STEP = "flex w-full shrink-0 flex-col px-6 pt-5 pb-6";
+
   return (
     <Frame>
       <div className="flex h-full flex-col items-center justify-center" key={active ? "on" : "off"}>
-        <div className="flex w-[820px] items-center gap-5">
+        {/* Avatar, name, role — the app's whole header for this page. */}
+        <div className="flex w-[880px] items-center gap-5">
           <Avatar who="sofia" size={64} />
           <div>
-            <p className="text-[28px] font-light text-ink">Book a meeting with Sofia Ferrer</p>
-            <p className="text-[18px] text-ink-soft">Product lead</p>
+            <p className="text-[28px]/[1.15] font-light tracking-[-0.5px] text-ink">Book a meeting with {p.host}</p>
+            <p className="text-[18px] text-ink-soft">{p.role}</p>
           </div>
         </div>
-        <div className="mt-6 grid w-[820px] grid-cols-[1.1fr_1fr] gap-4">
-          <div className="rounded-[26px] bg-raised p-6">
-            <p className="text-[19px] font-medium text-ink">Intro call</p>
-            <p className="text-[16px] text-ink-soft">30 min · Morse meeting</p>
-            <p className="mt-5 text-[16px] text-ink">September 2026</p>
-            <div className="mt-2 grid grid-cols-7 gap-1.5 text-center text-[14px]">
-              {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
-                <span key={i} className="text-ink-faint">
-                  {d}
-                </span>
-              ))}
-              <span />
-              {Array.from({ length: 30 }, (_, i) => i + 1).map((n) => {
-                const wd = (n % 7) as number;
-                const open = n > 22 && wd !== 5 && wd !== 6;
-                return (
-                  <span
-                    key={n}
-                    className={`mx-auto grid size-8 place-items-center rounded-full tabular-nums ${
-                      n === 24 ? "bg-action text-action-foreground" : open ? "bg-overlay/60 text-ink" : "text-ink-faint/50"
-                    }`}
-                  >
-                    {n}
-                  </span>
-                );
-              })}
+
+        <div className="mt-6 grid w-[880px] grid-cols-2 items-start gap-4">
+          {/* The picture, framed inside the card as the app frames its film:
+              inset 8px, following the card's corners. It holds still. */}
+          <div className="h-[420px] rounded-[26px] bg-raised p-2">
+            <div className="relative isolate size-full overflow-hidden rounded-[20px] bg-[#05070a]">
+              <Image src="/art/current-light.webp" alt="" width={1600} height={1067} sizes="440px" className="size-full object-cover dark:hidden" />
+              <Image src="/art/current.webp" alt="" width={1600} height={1067} sizes="440px" className="hidden size-full object-cover dark:block" />
             </div>
           </div>
-          <div className="flex flex-col rounded-[26px] bg-raised p-6">
-            <p className="text-[17px] text-ink">Thursday 24 September</p>
-            <p className="text-[14px] text-ink-faint">Times in Western European Time</p>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {times.map((t) => (
-                <span key={t} className="relative grid h-11 place-items-center overflow-hidden rounded-full bg-overlay text-[16px] text-ink tabular-nums">
-                  {t}
-                  {t === "2:00" && (
-                    <span
-                      className={`absolute inset-0 grid place-items-center bg-action font-medium text-action-foreground ${active ? "animate-rise" : ""}`}
-                      style={at(1200)}
-                    >
-                      {t}
-                    </span>
-                  )}
-                </span>
-              ))}
+
+          {/* The form. One card, four steps, the track sliding between them. */}
+          <div className="relative isolate flex h-[420px] flex-col overflow-hidden rounded-[26px] bg-raised">
+            <div className="flex items-center gap-2 border-b border-hairline px-6 py-3.5">
+              <Icon icon={ArrowLeft01Icon} className="size-5 shrink-0 text-ink-faint" />
+              <p className="shrink-0 text-[18px] font-medium text-ink">{p.type}</p>
+              <p className="truncate text-[15px] text-ink-soft">&middot; Wed 23</p>
+              <p className="shrink-0 text-[15px] text-ink-soft tabular-nums">&middot; {p.pick}</p>
+              <p className="ml-auto shrink-0 text-[15px] text-ink-soft tabular-nums">{p.minutes}</p>
             </div>
-            <p
-              className={`mt-auto flex items-center gap-2 pt-4 text-[16px] text-ink ${active ? "animate-rise" : "opacity-0"}`}
-              style={at(2200)}
-            >
-              <span className="grid size-6 place-items-center rounded-full bg-action text-action-foreground">
-                <Icon icon={Tick02Icon} className="size-3.5" />
-              </span>
-              Booked. The link is in your email.
-            </p>
+
+            <div className="relative min-h-0 flex-1 overflow-hidden">
+              <div className={`flex h-full w-full ${active ? "book-steps" : ""}`}>
+                {/* 1 · the month */}
+                <div className={STEP}>
+                  <div className="flex items-center justify-between px-2 text-[16px] text-ink">
+                    <Icon icon={ArrowLeft01Icon} className="size-4 text-ink-faint" />
+                    <span>{p.month}</span>
+                    <Icon icon={ArrowLeft01Icon} className="size-4 rotate-180 text-ink-faint" />
+                  </div>
+                  <div className="mt-3 grid grid-cols-7 gap-y-0.5 text-center text-[13px]">
+                    {WEEK.map((d) => (
+                      <span key={d} className="text-ink-faint">{d}</span>
+                    ))}
+                    {[0, 1].map((i) => <span key={`b${i}`} />)}
+                    {Array.from({ length: 30 }, (_, i) => i + 1).map((n) => (
+                      <span key={n} className="relative mx-auto grid size-8 place-items-center">
+                        {n === p.day && <span className="absolute inset-0 rounded-full bg-overlay" />}
+                        <span className={`relative tabular-nums ${FREE.includes(n) ? "text-ink" : "text-ink-faint/45"}`}>{n}</span>
+                        {FREE.includes(n) && <span className="absolute bottom-0.5 size-1 rounded-full bg-action" />}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-auto flex items-center gap-2 px-2 text-[14px] text-ink-soft">
+                    <span className="size-1.5 rounded-full bg-action" />
+                    {p.free}
+                  </p>
+                </div>
+
+                {/* 2 · the time. Three across, as the app lays them out. */}
+                <div className={STEP}>
+                  <p className="text-[16px] text-ink">{p.dayLabel}</p>
+                  <p className="text-[13px] text-ink-faint">{p.zone}</p>
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {p.times.map((t) => (
+                      <span
+                        key={t}
+                        className={`grid h-10 place-items-center rounded-full text-[15px] tabular-nums ${
+                          t === p.pick ? "bg-action font-medium text-action-foreground" : "bg-sunken text-ink shadow-sunken"
+                        }`}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3 · who you are */}
+                <div className={STEP}>
+                  {([["name", p.name] as const, ["email", p.email] as const]).map(([k, field]) => (
+                    <label key={k} className="mt-3 flex flex-col gap-1.5 first:mt-0">
+                      <span className="px-1 text-[15px] font-medium text-ink-soft">{field.label}</span>
+                      <span className="flex h-11 items-center rounded-full bg-sunken px-5 text-[16px] text-ink shadow-sunken">
+                        {field.value}
+                      </span>
+                    </label>
+                  ))}
+                  <p className="mt-1.5 px-1 text-[14px]/[1.4] text-ink-faint">{p.email.hint}</p>
+                  <div className="mt-auto flex justify-end">
+                    <span className="inline-flex h-11 items-center rounded-full bg-action px-7 text-[16px] font-medium text-action-foreground">
+                      {p.confirm}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 4 · booked */}
+                <div className={STEP}>
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-action">
+                      <Icon icon={Tick02Icon} className="size-3.5 text-action-foreground" />
+                    </span>
+                    <h3 className="text-[22px]/[1.25] font-light tracking-[-0.3px] text-ink">{p.done.title}</h3>
+                  </div>
+                  <p className="mt-3 text-[17px]/[1.5] text-ink">{p.done.what}</p>
+                  <p className="mt-1 text-[14px] text-ink-soft">{p.zone.replace("Times shown in ", "")}</p>
+                  <p className="mt-4 text-[15px]/[1.5] text-ink-soft">
+                    {p.done.sent} <span className="text-ink">{p.email.value}</span>.
+                  </p>
+                  <p className="mt-auto border-t border-hairline pt-4 text-[14px] text-ink-soft">
+                    Booked the wrong time? <span className="tabular-nums">9:55</span> {p.done.undo}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

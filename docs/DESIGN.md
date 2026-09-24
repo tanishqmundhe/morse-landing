@@ -205,6 +205,17 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
 - **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
 - **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
+## The mocks, against the app
+
+The screens in the hero and the showcase are drawings of a real product, so
+they are checked against it rather than designed. `~/Documents/Morse/frontend`
+is the source; when the two disagree, the app wins and the drawing changes.
+
+- **The control bar** (`showcase/screens.tsx`, `Controls`) is `control-bar.tsx`: 44px buttons, and the order mic, camera, share, react, hand │ chat, people, teleprompter, more, leave. The hand was missing, which put the one divider a button early and left the room with no way to do the thing the hero animates — "Daniel raised a hand" over a bar with no hand in it. Icons are the app's exact ones (`Mic02`, `Message02`, `UserMultiple02`, not the `01` variants), and an open panel takes `SELECTED`, which is the ink and the ground swapped, never an accent.
+- **The booking screen is one card moving through four steps**, not four panels at once. It drew a month and a times grid side by side with a "Booked" line under them, which is a product Morse does not have: in `booking-flow.tsx` the times replace the month, the form replaces the times, and the confirmation replaces the form. It now has the app's anatomy — header, picture card holding still, stepped form card — and runs on `.book-steps`, a CSS track timed to the montage's hold so it cannot drift from the clock the pop-ups use.
+- **Checked and matching:** panel titles (People, Chat, Teleprompter, Vault, Transcript), "Add people", "Recording".
+- **Not yet audited line by line:** the Notes, Calendar and Knowledge screens. They were built from the app but have not been re-read against it since.
+
 ## Depth
 
 - **Depth is the rim and the luminance; the shadow is the last 10%.** `--elev-raised` and `--elev-float` are a 1px rim, a 1-3px contact shadow and one short ambient one. The first pass put a 44px blur at 26% under every floating card and 30px under every raised one, and in dark mode the float was 0.75 at 44px — which reads as a sticker lifted off the page rather than a surface on it. Linear, Vercel and Stripe all sit nearer a 1-3px contact shadow plus something shallow; these now do too, at roughly half the alpha and two-thirds the blur. **Dark needs less, not more:** the ground is already near-black, so a heavy shadow only draws a dark halo.

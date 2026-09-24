@@ -483,3 +483,29 @@
     filter: blur(0px);
   }
 }
+
+/* ── The booking mock in the hero, stepping itself ───────────────────────
+ *
+ * The public booking page is one card moving through four steps, not four
+ * panels on screen at once — see `booking-flow.tsx` in the app. The hero's
+ * copy of it ran a calendar and a times grid side by side with a "Booked"
+ * line under them, which is a product Morse does not have.
+ *
+ * One track of four steps, translated a step at a time over the montage's
+ * hold. Each step gets about a second and a half to be read and a short
+ * slide between them, on the page's own curve.
+ *
+ * Under reduced motion it rests on the last frame: the booking is the point,
+ * and a still of the confirmation says it without moving.
+ */
+@keyframes book-steps {
+  0%, 17%   { transform: translateX(0); }
+  23%, 43%  { transform: translateX(-100%); }
+  49%, 69%  { transform: translateX(-200%); }
+  75%, 100% { transform: translateX(-300%); }
+}
+.book-steps { animation: book-steps 6.2s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .book-steps { animation: none; transform: translateX(-300%); }
+}
