@@ -74,9 +74,9 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed inset-x-2.5 top-2.5 z-40 transition-[background-color,box-shadow] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
-        // Over the film it reads on stage; once the pill goes solid it is on the
-        // light page and the ink has to turn with it.
-        solid ? "" : "on-stage"
+        // Every page now opens on paper rather than on a film, so the bar is on
+        // the light page from the first pixel and never inverts.
+        ""
       } ${
         menu ? "rounded-[28px] bg-canvas/95 shadow-float backdrop-blur-md" : solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
       }`}

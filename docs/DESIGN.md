@@ -18,6 +18,11 @@ not reinvented.
   Footage is Pexels (free commercial use, no attribution required, **no model release**), so these people stand in a generic call and never carry a name-plus-quote or any endorsement:
   ember `pexels.com/video/7647691` · lagoon `/8135478` · sage `/8048247` · lilac `/5941020` · tide `/8685426` · fjord `/6667340`.
   If a face ever needs to carry a testimonial, it has to be replaced with released stock or a real person first.
+- **#2e The artwork is a panel, never a backdrop.** The infrared work (`/art/*.webp`) is false-colour: black sky, lime and cyan rock, coral ground, with the scan-echo glitch baked into the pixels rather than animated over them. There is no corner of it that holds a headline without a scrim heavy enough to throw away the reason for showing it — so words sit on paper and the artwork gets its own framed panel below them. A light card may sit on it; text may not.
+  It is already the page's palette: the lime is `--action`, the coral is near `--signal`, the cyan is `--understood`. Nothing was tinted to fit.
+  **It only works because it is rare.** One panel on the home page, one picture inside the booking mock. The closing band is a plain well and the pricing page carries none at all — both deliberately, following the reference. A second hero-scale panel would spend it.
+  Source PNGs are 1536x1024 at ~3 MB; shipped as 1600px WebP at ~200-260 KB, which is the only reason this is affordable at all.
+- **#2f One ornament: the Morse rule.** A line of Morse along the top right of each panel, spelling MORSE. It is the product's name in the product's own alphabet, which is the only kind of ornament contract #7 allows.
 - **#3 Two registers.** IBM Plex Sans for everything people say. Geist Mono only for the uppercase `text-label` eyebrows. No third family.
 - **#4 Weight inverts with scale.** Headlines are Plex 300. Labels are 600 at 13px.
 - **#5/#6 Depth without borders.** Cards are `rounded-[28px] bg-raised shadow-raised`. Wells inside cards are `bg-sunken shadow-sunken`, and the follow-up card floats (`bg-float shadow-float`). Hairlines only divide list rows and page bands.

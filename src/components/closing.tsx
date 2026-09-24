@@ -1,24 +1,23 @@
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { closing } from "@/content/site";
-import { Film } from "./film";
 import { LogoMark } from "./logo";
 import { Heading, Icon, PRIMARY } from "./ui";
 
 /**
- * Section 8: the last word, over the app's ringed-meadow film. The page opens
- * on a film and closes on one; the mark sits above the line, as a sign-off.
+ * Section 8: the last word, on a plain well.
+ *
+ * This used to close on a film, to rhyme with a hero that opened on one. The
+ * hero now carries the infrared artwork instead, and that artwork only works
+ * because it is rare — a second panel here would spend it. So the last word
+ * gets the quietest surface on the page and the loudest button, and the mark
+ * sits above the line as a sign-off.
  */
 export function Closing() {
   return (
     <section className="p-2.5 sm:p-3.5">
-      <div className="on-stage relative isolate grid min-h-[480px] place-items-center overflow-hidden rounded-[22px] bg-stage px-6 py-24 text-center sm:rounded-[30px] lg:min-h-[620px]">
-        <Film src={closing.film.src} poster={closing.film.poster} className="-z-10 object-center" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.205_0_0/0.78)_0%,oklch(0.205_0_0/0.46)_100%)]"
-        />
+      <div className="grid min-h-[420px] place-items-center rounded-[22px] bg-sunken px-6 py-24 text-center sm:rounded-[30px] lg:min-h-[520px]">
         <div>
-          <LogoMark className="mx-auto size-11 text-ink/85" title="" />
+          <LogoMark className="mx-auto size-11 text-ink-faint" title="" />
           <Heading
             lead={closing.title}
             muted={closing.titleMuted}

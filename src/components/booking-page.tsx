@@ -2,7 +2,7 @@
 
 import { ArrowLeft01Icon, Link01Icon } from "@hugeicons/core-free-icons";
 import { booking } from "@/content/site";
-import { Film } from "./film";
+import Image from "next/image";
 import { useLoop } from "./features/timeline";
 import { Eyebrow, H2, Heading, Icon, LEAD, SECTION, WRAP } from "./ui";
 
@@ -141,11 +141,19 @@ export function BookingPage() {
 
       {/* The booking page itself */}
       <div ref={root} className="mx-auto mt-14 grid w-full max-w-[1000px] items-start gap-4 text-left lg:mt-16 lg:grid-cols-2">
-        {/* The film, framed inside the card as the app frames it */}
+        {/* The picture on the booking page, framed inside the card as the app
+            frames it. It drifts, which is the only motion the artwork gets. */}
         <div data-card className={`${CARD} h-40 p-2 lg:aspect-[9/10] lg:h-auto`}>
-          <div className="relative isolate size-full overflow-hidden rounded-[20px] bg-black">
+          <div className="relative isolate size-full overflow-hidden rounded-[20px] bg-[#05070a]">
             <div className="film-drift absolute inset-0">
-              <Film src={p.film.src} poster={p.film.poster} className="object-center" />
+              <Image
+                src="/art/knowledge.webp"
+                alt=""
+                width={1600}
+                height={1067}
+                sizes="(min-width: 1024px) 500px, 100vw"
+                className="size-full object-cover"
+              />
             </div>
           </div>
         </div>
