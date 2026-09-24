@@ -1,7 +1,7 @@
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { hero } from "@/content/site";
 import { Artwork } from "./artwork";
-import { LiveCard } from "./live-card";
+import { HeroMontage } from "./hero-montage";
 import { Icon, PRIMARY, SECONDARY } from "./ui";
 
 /**
@@ -60,11 +60,8 @@ export function Hero() {
           priority
           className="animate-film-in h-[380px] sm:h-[460px] lg:h-[560px] 3xl:h-[660px]"
         >
-          <div
-            className="absolute right-6 bottom-6 hidden animate-enter lg:block 3xl:right-10 3xl:bottom-10"
-            style={at(700)}
-          >
-            <LiveCard />
+          <div className="absolute right-6 bottom-6 3xl:right-10 3xl:bottom-10">
+            <HeroMontage />
           </div>
         </Artwork>
       </div>
