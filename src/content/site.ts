@@ -537,11 +537,70 @@ export const comparison = {
     alts: "Granola is $14, Fireflies Pro $10 and Otter Pro $17. The row takes Fathom because it is the one most teams land on.",
   },
 
-  jobs: {
+  /**
+   * The difference, as three panels. Two problems sitting flat, and the answer
+   * lifted onto a raised card — after the device Verseo use on their own page,
+   * where the elevation does the arguing before anyone reads a word.
+   *
+   * This replaced a list of seven categories and the tools in each. That list
+   * was an inventory: true, checkable, and no argument at all. Same material,
+   * turned into the comparison the page is for.
+   */
+  difference: {
+    eyebrow: "The difference",
+    title: "Four tools and a person",
+    titleMuted: "taking notes. Or Morse.",
+    columns: [
+      {
+        title: "A stack of tools",
+        win: false,
+        points: [
+          "Four subscriptions, four logins",
+          "The call in one place, the notes in another",
+          "A bot joins the meeting to take them",
+          "Nothing knows what anything else said",
+        ],
+      },
+      {
+        title: "Doing it by hand",
+        win: false,
+        points: [
+          "Somebody types the minutes",
+          "Action items get lost in the thread",
+          "The follow-up is booked tomorrow, if at all",
+          "Nobody can search what was said last March",
+        ],
+      },
+      {
+        title: "Morse",
+        win: true,
+        points: [
+          "One login, one subscription",
+          "Notes and action items the moment it ends",
+          "No bot \u2014 Morse transcribes the call itself",
+          "The follow-up booked before you hang up",
+        ],
+      },
+    ],
+  },
+
+  /**
+   * The orbit. Morse at the centre, the tools it stands in for around it, on
+   * the one artwork the compare page carries.
+   *
+   * The marks are the same `BRANDS` the home page's band runs on, so the two
+   * cannot drift, and the same licence note applies: comparative use is
+   * against most of these brand guidelines, and `MARKS = false` in
+   * `replaces.tsx` is the switch that drops every one of them at once.
+   */
+  orbit: {
     eyebrow: "Seven jobs",
     title: "One login,",
     titleMuted: "instead of seven.",
-    body: "Every category below was checked against the app before it went on this page. The tools named are the ones people actually buy for that job.",
+    /** Inner ring first, then outer. Named rather than taken by index so a
+     *  reordering of BRANDS cannot silently change the picture. */
+    inner: ["Google Meet", "Calendly", "Descript"],
+    outer: ["Zoom", "Fathom", "Miro", "Loom"],
   },
 
   /**

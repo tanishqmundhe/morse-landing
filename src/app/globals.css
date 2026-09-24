@@ -529,3 +529,28 @@
 @media (prefers-reduced-motion: reduce) {
   .um-mark { transition: none; }
 }
+
+/* ── The compare page's orbit ────────────────────────────────────────────
+ *
+ * Morse at the centre and the tools it stands in for going round it. The
+ * rings turn; each mark counter-turns at the same rate so it stays upright,
+ * which is the whole trick — a logo rotating with its ring reads as a fairground
+ * ride rather than a system.
+ *
+ * Two speeds and two directions, so the picture never repeats itself exactly
+ * and no two marks hold formation. 80s and 110s: slow enough that it is
+ * movement you notice only if you look, which is what the page needs from it.
+ */
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
+@keyframes orbit-hold { to { transform: rotate(-360deg); } }
+
+.orbit-inner { animation: orbit-turn 80s linear infinite; }
+.orbit-inner .orbit-mark { animation: orbit-hold 80s linear infinite; }
+.orbit-outer { animation: orbit-turn 110s linear infinite reverse; }
+.orbit-outer .orbit-mark { animation: orbit-hold 110s linear infinite reverse; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-inner, .orbit-outer, .orbit-inner .orbit-mark, .orbit-outer .orbit-mark {
+    animation: none;
+  }
+}

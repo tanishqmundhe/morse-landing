@@ -1,5 +1,8 @@
+import Image from "next/image";
 import { comparison, pricing } from "@/content/site";
 import { BRANDS, type Brand } from "./brand-marks";
+import { GlitchBand } from "./glitch";
+import { LogoMark } from "./logo";
 import { Eyebrow, LEAD, PRIMARY, WRAP } from "./ui";
 
 /**
@@ -32,36 +35,26 @@ import { Eyebrow, LEAD, PRIMARY, WRAP } from "./ui";
  * checkable, neither is an opinion.
  */
 
-const { cost, jobs: jobsCopy, honest } = comparison;
+const { cost, difference, orbit, honest } = comparison;
 const STACK = cost.rows.reduce((sum, row) => sum + row.pay, 0);
 
 /** A tool's own mark, from the same list the home page's band runs on. */
-function Mark({ brand }: { brand: Brand }) {
+function Mark({ brand, big = false }: { brand: Brand; big?: boolean }) {
+  const size = big ? "h-[22px]" : "h-[11px]";
   return (
     <svg
       viewBox={brand.viewBox}
       role={brand.wordmark ? "img" : undefined}
       aria-label={brand.wordmark ? brand.name : undefined}
       aria-hidden={brand.wordmark ? undefined : true}
-      className={brand.wordmark ? "h-[11px] w-auto shrink-0 text-ink-faint" : "size-[18px] shrink-0 text-ink-faint"}
+      className={brand.wordmark ? `${size} w-auto shrink-0 ${big ? "text-ink" : "text-ink-soft"}` : `${big ? "size-[26px] text-ink" : "size-[18px] text-ink-soft"} shrink-0`}
       dangerouslySetInnerHTML={{ __html: brand.svg }}
     />
   );
 }
 
-/** The seven jobs, grouped from `BRANDS` so the two lists cannot drift. */
-function jobs() {
-  const order: string[] = [];
-  const by = new Map<string, Brand[]>();
-  for (const brand of BRANDS) {
-    if (!by.has(brand.cat)) {
-      by.set(brand.cat, []);
-      order.push(brand.cat);
-    }
-    by.get(brand.cat)!.push(brand);
-  }
-  return order.map((cat) => ({ cat, tools: by.get(cat)! }));
-}
+/** A mark by name, from the same list the home page's band runs on. */
+const byName = (name: string) => BRANDS.find((b) => b.name === name);
 
 const H2 = "text-[34px]/[1.08] font-light tracking-[-0.03em] text-ink sm:text-[42px]/[1.06]";
 
@@ -73,7 +66,7 @@ export function ComparePage() {
       {/* The first screen is the headline and nothing else. */}
       <section className={`${WRAP} pt-40 pb-20 lg:pt-52 lg:pb-28`}>
         <Eyebrow className="mb-7">{comparison.eyebrow}</Eyebrow>
-        <h1 className="max-w-[16ch] text-[52px]/[0.96] font-light tracking-[-0.04em] text-ink sm:text-[76px]/[0.94] lg:text-[96px]/[0.93]">
+        <h1 className="max-w-[16ch] text-[40px]/[1] font-light tracking-[-0.04em] text-ink sm:text-[54px]/[0.98] lg:text-[64px]/[0.96]">
           {comparison.title}
           <br />
           <span className="text-ink-soft">{comparison.titleMuted}</span>
@@ -132,36 +125,120 @@ export function ComparePage() {
         </a>
       </section>
 
-      {/* ── The seven jobs ────────────────────────────────────────────── */}
-      <section id="jobs" className={`${WRAP} scroll-mt-24 pb-28 lg:pb-40`}>
-        <Eyebrow className="mb-5">{jobsCopy.eyebrow}</Eyebrow>
+      {/* ── The difference ────────────────────────────────────────────
+          Two problems flat on the sunken ground, the answer lifted onto a
+          raised card. The elevation argues before anyone reads a word, which
+          is the point: a comparison is read at a glance or not at all. */}
+      <section id="difference" className={`${WRAP} scroll-mt-24 pb-28 lg:pb-40`}>
+        <Eyebrow className="mb-5">{difference.eyebrow}</Eyebrow>
         <h2 className={H2}>
-          {jobsCopy.title}
+          {difference.title}
           <br />
-          <span className="text-ink-soft">{jobsCopy.titleMuted}</span>
+          <span className="text-ink-soft">{difference.titleMuted}</span>
         </h2>
-        <p className={`${LEAD} mt-6 max-w-[56ch]`}>{jobsCopy.body}</p>
 
-        <dl className="mt-12 border-t border-hairline">
-          {jobs().map(({ cat, tools }) => (
+        <div className="mt-14 grid overflow-hidden rounded-[22px] bg-sunken ring-1 ring-hairline lg:grid-cols-[1fr_1fr_1.08fr]">
+          {difference.columns.map((column) => (
             <div
-              key={cat}
-              className="grid gap-3 border-b border-hairline py-6 lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)] lg:items-center lg:gap-10"
+              key={column.title}
+              className={
+                column.win
+                  ? "-m-px rounded-[22px] bg-raised p-8 shadow-float ring-1 ring-hairline lg:p-9"
+                  : "border-b border-hairline p-8 last:border-b-0 lg:border-r lg:border-b-0 lg:p-9"
+              }
             >
-              <dt className="text-[18px] text-ink">{cat}</dt>
-              <dd className="flex flex-wrap items-center gap-x-6 gap-y-2.5">
-                {/* A wordmark says the name itself; typing it again beside it
-                    reads "zoom Zoom", the same bug the home page's band had. */}
-                {tools.map((brand) => (
-                  <span key={brand.name} className="flex items-center gap-2 text-[16px] text-ink-soft">
-                    <Mark brand={brand} />
-                    {!brand.wordmark && brand.name}
-                  </span>
+              <span
+                aria-hidden="true"
+                className={`grid size-8 place-items-center rounded-[10px] text-[14px] ${
+                  column.win ? "bg-ink text-canvas" : "text-ink-faint ring-1 ring-hairline"
+                }`}
+              >
+                {column.win ? "\u2713" : "\u2715"}
+              </span>
+              <h3 className="mt-12 text-[21px] text-ink">{column.title}</h3>
+              <ul className="mt-5 flex flex-col gap-3">
+                {column.points.map((point) => (
+                  <li key={point} className={`flex gap-2.5 text-[16px]/[1.5] ${column.win ? "text-ink" : "text-ink-soft"}`}>
+                    {/* The marker carries the sense as well as the colour: a
+                        minus for what you lose, a plus for what you get. */}
+                    <span aria-hidden="true" className={`shrink-0 ${column.win ? "text-action-ink" : "text-ink-faint"}`}>
+                      {column.win ? "+" : "\u2014"}
+                    </span>
+                    {point}
+                  </li>
                 ))}
-              </dd>
+              </ul>
             </div>
           ))}
-        </dl>
+        </div>
+      </section>
+
+      {/* ── The orbit ─────────────────────────────────────────────────────
+          The page's one picture, and the artwork is under it rather than in a
+          band of its own: this page went wrong the first time by putting
+          decoration between a reader and a number, so what artwork there is
+          has to be doing a job. Here it is the ground the orbit turns on. */}
+      <section id="jobs" className={`${WRAP} scroll-mt-24 pb-28 lg:pb-40`}>
+        <div className="on-stage relative isolate overflow-hidden rounded-[24px] px-6 py-20 text-center lg:py-24">
+          <Image
+            src="/art/knowledge.webp"
+            alt=""
+            aria-hidden="true"
+            width={1600}
+            height={1067}
+            sizes="(max-width: 1280px) 100vw, 1200px"
+            className="absolute inset-0 -z-20 size-full object-cover object-[center_40%]"
+          />
+          <GlitchBand src="knowledge" onStage delay={2.8} className="absolute inset-0 -z-20 size-full object-cover object-[center_40%]" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.19_0.002_90/0.86)]" />
+
+          <Eyebrow className="mb-5">{orbit.eyebrow}</Eyebrow>
+          <h2 className={H2}>
+            {orbit.title}
+            <br />
+            <span className="text-ink-soft">{orbit.titleMuted}</span>
+          </h2>
+
+          <div className="relative mx-auto mt-10 h-[340px] w-[340px] sm:h-[420px] sm:w-[420px] lg:mt-12 lg:h-[480px] lg:w-[480px]">
+            {[
+              { marks: orbit.inner, radius: 32, spin: "orbit-inner" },
+              { marks: orbit.outer, radius: 46, spin: "orbit-outer" },
+            ].map((ring) => (
+              <div key={ring.spin} className={`absolute inset-0 ${ring.spin}`}>
+                <span
+                  aria-hidden="true"
+                  className="absolute rounded-full border border-hairline"
+                  style={{ inset: `${50 - ring.radius}%` }}
+                />
+                {ring.marks.map((name, i) => {
+                  const brand = byName(name);
+                  if (!brand) return null;
+                  const angle = (-90 + (i * 360) / ring.marks.length) * (Math.PI / 180);
+                  return (
+                    <span
+                      key={name}
+                      className="absolute grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-float shadow-float"
+                      style={{
+                        left: `${50 + Math.cos(angle) * ring.radius}%`,
+                        top: `${50 + Math.sin(angle) * ring.radius}%`,
+                      }}
+                    >
+                      <span className="orbit-mark grid place-items-center">
+                        <Mark brand={brand} big />
+                      </span>
+                    </span>
+                  );
+                })}
+              </div>
+            ))}
+
+            {/* Morse does not turn. Everything else goes round it, which is
+                the entire claim the section is making. */}
+            <span className="absolute top-1/2 left-1/2 grid size-[104px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-ink text-canvas shadow-float">
+              <LogoMark className="size-11" title="Morse" />
+            </span>
+          </div>
+        </div>
       </section>
 
       {/* ── The part that makes the rest believable ───────────────────── */}
