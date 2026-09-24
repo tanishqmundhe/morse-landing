@@ -48,7 +48,7 @@ export function Languages() {
   );
 }
 
-/** Pixel emoji float up Arjun's tile; now and then his hand goes up. */
+/** Pixel emoji float up Daniel's tile; now and then his hand goes up. */
 export function Reactions() {
   const emoji = ["red-heart", "party-popper", "thumbs-up", "fire", "clapping-hands", "face-with-tears-of-joy", "red-heart"];
   // Kept out of the middle band: they rise the full height of the tile, and a
@@ -64,9 +64,9 @@ export function Reactions() {
       <span className="f-hand absolute top-4 left-4 flex items-center gap-2 rounded-full bg-canvas/80 py-1.5 pr-3.5 pl-2 text-[15px] text-ink">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/emoji/raising-hands.svg" alt="" className="size-[22px]" />
-        Arjun raised a hand
+        Daniel raised a hand
       </span>
-      <span className={`${TAG} bottom-4 left-4`}>Arjun Mehta</span>
+      <span className={`${TAG} bottom-4 left-4`}>Daniel Chen</span>
     </div>
   );
 }
@@ -76,7 +76,7 @@ export function MindMap() {
   const sections: [string, string, string[]][] = [
     ["Onboarding", "#FF8FB1", ["Drop after sign-up", "Try a nudge"]],
     ["Acme renewal", "#E8C98A", ["This year’s rate", "Two extra seats"]],
-    ["Next steps", "#8FD9C4", ["Arjun: the nudge", "Priya: the terms"]],
+    ["Next steps", "#8FD9C4", ["Daniel: the nudge", "Priya: the terms"]],
   ];
   const parts: React.ReactNode[] = [];
   // All three branches set off together, each a beat behind the last.

@@ -26,7 +26,7 @@
   --float: #ffffff;
   --overlay: #edecdb;
   --overlay-hover: #e3e2ce; /* derived */
-  --stage: #111b1e; /* their dark paper: the ground under the artwork */
+  --stage: #141413; /* the app's charcoal: the ground under the artwork */
 
   --ink: #0e1d21; /* 16.3:1 on canvas */
   --ink-soft: #45595d; /* muted, 7.0:1 */
@@ -72,33 +72,37 @@
  */
 .dark {
   color-scheme: dark;
-  --sunken: #1d2a2d; /* paper-2 */
-  --canvas: #111b1e; /* paper */
-  --raised: #1d2a2d;
-  --float: #263539; /* derived */
-  --overlay: #26353a; /* derived */
-  --overlay-hover: #324449; /* derived */
+  /* The app's own "neutral charcoal" (morse-app-design, fluid.css). The set
+   * this replaced was the package's #111B1E on #1D2A2D — hue 210 with real
+   * chroma in it, which is what read as blue. This one is hue 90 at 0.002,
+   * so it is a charcoal with a trace of warmth and no cast. */
+  --sunken: #101010;
+  --canvas: #141413; /* bg */
+  --raised: #1d1d1c; /* surface */
+  --float: #2c2b2a; /* raised */
+  --overlay: #232322;
+  --overlay-hover: #2f2e2d;
 
-  --ink: #f3f4e9; /* 15.8:1 on canvas */
-  --ink-soft: #b2c2c2; /* muted, 8.0:1 on raised */
-  --ink-faint: #8c9c9d; /* derived, 5.2:1 on raised */
-  --ink-inverse: #0e1d21;
-  --hairline: #405356; /* rule */
+  --ink: #efefea; /* 16.0:1 on canvas */
+  --ink-soft: #9f9e9c; /* muted, 6.3:1 on surface */
+  --ink-faint: #8a8a85; /* derived, 4.9:1 on surface */
+  --ink-inverse: #141413;
+  --hairline: #363534; /* rule */
 
   --action: #e5f700;
   --action-hover: #eefb4d;
   --action-foreground: #0e1d21;
-  --action-ink: #e5f700; /* 12.4:1 on raised */
-  --signal: #fb5b40;
-  --signal-ink: #fb5b40; /* 4.7:1 on raised */
+  --action-ink: #e5f700; /* 15.5:1 on canvas */
+  --signal: #ff7d5c; /* their coral-action, warmer than the package's */
+  --signal-ink: #fe886a; /* 7.9:1 on canvas */
   --understood: #00baa3;
-  --understood-ink: #91e2cd; /* their own dark highlight, 9.8:1 */
+  --understood-ink: #91e2cd;
 
-  --rim: rgb(243 244 233 / 0.08);
-  --shade: 0.1 0.01 215;
+  --rim: rgb(239 239 234 / 0.07);
+  --shade: 0.05 0 0;
   --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.4),
     0 10px 28px -16px oklch(var(--shade) / 0.6);
-  --elev-float: 0 0 0 1px rgb(243 244 233 / 0.10),
+  --elev-float: 0 0 0 1px rgb(239 239 234 / 0.09),
     0 18px 44px -14px oklch(var(--shade) / 0.75);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.5), inset 0 0 0 1px var(--rim);
 
@@ -114,22 +118,22 @@
  * anything sitting on them keeps the dark ramp regardless of the page theme.
  */
 .on-stage {
-  --sunken: #1d2a2d;
-  --canvas: #111b1e;
-  --raised: #1d2a2d;
-  --float: #263539;
-  --overlay: #26353a;
-  --overlay-hover: #324449;
-  --ink: #f3f4e9;
-  --ink-soft: #b2c2c2;
-  --ink-faint: #8c9c9d;
-  --ink-inverse: #0e1d21;
-  --hairline: #405356;
-  --signal-ink: #fb5b40;
+  --sunken: #101010;
+  --canvas: #141413;
+  --raised: #1d1d1c;
+  --float: #2c2b2a;
+  --overlay: #232322;
+  --overlay-hover: #2f2e2d;
+  --ink: #efefea;
+  --ink-soft: #9f9e9c;
+  --ink-faint: #8a8a85;
+  --ink-inverse: #141413;
+  --hairline: #363534;
+  --signal-ink: #fe886a;
   --action-ink: #e5f700;
   --understood-ink: #91e2cd;
-  --rim: rgb(243 244 233 / 0.08);
-  --shade: 0.1 0.01 215;
+  --rim: rgb(239 239 234 / 0.07);
+  --shade: 0.05 0 0;
 }
 
 @theme inline {

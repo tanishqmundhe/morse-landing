@@ -27,6 +27,7 @@ import { Icon } from "../ui";
 import { LogoMark } from "../logo";
 import { Written } from "../live-card";
 import { Cam } from "../cam";
+import { Avatar as Disc } from "../avatar";
 
 /**
  * The app's screens, rebuilt at one design size (1120 × 700) from the real
@@ -37,22 +38,20 @@ import { Cam } from "../cam";
 export const SCREEN_W = 1120;
 export const SCREEN_H = 700;
 
-type Who = "priya" | "arjun" | "you";
-const PEOPLE: Record<Who, { name: string; colour: string; dot: string }> = {
-  priya: { name: "Priya Shah", colour: "ember", dot: "#e8927c" },
-  arjun: { name: "Arjun Mehta", colour: "lagoon", dot: "#8fb8c9" },
-  you: { name: "You", colour: "sage", dot: "#a9be8c" },
+type Who = "priya" | "daniel" | "you";
+/** `name` is what a tile calls them; `full` is who they are. The two differ
+ *  for one person — your own tile says "You" — and the disc needs the second,
+ *  or it initialises the word rather than the person. */
+const PEOPLE: Record<Who, { name: string; full: string; colour: string; dot: string }> = {
+  priya: { name: "Priya Shah", full: "Priya Shah", colour: "ember", dot: "#e8927c" },
+  daniel: { name: "Daniel Chen", full: "Daniel Chen", colour: "lagoon", dot: "#8fb8c9" },
+  you: { name: "You", full: "Amara Cole", colour: "sage", dot: "#a9be8c" },
 };
 
 const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
 function Avatar({ who, size }: { who: Who; size: number }) {
-  return (
-    <span
-      className="inline-block shrink-0 rounded-full bg-cover bg-center"
-      style={{ width: size, height: size, backgroundImage: `url(/app/avatar-${PEOPLE[who].colour}.svg)` }}
-    />
-  );
+  return <Disc colour={PEOPLE[who].colour} name={PEOPLE[who].full} size={size} />;
 }
 
 function Frame({ children }: { children: React.ReactNode }) {
@@ -102,7 +101,7 @@ function Panel({ title, count, children, width }: { title: string; count?: numbe
 
 const TURNS: [Who, string, string][] = [
   ["priya", "17:11", "I pulled the numbers from last quarter before this."],
-  ["arjun", "17:11", "The gap is mostly onboarding. People sign up and never get to a second meeting."],
+  ["daniel", "17:11", "The gap is mostly onboarding. People sign up and never get to a second meeting."],
   ["priya", "17:12", "What did we promise Acme on the renewal?"],
 ];
 
@@ -133,7 +132,7 @@ function Transcript({ active }: { active: boolean }) {
 }
 
 function Stage({ speaking }: { speaking: Who }) {
-  const others = (["priya", "arjun", "you"] as Who[]).filter((w) => w !== speaking);
+  const others = (["priya", "daniel", "you"] as Who[]).filter((w) => w !== speaking);
   const tile = (who: Who, big: boolean) => (
     <div
       key={who}
@@ -198,8 +197,8 @@ export function RoomScreen({ active }: { active: boolean }) {
             <Icon icon={UserAdd01Icon} className="size-[18px]" /> Add people
           </span>
           {([
-            ["you", "Alex (you)", "Host · Design lead"],
-            ["arjun", "Arjun Mehta", "Guest"],
+            ["you", "Amara (you)", "Host · Design lead"],
+            ["daniel", "Daniel Chen", "Guest"],
             ["priya", "Priya Shah", "Guest · speaking"],
           ] as [Who, string, string][]).map(([who, name, role]) => (
             <div key={who} className="mt-4 flex items-center gap-3">
@@ -225,7 +224,7 @@ export function TeleprompterScreen({ active }: { active: boolean }) {
       <RoomBar />
       <div className="mt-2.5 flex min-h-0 flex-1 gap-3">
         <Transcript active={false} />
-        <Stage speaking="arjun" />
+        <Stage speaking="daniel" />
         <Panel title="Teleprompter" width={300}>
           <p className="mt-[18px] font-mono text-label text-ink-faint uppercase">Heard in the meeting</p>
           <div key={active ? "on" : "off"}>
@@ -242,7 +241,7 @@ export function TeleprompterScreen({ active }: { active: boolean }) {
             </div>
             <div className={`mt-2.5 rounded-[16px] bg-sunken p-3.5 shadow-sunken ${active ? "animate-rise" : ""}`} style={at(2100)}>
               <p className="text-[14px] text-ink-soft">
-                <b className="font-medium text-ink">Arjun</b> said “Let’s pick this up Thursday at two.”
+                <b className="font-medium text-ink">Daniel</b> said “Let’s pick this up Thursday at two.”
               </p>
               <p className="mt-2 flex items-center gap-2 text-[16px] text-ink">
                 <Icon icon={Calendar03Icon} className="size-[17px]" /> Book a follow-up?
@@ -266,7 +265,7 @@ export function TeleprompterScreen({ active }: { active: boolean }) {
 /** The notes page: summary, decisions, action items ticking off, the recording. */
 export function NotesScreen({ active }: { active: boolean }) {
   const items: [string, string][] = [
-    ["Draft the onboarding nudge", "Arjun · Fri"],
+    ["Draft the onboarding nudge", "Daniel · Fri"],
     ["Send Acme the renewal terms", "Priya · Tomorrow"],
     ["Book three user interviews", "You · Next week"],
   ];
@@ -503,7 +502,7 @@ export function HomeScreen() {
           <div className="flex items-end justify-between px-5 pt-5 pb-4">
             <div>
               <p className="text-[18px] font-light text-ink-soft">Good morning,</p>
-              <p className="text-[44px]/[1.1] font-light text-ink">Alex</p>
+              <p className="text-[44px]/[1.1] font-light text-ink">Amara</p>
               <p className="mt-1 text-[15px] text-ink-soft">Design lead</p>
               <div className="mt-4 flex gap-2">
                 <span className="flex h-11 items-center gap-2 rounded-full bg-action px-5 text-[16px] font-medium text-action-foreground">
@@ -520,7 +519,7 @@ export function HomeScreen() {
         </div>
         <p className="mt-6 font-mono text-label text-ink-faint uppercase">Upcoming</p>
         {[
-          ["11:00", "Weekly design review", "Priya, Arjun"],
+          ["11:00", "Weekly design review", "Priya, Daniel"],
           ["14:00", "Acme renewal", "Guest: Sam from Acme"],
         ].map(([t, n, w]) => (
           <div key={n} className="mt-2 flex items-center gap-5 rounded-[20px] bg-raised px-5 py-3.5">

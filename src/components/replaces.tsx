@@ -94,15 +94,7 @@ export function Replaces() {
         <div className="mt-14 overflow-hidden rounded-[24px] border border-hairline bg-sunken lg:mt-16">
           {/* The strip runs; the list is longer than the column. */}
           <div className="relative isolate overflow-hidden border-b border-hairline [mask-image:linear-gradient(90deg,transparent,#000_4%,#000_96%,transparent)]">
-            {/* A lit centre, behind the marks rather than over them. A
-                mix-blend-mode tint was the first try and it painted a solid
-                block: blending needs the backdrop in the same stacking
-                context, and a marquee track full of transformed children is
-                not that. A glow underneath cannot fail the same way. */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-[38%] -translate-x-1/2 bg-[radial-gradient(60%_140%_at_50%_50%,var(--action),transparent_72%)] opacity-25 dark:opacity-30"
-            />
+            
             <div className="marquee flex w-max">
               {[0, 1].map((k) => (
                 <div key={k} className="flex" aria-hidden={k > 0}>

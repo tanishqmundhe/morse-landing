@@ -36,7 +36,7 @@ export function Hero() {
       {/* Aligned to the artwork's own edge, not to a narrower centred column.
           In a 1200px wrap against a full-bleed panel the words sat 230px inside
           it at 2000, which read as floating rather than as a pair. */}
-      <div className="mx-auto grid max-w-[2040px] gap-10 px-4 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(290px,400px)] lg:items-end lg:gap-14 lg:px-10">
+      <div className="mx-auto grid max-w-[2040px] gap-10 px-4 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(290px,400px)] lg:items-start lg:gap-14 lg:px-10">
         {/* One line each. The headline no longer has the page to itself — the
             aside sits beside it and the artwork below carries the weight — so
             it steps down from 92px, which wrapped to three lines here. */}
@@ -53,7 +53,10 @@ export function Hero() {
           </span>
         </h1>
 
-        <div className="animate-enter lg:pb-3" style={at(420)}>
+        {/* Top-aligned. Bottom-aligned, the lede floated a hundred pixels
+            above the headline it belongs to, so the eye read the small copy
+            first and the title second. */}
+        <div className="animate-enter lg:pt-3" style={at(420)}>
           <p className="max-w-[520px] text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55] 3xl:text-[22px]/[1.55]">{hero.lede}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a href={hero.primary.href} className={`${PRIMARY} group`}>

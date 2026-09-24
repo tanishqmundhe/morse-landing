@@ -20,9 +20,9 @@ const TURNS = [
     shown: "We need to focus on onboarding. People sign up and never come back.",
   },
   {
-    who: "Arjun Mehta",
+    who: "Daniel Chen",
     colour: "lagoon",
-    said: { label: "Arjun says, in Marathi", text: "पुढच्या आठवड्यापासून दुसऱ्या मीटिंगची आठवण पाठवूया." },
+    said: { label: "Daniel says, in Marathi", text: "पुढच्या आठवड्यापासून दुसऱ्या मीटिंगची आठवण पाठवूया." },
     shown: "Let’s send a second-meeting reminder, starting next week.",
   },
 ];

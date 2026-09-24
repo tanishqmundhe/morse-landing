@@ -13,6 +13,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import type { IconSvgElement } from "@hugeicons/react";
 import { showcase, type Chip as ChipKind } from "@/content/site";
+import { Avatar } from "../avatar";
 import { Icon } from "../ui";
 import {
   BookingScreen,
@@ -151,16 +152,20 @@ function Chip({ chip, label }: { chip: ChipKind; label: string }) {
     >
       {chip === "call" || chip === "question" ? (
         <span className="flex">
-          {(chip === "call" ? ["ember", "lagoon", "sage"] : ["ember"]).map((c, k) => (
+          {(chip === "call"
+            ? ([["ember", "Priya Shah"], ["lagoon", "Daniel Chen"], ["sage", "Amara Cole"]] as const)
+            : ([["ember", "Priya Shah"]] as const)
+          ).map(([c, who], k) => (
             <span
               key={c}
-              className="inline-block size-[1.85em] rounded-full bg-cover bg-center ring-2 ring-raised"
+              className="inline-block size-[1.85em] rounded-full ring-2 ring-raised"
               style={{
-                backgroundImage: `url(/app/avatar-${c}.svg)`,
                 marginLeft: k ? "-0.55em" : 0,
                 transform: `translateX(calc((1 - ${LIT}) * ${-0.6 * k}em))`,
               }}
-            />
+            >
+              <Avatar colour={c} name={who} size={32} className="size-full" />
+            </span>
           ))}
         </span>
       ) : (

@@ -112,7 +112,7 @@ export function Annotate() {
 
       {/* The people in the call, under the shared screen */}
       <div className="absolute inset-x-4 bottom-4 flex gap-2.5">
-        {([["ember", "Priya"], ["lagoon", "Arjun"], ["sage", "You"]] as const).map(([c, n], i) => (
+        {([["ember", "Priya"], ["lagoon", "Daniel"], ["sage", "You"]] as const).map(([c, n], i) => (
           <div
             key={n}
             className="relative aspect-[4/3] flex-1 overflow-hidden rounded-[14px] bg-sunken"

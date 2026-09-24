@@ -23,7 +23,7 @@ import { Icon } from "./ui";
  *  hangs off a line arriving. */
 const TRANSCRIPT = [
   { who: "Priya", at: 0.8, text: "The gap is mostly onboarding — people sign up and never come back." },
-  { who: "Arjun", at: 3.2, text: "Then let’s try a nudge before the second meeting." },
+  { who: "Daniel", at: 3.2, text: "Then let’s try a nudge before the second meeting." },
   { who: "Priya", at: 6.0, text: "Good. Let’s pick this up Thursday at two." },
 ];
 
@@ -63,7 +63,7 @@ export function HeroMontage() {
         tl.to(e, { opacity: 0, duration: 0.7, ease: "power1.in" }, at + 1.3);
       });
 
-      // Arjun wants in before he answers.
+      // Daniel wants in before he answers.
       tl.set(el("[data-hand]"), { opacity: 0, y: 8, scale: 0.9 }, 0);
       tl.to(el("[data-hand]"), { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2)" }, 2.6);
       tl.to(el("[data-hand]"), { opacity: 0, duration: 0.35 }, 4.1);
@@ -145,7 +145,7 @@ export function HeroMontage() {
                 </svg>
               </span>
               <span className="flex-1 text-[13px] text-ink">Draft the onboarding nudge</span>
-              <span className="text-[12px] text-ink-faint">Arjun</span>
+              <span className="text-[12px] text-ink-faint">Daniel</span>
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@ export function HeroMontage() {
             <div key={colour} className="relative aspect-[4/3] overflow-hidden rounded-[11px] bg-sunken">
               <Cam colour={colour} />
               {i === 0 && <span aria-hidden="true" className="absolute inset-0 rounded-[11px] ring-2 ring-signal ring-inset" />}
-              {/* Arjun’s hand, on Arjun’s tile. */}
+              {/* Daniel’s hand, on Daniel’s tile. */}
               {i === 1 && (
                 <span
                   data-hand
