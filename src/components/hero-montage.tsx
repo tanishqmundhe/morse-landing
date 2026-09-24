@@ -1,74 +1,80 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLoop } from "./features/timeline";
-import { NotesScreen, RoomScreen, SCREEN_H, SCREEN_W, TeleprompterScreen } from "./showcase/screens";
+import {
+  BookingScreen,
+  CalendarScreen,
+  NotesScreen,
+  RoomScreen,
+  SCREEN_H,
+  SCREEN_W,
+  TeleprompterScreen,
+} from "./showcase/screens";
 
 /**
- * The hero's meeting: the app's own screens, playing, breaking out of the
- * artwork they sit on.
+ * The hero's meeting: the app's own screens, playing through a whole one.
  *
- * Three things were wrong with the version before. It drew its own window
- * rather than using the one the page already had. It showed one screen, so a
- * product that does four things looked like it did one. And it sat inside the
- * panel's bottom corner, which put it under the fold and cut it off.
+ * Five of the seven the showcase carries, in the order a meeting actually
+ * goes — you are in the call, a question gets answered out of the notes, the
+ * notes get written, the follow-up is booked, and it lands on the calendar.
+ * The loop is the product's arc rather than a slideshow of screenshots.
  *
- * So: the real screens, at the panel's centre, overlapping its edges — and the
- * things that pop up spill outside the frame entirely, onto the paper. A card
- * that stays politely inside its box reads as a screenshot; one that breaks
- * the box reads as something happening.
+ * One clock. The screen changes are `tl.call`s on the same GSAP timeline the
+ * pop-ups run on, not a separate interval — with five screens and an interval
+ * the two drifted apart within a couple of passes and cards started landing on
+ * the wrong screen.
  */
 
-/** The three the hero can say something with, in the order a meeting goes. */
-const SCREENS = [RoomScreen, TeleprompterScreen, NotesScreen] as const;
-const HOLD = 7200;
+const SCREENS = [RoomScreen, TeleprompterScreen, NotesScreen, BookingScreen, CalendarScreen] as const;
+/** Long enough to read a panel, short enough that the loop is not a wait. */
+const HOLD = 6.2;
+const RUN = SCREENS.length * HOLD;
 
-/** Big enough to read the transcript, small enough to leave the artwork room. */
-const SCALE = 0.74;
+/** Big enough to read the transcript; the frame is 828 wide before this. */
+const SCALE = 0.68;
 
 const EMOJI = ["red-heart", "thumbs-up", "fire", "clapping-hands", "party-popper"];
 
 export function HeroMontage() {
   const [shown, setShown] = useState(0);
 
-  useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => setShown((n) => (n + 1) % SCREENS.length), HOLD);
-    return () => clearInterval(id);
-  }, []);
-
   const root = useLoop<HTMLDivElement>(
     (tl, q) => {
       const el = (s: string) => q(s)[0];
+
+      // The screens, on the same clock as everything that lands on them.
+      SCREENS.forEach((_, i) => tl.call(() => setShown(i), undefined, i * HOLD));
+
       tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.5 }, 0);
       tl.set(el("[data-hand]"), { opacity: 0, x: -24, scale: 0.86 }, 0);
-      tl.set(el("[data-written]"), { opacity: 0, y: -22, scale: 0.9 }, 0);
-      tl.set(el("[data-booked]"), { opacity: 0, y: -22, scale: 0.9 }, 0);
+      tl.set(q("[data-pop]"), { opacity: 0, y: -22, scale: 0.9 }, 0);
 
-      // Reactions, rising past the top edge of the frame and out of it.
+      // 1 · In the call: the room reacts while somebody is still speaking.
       q("[data-emoji]").forEach((e, i) => {
-        const at = 0.9 + i * 0.42;
+        const at = 0.8 + i * 0.4;
         tl.to(e, { opacity: 1, scale: 1.15, duration: 0.24, ease: "back.out(3)" }, at);
         tl.to(e, { scale: 1, duration: 0.3, ease: "power2.out" }, at + 0.24);
-        tl.to(e, { y: -340, duration: 3.2, ease: "power1.out" }, at);
-        tl.to(e, { opacity: 0, duration: 1, ease: "power1.in" }, at + 2.2);
+        tl.to(e, { y: -330, duration: 3.1, ease: "power1.out" }, at);
+        tl.to(e, { opacity: 0, duration: 1, ease: "power1.in" }, at + 2.1);
       });
+      tl.to(el("[data-hand]"), { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 1.9);
+      tl.to(el("[data-hand]"), { opacity: 0, x: -14, duration: 0.4 }, 5.4);
 
-      // A hand, out past the left edge.
-      tl.to(el("[data-hand]"), { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 2.1);
-      tl.to(el("[data-hand]"), { opacity: 0, x: -14, duration: 0.4 }, 6.4);
+      /** Each card belongs to a screen, and lands a beat after it arrives. */
+      const pop = (name: string, screen: number) => {
+        const at = screen * HOLD + 1.1;
+        tl.to(el(`[data-pop="${name}"]`), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.9)" }, at);
+        tl.to(el(`[data-pop="${name}"]`), { opacity: 0, y: -14, duration: 0.45, ease: "power1.in" }, at + HOLD - 2.2);
+      };
+      pop("answered", 1); // the teleprompter answering
+      pop("written", 2); // the notes writing themselves
+      pop("booked", 3); // the follow-up going in
+      pop("calendar", 4); // and landing on the calendar
 
-      // The notes, out past the bottom edge, as the second screen arrives.
-      tl.to(el("[data-written]"), { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 8.4);
-      tl.to(el("[data-written]"), { opacity: 0, y: -14, duration: 0.45 }, 13.6);
-
-      // And the booking, out past the right, as the third does.
-      tl.to(el("[data-booked]"), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, 15.4);
-      tl.to(el("[data-booked]"), { opacity: 0, y: -14, duration: 0.45 }, 20.4);
-
-      tl.set({}, {}, 21.6);
+      tl.set({}, {}, RUN);
     },
-    { rest: 0.35 },
+    { rest: 0.12 },
   );
 
   return (
@@ -100,7 +106,8 @@ export function HeroMontage() {
       </div>
 
       {/* Outside the frame, deliberately. These are the only things on the page
-          allowed past an edge, which is what makes them read as interruptions. */}
+          allowed past an edge, which is what makes them read as interruptions.
+          They rise into the picture: below the frame is the floor. */}
       <div aria-hidden="true" className="absolute inset-0">
         {EMOJI.map((e, i) => (
           // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs
@@ -125,7 +132,15 @@ export function HeroMontage() {
           Daniel raised a hand
         </span>
 
-        <div data-written className="absolute -top-12 left-4 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="answered" className="absolute -top-12 left-2 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+          <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
+            <span className="size-2 rounded-full bg-understood" />
+            Answered from your notes
+          </p>
+          <p className="mt-1.5 text-[13px] text-ink-soft">This year&rsquo;s rate, fixed until March.</p>
+        </div>
+
+        <div data-pop="written" className="absolute -top-12 left-4 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
           <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
             <span className="grid size-5 place-items-center rounded-full bg-action">
               <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
@@ -137,9 +152,14 @@ export function HeroMontage() {
           <p className="mt-1.5 text-[13px] text-ink-soft">A summary, two decisions and three action items.</p>
         </div>
 
-        <div data-booked className="absolute -top-10 right-6 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-pop="booked" className="absolute -top-10 right-6 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
           <p className="text-[15px] font-medium text-ink">Follow-up booked</p>
           <p className="mt-1 text-[13px] text-ink-soft">Thursday, 2:00 &ndash; 2:30 pm</p>
+        </div>
+
+        <div data-pop="calendar" className="absolute -top-10 right-10 w-[268px] rounded-[18px] bg-float p-4 shadow-float">
+          <p className="text-[15px] font-medium text-ink">On the calendar you keep</p>
+          <p className="mt-1 text-[13px] text-ink-soft">Invites sent. No clashes.</p>
         </div>
       </div>
     </div>

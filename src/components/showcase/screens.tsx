@@ -456,7 +456,7 @@ export function BookingScreen({ active }: { active: boolean }) {
           </div>
           <div className="flex flex-col rounded-[26px] bg-raised p-6">
             <p className="text-[17px] text-ink">Thursday 24 September</p>
-            <p className="text-[14px] text-ink-faint">Times in India Standard Time</p>
+            <p className="text-[14px] text-ink-faint">Times in Western European Time</p>
             <div className="mt-4 grid grid-cols-2 gap-2">
               {times.map((t) => (
                 <span key={t} className="relative grid h-11 place-items-center overflow-hidden rounded-full bg-overlay text-[16px] text-ink tabular-nums">

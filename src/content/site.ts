@@ -241,7 +241,7 @@ export const booking = {
     month: "September 2026",
     day: 23,
     dayLabel: "Wednesday 23 September",
-    zone: "Times shown in Asia/Calcutta (GMT+5:30)",
+    zone: "Times shown in Europe/Lisbon (GMT+1)",
     free: "Free times",
     times: ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "13:00", "13:30", "14:00"],
     pick: "10:30",
