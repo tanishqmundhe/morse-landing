@@ -15,7 +15,7 @@ export function Closing() {
         <Film src={closing.film.src} poster={closing.film.poster} className="-z-10 object-center" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.205_0_0/0.93)_0%,oklch(0.205_0_0/0.6)_100%)]"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.205_0_0/0.78)_0%,oklch(0.205_0_0/0.46)_100%)]"
         />
         <div>
           <LogoMark className="mx-auto size-11 text-ink/85" title="" />
