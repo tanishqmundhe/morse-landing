@@ -3,6 +3,7 @@ import { Caveat, Geist_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Devanagari } from "nex
 import { meta } from "@/content/site";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import "./globals.css";
+import { THEME_BOOT } from "@/components/theme";
 
 // The app's two registers (contract #3): Plex for what people say, mono for
 // labels and exact strings. Named apart from Tailwind's --font-sans/--font-mono.
@@ -54,13 +55,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f0e9",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f4f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable} ${plexDeva.variable}`}>
+    <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable} ${plexDeva.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Before paint, or the page shows light for a frame and then swaps. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+      </head>
       <body>
         <SmoothScroll />
         <a

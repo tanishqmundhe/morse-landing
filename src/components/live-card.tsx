@@ -75,7 +75,7 @@ export function LiveCard({ className = "" }: { className?: string }) {
     >
       <div className="flex items-center justify-between gap-3">
         <p className="truncate text-[15px] text-ink-soft">{live.meeting}</p>
-        <p className="flex shrink-0 items-center gap-2 text-[14px] text-signal tabular-nums">
+        <p className="flex shrink-0 items-center gap-2 text-[14px] text-signal-ink tabular-nums">
           <span className="relative flex size-2">
             <span className="absolute inset-0 animate-ping rounded-full bg-signal opacity-60" />
             <span className="relative size-2 rounded-full bg-signal" />

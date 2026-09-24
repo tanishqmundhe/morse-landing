@@ -2,7 +2,7 @@ import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { hero } from "@/content/site";
 import { Artwork } from "./artwork";
 import { LiveCard } from "./live-card";
-import { Icon, PRIMARY, SECONDARY, WRAP } from "./ui";
+import { Icon, PRIMARY, SECONDARY } from "./ui";
 
 /**
  * The promise on the page, then the artwork under it.
@@ -22,8 +22,11 @@ export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="pt-32 sm:pt-36 lg:pt-40">
-      <div className={`${WRAP} grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(290px,370px)] lg:items-end lg:gap-14`}>
+    <section className="px-2.5 pt-32 sm:px-3.5 sm:pt-36 lg:pt-40">
+      {/* Aligned to the artwork's own edge, not to a narrower centred column.
+          In a 1200px wrap against a full-bleed panel the words sat 230px inside
+          it at 2000, which read as floating rather than as a pair. */}
+      <div className="mx-auto grid max-w-[2040px] gap-10 px-4 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(290px,400px)] lg:items-end lg:gap-14 lg:px-10">
         {/* One line each. The headline no longer has the page to itself — the
             aside sits beside it and the artwork below carries the weight — so
             it steps down from 92px, which wrapped to three lines here. */}
@@ -50,7 +53,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="mt-10 px-2.5 sm:mt-14 sm:px-3.5">
+      <div className="mx-auto mt-10 max-w-[2040px] sm:mt-14">
         <Artwork
           src="/art/signal.webp"
           alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."

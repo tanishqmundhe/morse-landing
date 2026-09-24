@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { nav } from "@/content/site";
 import { Logo } from "./logo";
+import { ThemeToggle } from "./theme";
 import { Icon, PRIMARY } from "./ui";
 
 /**
@@ -114,6 +115,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <a href={nav.cta.href} className={`${PRIMARY} h-11 px-5 text-[16px]`}>
             {nav.cta.label}
           </a>

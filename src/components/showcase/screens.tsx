@@ -74,7 +74,7 @@ function RoomBar({ recording = true }: { recording?: boolean }) {
       <span className="text-[18px] text-ink">Weekly design review</span>
       <span className="font-mono text-[14px] text-ink-faint">dsn-revw-wkl</span>
       {recording && (
-        <span className="ml-auto flex items-center gap-2 text-[15px] text-signal">
+        <span className="ml-auto flex items-center gap-2 text-[15px] text-signal-ink">
           <span className="size-2 animate-blink rounded-full bg-signal" />
           Recording
         </span>
@@ -208,7 +208,7 @@ export function RoomScreen({ active }: { active: boolean }) {
                 <p className="text-[15px] text-ink">{name}</p>
                 <p className="text-[13px] text-ink-faint">{role}</p>
               </div>
-              <Icon icon={Mic01Icon} className={`size-[17px] ${who === "priya" ? "text-signal" : "text-ink-soft"}`} />
+              <Icon icon={Mic01Icon} className={`size-[17px] ${who === "priya" ? "text-signal-ink" : "text-ink-soft"}`} />
             </div>
           ))}
         </Panel>

@@ -27,6 +27,8 @@ export function Artwork({
 }) {
   return (
     <figure className={`relative isolate overflow-hidden rounded-[22px] bg-[#05070a] sm:rounded-[30px] ${className}`}>
+      {/* Absolute, so a panel can be a grid or a flex box for whatever sits on
+          it without the artwork becoming an item in that layout. */}
       <Image
         src={src}
         alt={alt}
@@ -34,7 +36,7 @@ export function Artwork({
         height={1067}
         priority={priority}
         sizes="100vw"
-        className="size-full object-cover"
+        className="absolute inset-0 -z-10 size-full object-cover"
       />
       <MorseRule />
       {children}
