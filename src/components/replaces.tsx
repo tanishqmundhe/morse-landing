@@ -3,7 +3,7 @@
 import { replaces } from "@/content/site";
 import { BRANDS, type Brand } from "./brand-marks";
 import { LogoMark } from "./logo";
-import { Eyebrow, H2, Heading, LEAD, WRAP } from "./ui";
+import { Eyebrow, H2, Heading, LEAD, WRAP, uniqueIds } from "./ui";
 import Image from "next/image";
 import { GlitchBand } from "./glitch";
 
@@ -38,7 +38,8 @@ const MARKS = true;
  * The mark and the name. `svg` is markup we generated into the repo from the
  * three icon sets, not anything fetched at runtime, so injecting it is safe.
  */
-function Cell({ brand }: { brand: Brand }) {
+/** `copy` is which pass of the marquee this cell belongs to; see `uniqueIds`. */
+function Cell({ brand, copy = 0 }: { brand: Brand; copy?: number }) {
   return (
     <div className="flex h-[108px] w-[184px] shrink-0 items-center justify-center gap-2.5 overflow-clip relative border-r border-hairline px-4 text-ink-soft transition-colors duration-300 lg:h-[132px] lg:w-[200px] 3xl:h-[148px] 3xl:w-[224px]">
       {MARKS && (
@@ -49,7 +50,7 @@ function Cell({ brand }: { brand: Brand }) {
           role="img"
           aria-label={brand.wordmark ? brand.name : undefined}
           aria-hidden={brand.wordmark ? undefined : true}
-          dangerouslySetInnerHTML={{ __html: brand.svg }}
+          dangerouslySetInnerHTML={{ __html: uniqueIds(brand.svg, copy) }}
         />
       )}
       {/* A wordmark says the name itself; typing it again read "zoom Zoom". */}
@@ -103,7 +104,7 @@ export function Replaces() {
               {[0, 1].map((k) => (
                 <div key={k} className="flex" aria-hidden={k > 0}>
                   {BRANDS.map((brand) => (
-                    <Cell key={brand.name} brand={brand} />
+                    <Cell key={brand.name} brand={brand} copy={k} />
                   ))}
                 </div>
               ))}

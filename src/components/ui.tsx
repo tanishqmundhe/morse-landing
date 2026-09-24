@@ -85,3 +85,22 @@ export const EASE = "cubic-bezier(0.22,1,0.36,1)";
  */
 export const UNDERLINE =
   "relative inline-block after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 focus-visible:after:scale-x-100";
+
+/**
+ * Suffix every id inside an inline SVG string, and every `url(#…)` that
+ * points at one.
+ *
+ * Both marquees on the site render their list twice — the track is the list
+ * twice over, which is what makes the loop seamless — so every gradient, mask
+ * and clipPath id inside a mark appeared on the page twice. Duplicate ids are
+ * invalid HTML, and `url(#id)` resolves to whichever element came first, so a
+ * mark can silently paint with another copy's gradient.
+ *
+ * The ids are already namespaced per brand (see `brand-marks.ts`); that solves
+ * collisions *between* marks, not between two copies of the same one. Pass the
+ * copy index: 0 is left alone.
+ */
+export function uniqueIds(svg: string, copy: number) {
+  if (!copy) return svg;
+  return svg.replace(/id="([^"]+)"/g, `id="$1-${copy}"`).replace(/url\(#([^)]+)\)/g, `url(#$1-${copy})`);
+}

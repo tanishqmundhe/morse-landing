@@ -296,6 +296,23 @@ is the source; when the two disagree, the app wins and the drawing changes.
 - **One deliberate divergence:** the app still calls the panel "Teleprompter". The landing page calls it **Morse Intelligence**, which is the settled name — the app has to catch up, not the page. If you are diffing the two, that one is on purpose.
 - **Not yet audited line by line:** the Notes, Calendar and Knowledge screens. They were built from the app but have not been re-read against it since.
 
+## Audit, 25 September 2026
+
+Every page walked at 390, 768, 1440 and 1920, with the script in this
+session's scratchpad. Two real defects, both found and fixed:
+
+- **A heading skip, `h1 → h3`, three times over.** "You're booked in with Sofia." was an `<h3>` inside the *drawing* of the booking page, and three sections draw that mock — the hero montage, the showcase and the booking section. A heading inside a picture of a screen is not a heading of this page; they are `<p>` now. **Rule: nothing inside a mock is a heading element.**
+- **22 duplicate ids on the home page.** Both marquees render their list twice — that is what makes the loop seamless — so every gradient, mask and clipPath inside a mark appeared twice. Duplicate ids are invalid HTML and `url(#id)` resolves to whichever came first, so a mark could silently paint with another copy's gradient. `uniqueIds` in `ui.tsx` suffixes the second pass; both marquees use it. Per-brand namespacing solves collisions *between* marks, not between two copies of one.
+
+Clean on: heading order, image `alt`, image dimensions, named links and
+buttons, horizontal overflow at all four widths, console and page errors,
+`lang`, skip link, meta description.
+
+**Still outstanding and not a bug:** four placeholder `#` links — X, LinkedIn,
+Privacy, Terms. They need real URLs. `dusk-light`, `knowledge-light` and
+`voices-light` are shipped and unreferenced (~550 KB); they are the first
+things to delete if the folder needs trimming.
+
 ## Depth
 
 - **Depth is the rim and the luminance; the shadow is the last 10%.** `--elev-raised` and `--elev-float` are a 1px rim, a 1-3px contact shadow and one short ambient one. The first pass put a 44px blur at 26% under every floating card and 30px under every raised one, and in dark mode the float was 0.75 at 44px — which reads as a sticker lifted off the page rather than a surface on it. Linear, Vercel and Stripe all sit nearer a 1-3px contact shadow plus something shallow; these now do too, at roughly half the alpha and two-thirds the blur. **Dark needs less, not more:** the ground is already near-black, so a heavy shadow only draws a dark halo.

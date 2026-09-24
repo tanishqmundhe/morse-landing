@@ -624,7 +624,7 @@ export function BookingScreen({ active }: { active: boolean }) {
                     <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-action">
                       <Icon icon={Tick02Icon} className="size-3.5 text-action-foreground" />
                     </span>
-                    <h3 className="text-[22px]/[1.25] font-light tracking-[-0.3px] text-ink">{p.done.title}</h3>
+                    <p className="text-[22px]/[1.25] font-light tracking-[-0.3px] text-ink">{p.done.title}</p>
                   </div>
                   <p className="mt-3 text-[17px]/[1.5] text-ink">{p.done.what}</p>
                   <p className="mt-1 text-[14px] text-ink-soft">{p.zone.replace("Times shown in ", "")}</p>

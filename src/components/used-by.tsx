@@ -2,7 +2,7 @@ import Image from "next/image";
 import { usedBy } from "@/content/site";
 import { COMPANIES, type Company } from "./company-marks";
 import { GlitchBand } from "./glitch";
-import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
+import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP, uniqueIds } from "./ui";
 
 /**
  * Who is running their meetings on Morse.
@@ -30,7 +30,7 @@ import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
 
 /** One company's mark, on a fixed line so seven different shapes share a
  *  baseline and the names below them land level. */
-function Mark({ company, base }: { company: Company; base: number }) {
+function Mark({ company, base, copy = 0 }: { company: Company; base: number; copy?: number }) {
   const height = Math.round(base * company.scale);
   if (company.mask) {
     // No vector artwork exists for this one; the mask paints currentColor
@@ -62,7 +62,7 @@ function Mark({ company, base }: { company: Company; base: number }) {
       aria-hidden="true"
       className="w-auto"
       style={{ height }}
-      dangerouslySetInnerHTML={{ __html: company.svg ?? "" }}
+      dangerouslySetInnerHTML={{ __html: uniqueIds(company.svg ?? "", copy) }}
     />
   );
 }
@@ -129,7 +129,7 @@ export function UsedBy() {
                 {COMPANIES.map((company) => (
                   <li key={company.name} className="flex w-[180px] shrink-0 flex-col items-center gap-4 px-4 text-ink sm:w-[220px] lg:w-[248px]">
                     <span className="grid h-11 place-items-center">
-                      <Mark company={company} base={32} />
+                      <Mark company={company} base={32} copy={copy} />
                     </span>
                     <span className="text-center font-mono text-label text-ink/80">{company.name}</span>
                   </li>
