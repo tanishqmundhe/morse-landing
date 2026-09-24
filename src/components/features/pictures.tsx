@@ -2,6 +2,7 @@ import { extras } from "@/content/site";
 import { Captions } from "./captions";
 import { Whiteboard } from "./whiteboard";
 import { Annotate } from "./annotate";
+import { Cam } from "../cam";
 
 /**
  * Section 3's six looping pictures, one per feature, each filling its card.
@@ -13,15 +14,6 @@ import { Annotate } from "./annotate";
 const STAGE = "relative size-full overflow-hidden rounded-[26px] bg-raised shadow-raised";
 const TAG = "absolute rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink";
 const at = (s: number) => ({ animationDelay: `${s}s` });
-
-function Avatar({ colour, size, centred = false }: { colour: string; size: number; centred?: boolean }) {
-  return (
-    <span
-      className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cover bg-center ${centred ? "top-1/2" : "top-[42%]"}`}
-      style={{ width: size, height: size, backgroundImage: `url(/app/avatar-${colour}.webp)` }}
-    />
-  );
-}
 
 /** The eighteen languages roll past a band, resting on each, in their own scripts. */
 const ROW = 60;
@@ -61,8 +53,8 @@ export function Reactions() {
   const emoji = ["red-heart", "party-popper", "thumbs-up", "fire", "clapping-hands", "face-with-tears-of-joy", "red-heart"];
   const left = [18, 34, 52, 66, 78, 42, 88];
   return (
-    <div className={STAGE} style={{ background: "url(/app/bg-lagoon.webp) center/cover" }}>
-      <Avatar colour="lagoon" size={104} centred />
+    <div className={STAGE}>
+      <Cam colour="lagoon" className="object-[50%_22%]" />
       {emoji.map((e, i) => (
         // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs, no optimisation to gain
         <img key={i} src={`/emoji/${e}.svg`} alt="" className="f-float absolute -bottom-2.5 size-11" style={{ left: `${left[i]}%`, ...at(i * 0.62) }} />

@@ -26,6 +26,7 @@ import {
 import { Icon } from "../ui";
 import { LogoMark } from "../logo";
 import { Written } from "../live-card";
+import { Cam } from "../cam";
 
 /**
  * The app's screens, rebuilt at one design size (1120 × 700) from the real
@@ -136,15 +137,10 @@ function Stage({ speaking }: { speaking: Who }) {
   const tile = (who: Who, big: boolean) => (
     <div
       key={who}
-      className="relative overflow-hidden rounded-[20px] bg-cover bg-center"
-      style={{
-        backgroundImage: `url(/app/bg-${PEOPLE[who].colour}.webp)`,
-        boxShadow: big ? "0 0 0 2px var(--signal)" : undefined,
-      }}
+      className="relative overflow-hidden rounded-[20px] bg-sunken"
+      style={{ boxShadow: big ? "0 0 0 2px var(--signal)" : undefined }}
     >
-      <span className="absolute inset-0 grid place-items-center">
-        <Avatar who={who} size={big ? 110 : 64} />
-      </span>
+      <Cam colour={PEOPLE[who].colour} />
       <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-canvas/70 px-3 py-1 text-[14px] text-ink">
         {big && <Icon icon={Mic01Icon} className="size-3.5" />}
         {PEOPLE[who].name}
@@ -317,10 +313,8 @@ export function NotesScreen({ active }: { active: boolean }) {
           ))}
         </div>
         <div className="flex flex-col gap-3">
-          <div className="relative flex-1 overflow-hidden rounded-[22px] bg-cover bg-center" style={{ backgroundImage: "url(/app/bg-ember.webp)" }}>
-            <span className="absolute inset-0 grid place-items-center">
-              <Avatar who="priya" size={84} />
-            </span>
+          <div className="relative flex-1 overflow-hidden rounded-[22px] bg-sunken">
+            <Cam colour="ember" />
             <div className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-full bg-canvas/75 px-3 py-2">
               <span className="grid size-8 place-items-center rounded-full bg-ink text-canvas">
                 <Icon icon={PauseIcon} className="size-4" />

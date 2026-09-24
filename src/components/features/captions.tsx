@@ -2,6 +2,7 @@
 
 import { Fragment } from "react";
 import { useLoop } from "./timeline";
+import { Cam } from "../cam";
 
 /**
  * What you say, and what Morse shows. Captions are translated as they're
@@ -84,11 +85,7 @@ export function Captions() {
     <div ref={root} className="relative size-full overflow-hidden rounded-[26px] bg-raised shadow-raised">
       {TURNS.map((t, k) => (
         <div key={t.who} data-speaker className="absolute inset-0" style={{ opacity: k === 0 ? 1 : 0 }}>
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(/app/bg-${t.colour}.webp)` }} />
-          <span
-            className="absolute top-[36%] left-1/2 size-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cover bg-center"
-            style={{ backgroundImage: `url(/app/avatar-${t.colour}.webp)` }}
-          />
+          <Cam colour={t.colour} />
           <span className="absolute top-4 left-4 rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink">{t.who}</span>
         </div>
       ))}

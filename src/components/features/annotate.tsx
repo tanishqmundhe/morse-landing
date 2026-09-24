@@ -1,5 +1,6 @@
 "use client";
 
+import { Cam } from "../cam";
 import { useLoop } from "./timeline";
 
 /**
@@ -114,13 +115,13 @@ export function Annotate() {
         {([["ember", "Priya"], ["lagoon", "Arjun"], ["sage", "You"]] as const).map(([c, n], i) => (
           <div
             key={n}
-            className="relative aspect-[4/3] flex-1 overflow-hidden rounded-[14px] bg-cover bg-center"
-            style={{ backgroundImage: `url(/app/bg-${c}.webp)`, boxShadow: i === 0 ? "0 0 0 2px var(--signal)" : undefined }}
+            className="relative aspect-[4/3] flex-1 overflow-hidden rounded-[14px] bg-sunken"
+            style={{ boxShadow: i === 0 ? "0 0 0 2px var(--signal)" : undefined }}
           >
-            <span className="absolute inset-0 grid place-items-center">
-              <span className="size-9 rounded-full bg-cover bg-center" style={{ backgroundImage: `url(/app/avatar-${c}.webp)` }} />
-            </span>
-            <span className="absolute bottom-1.5 left-2 text-[12px] text-ink">{n}</span>
+            <Cam colour={c} />
+            {/* The name sits on the camera now, so it carries its own footing. */}
+            <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-9 bg-gradient-to-t from-black/60 to-transparent" />
+            <span className="absolute bottom-1.5 left-2 text-[12px] text-[#f1f0ee]">{n}</span>
           </div>
         ))}
       </div>
