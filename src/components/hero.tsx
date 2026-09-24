@@ -78,7 +78,7 @@ export function Hero() {
           src="signal"
           alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
           priority
-          className="animate-film-in h-[380px] sm:h-[460px] lg:h-[560px] 3xl:h-[660px]"
+          className="animate-film-in h-[420px] sm:h-[520px] lg:h-[660px] 3xl:h-[760px]"
         >
           <div className="absolute right-6 bottom-6 3xl:right-10 3xl:bottom-10">
             <HeroMontage />

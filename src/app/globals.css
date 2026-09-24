@@ -7,13 +7,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * The palette is the artwork's own, measured off it: every pixel of the five
- * infrared pieces converted to OkLCh, binned by hue, and each accent taken at
- * the top 3% of chroma in its family — the neon end, never a cluster average,
- * which is what flattened the first attempt.
- *
- * Grounds and greys are pure neutral, zero chroma. The accents do all the
- * colour; nothing competes with them. Three accents, one job each.
+ * The palette is the one from the Morse website package (tokens.css and
+ * theme.css of morse-website), adopted whole rather than derived. It is a
+ * designed two-theme set, and every value below is theirs except the few
+ * marked "derived", which fill in steps our depth ramp needs and theirs does
+ * not have. The accent is an acid yellow, not a green — that is the single
+ * biggest difference from what this page had before.
  */
 :root {
   color-scheme: light;
@@ -21,48 +20,41 @@
   /* The house curve, the same one ui.tsx hands to GSAP. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Neutral ramp. Elevation reads as lighter, recession as darker. */
-  --sunken: #e8e8e8;
-  --canvas: #f4f4f4;
-  --raised: #fafafa;
+  --sunken: #edecdb; /* paper-2 */
+  --canvas: #f9f9ef; /* paper */
+  --raised: #fdfdf6; /* derived: paper -> white */
   --float: #ffffff;
-  --overlay: #e8e8e8;
-  --overlay-hover: #dcdcdc;
-  --stage: #0a0a0a;
+  --overlay: #edecdb;
+  --overlay-hover: #e3e2ce; /* derived */
+  --stage: #111b1e; /* their dark paper: the ground under the artwork */
 
-  --ink: #0a0a0a; /* 18:1 on canvas */
-  --ink-soft: #575757; /* 6.6:1 — body and leads */
-  --ink-faint: #6b6b6b; /* 4.9:1 — meta only */
-  --ink-inverse: #f4f4f4;
-  --hairline: #d4d4d4;
+  --ink: #0e1d21; /* 16.3:1 on canvas */
+  --ink-soft: #45595d; /* muted, 7.0:1 */
+  --ink-faint: #5a6b6e; /* derived: their muted lightened fails 4.5, this holds 4.7 on the deepest well */
+  --ink-inverse: #f9f9ef;
+  --hairline: #c6c5b3; /* rule */
 
-  /* Neon Green: only what you can press. It cannot carry light text (1.7:1)
-   * so it takes ink, which it holds at 11.5:1.
-   * Vermilion: only what is live. The neon itself is 3.3:1 on canvas — fine
-   * as a dot or a ring, short of AA as a 14px label — so the mark and the
-   * text are two tokens, and the text one darkens until it holds 5.9:1.
-   * Jade is reserved for the motion pass: the moment Morse understands. */
-  --action: #6dde43;
-  --action-hover: #5ccb32;
-  --action-foreground: #0a0a0a;
-  --signal: #f64330;
-  --signal-ink: #a8301c;
-  --understood: #1fcf86;
-  /* The accents as TEXT. The neon cannot be read on paper — green is 1.6:1 —
-   * so anything set in an accent (code, a hovered name) uses these instead.
-   * In dark the neon itself reads and these collapse back onto it. */
-  --action-ink: #2f7a1a; /* 5.1:1 on a card */
-  --understood-ink: #0a6b4a; /* 6.3:1 */
+  /* Acid yellow: only what you can press, and it carries ink at 14.5:1.
+   * Coral: only what is live. Teal: what Morse understood.
+   * Each also has an "-ink" form, because none of the three can be read as
+   * text on paper — the yellow is 1.1:1. */
+  --action: #e5f700;
+  --action-hover: #d4e600;
+  --action-foreground: #0e1d21;
+  --action-ink: #5c6900; /* 5.7:1 */
+  --signal: #fb5b40;
+  --signal-ink: #c2321b; /* 5.3:1 */
+  --understood: #00baa3;
+  --understood-ink: #005e51; /* their own highlight, 7.3:1 */
 
-  /* Neutral shade, so a shadow reads as less light rather than as dirt. */
-  --rim: rgb(10 10 10 / 0.10);
-  --shade: 0.15 0 0;
+  --rim: rgb(14 29 33 / 0.10);
+  --shade: 0.22 0.022 215;
   --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.05),
     0 10px 30px -16px oklch(var(--shade) / 0.18);
   --elev-float: 0 0 0 1px var(--rim), 0 2px 6px oklch(var(--shade) / 0.06),
     0 18px 44px -14px oklch(var(--shade) / 0.26);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.07), inset 0 0 0 1px var(--rim);
-  --glow: 0 8px 26px rgb(246 67 48 / 0.28);
+  --glow: 0 8px 26px rgb(251 91 64 / 0.28);
 
   /* The five accents a person picks in Settings — app-true, not re-tinted. */
   --accent-sage: #4e6838;
@@ -73,43 +65,40 @@
 }
 
 /*
- * Dark. Neutral all the way down — the grounds have no cast at all, so the
- * three accents are the only colour in either theme. Green does not change
- * between them: it holds both grounds, which is why the primary button finally
- * looks the same in both.
- *
- * In dark the ramp inverts direction but not meaning: canvas is the deepest,
- * and each step up the elevation is lighter.
+ * Dark, also theirs (theme.css). The accent does not change between themes —
+ * it holds both grounds — which is why the primary button looks the same in
+ * each. The three "-ink" forms collapse onto the accents themselves here,
+ * because on this ground the accents read.
  */
 .dark {
   color-scheme: dark;
-  --sunken: #111111;
-  --canvas: #0a0a0a;
-  --raised: #171717;
-  --float: #1f1f1f;
-  --overlay: #262626;
-  --overlay-hover: #333333;
+  --sunken: #1d2a2d; /* paper-2 */
+  --canvas: #111b1e; /* paper */
+  --raised: #1d2a2d;
+  --float: #263539; /* derived */
+  --overlay: #26353a; /* derived */
+  --overlay-hover: #324449; /* derived */
 
-  --ink: #f4f4f4;
-  --ink-soft: #a8a8a8; /* 7.5:1 on raised */
-  --ink-faint: #8f8f8f; /* 5.5:1 on raised */
-  --ink-inverse: #0a0a0a;
-  --hairline: #2e2e2e;
+  --ink: #f3f4e9; /* 15.8:1 on canvas */
+  --ink-soft: #b2c2c2; /* muted, 8.0:1 on raised */
+  --ink-faint: #8c9c9d; /* derived, 5.2:1 on raised */
+  --ink-inverse: #0e1d21;
+  --hairline: #405356; /* rule */
 
-  --action: #6dde43;
-  --action-hover: #82e65e;
-  --action-foreground: #0a0a0a;
-  --signal: #f64330;
-  --signal-ink: #f64330; /* 5.2:1 on canvas — the neon itself reads here */
-  --understood: #1fcf86;
-  --action-ink: #6dde43;
-  --understood-ink: #1fcf86;
+  --action: #e5f700;
+  --action-hover: #eefb4d;
+  --action-foreground: #0e1d21;
+  --action-ink: #e5f700; /* 12.4:1 on raised */
+  --signal: #fb5b40;
+  --signal-ink: #fb5b40; /* 4.7:1 on raised */
+  --understood: #00baa3;
+  --understood-ink: #91e2cd; /* their own dark highlight, 9.8:1 */
 
-  --rim: rgb(244 244 244 / 0.07);
-  --shade: 0 0 0;
+  --rim: rgb(243 244 233 / 0.08);
+  --shade: 0.1 0.01 215;
   --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.4),
     0 10px 28px -16px oklch(var(--shade) / 0.6);
-  --elev-float: 0 0 0 1px rgb(244 244 244 / 0.10),
+  --elev-float: 0 0 0 1px rgb(243 244 233 / 0.10),
     0 18px 44px -14px oklch(var(--shade) / 0.75);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.5), inset 0 0 0 1px var(--rim);
 
@@ -125,30 +114,22 @@
  * anything sitting on them keeps the dark ramp regardless of the page theme.
  */
 .on-stage {
-  --sunken: #111111;
-  --canvas: #0a0a0a;
-  --raised: #171717;
-  --float: #1f1f1f;
-  --overlay: #262626;
-  --overlay-hover: #333333;
-  --ink: #f4f4f4;
-  --ink-soft: #a8a8a8;
-  --ink-faint: #8f8f8f;
-  --ink-inverse: #0a0a0a;
-  --hairline: #2e2e2e;
-  --signal-ink: #f64330;
-  --rim: rgb(244 244 244 / 0.07);
-  --shade: 0 0 0;
-  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.4),
-    0 10px 28px -16px oklch(var(--shade) / 0.6);
-  --elev-float: 0 0 0 1px rgb(244 244 244 / 0.10),
-    0 18px 44px -14px oklch(var(--shade) / 0.75);
-  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.5), inset 0 0 0 1px var(--rim);
-  --accent-sage: #a9be8c;
-  --accent-patina: #6ec3b4;
-  --accent-dusk: #94b6d2;
-  --accent-indigo: #b3b4d6;
-  --accent-plum: #cc98be;
+  --sunken: #1d2a2d;
+  --canvas: #111b1e;
+  --raised: #1d2a2d;
+  --float: #263539;
+  --overlay: #26353a;
+  --overlay-hover: #324449;
+  --ink: #f3f4e9;
+  --ink-soft: #b2c2c2;
+  --ink-faint: #8c9c9d;
+  --ink-inverse: #0e1d21;
+  --hairline: #405356;
+  --signal-ink: #fb5b40;
+  --action-ink: #e5f700;
+  --understood-ink: #91e2cd;
+  --rim: rgb(243 244 233 / 0.08);
+  --shade: 0.1 0.01 215;
 }
 
 @theme inline {

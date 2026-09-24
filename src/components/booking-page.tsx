@@ -146,14 +146,10 @@ export function BookingPage() {
         <div data-card className={`${CARD} h-40 p-2 lg:aspect-[9/10] lg:h-auto`}>
           <div className="relative isolate size-full overflow-hidden rounded-[20px] bg-[#05070a]">
             <div className="film-drift absolute inset-0">
-              <Image
-                src="/art/knowledge.webp"
-                alt=""
-                width={1600}
-                height={1067}
-                sizes="(min-width: 1024px) 500px, 100vw"
-                className="size-full object-cover"
-              />
+              {/* The comets. Calmer than the colonnade, which fought the
+                  calendar beside it, and it takes the page's sky either way. */}
+              <Image src="/art/current-light.webp" alt="" width={1600} height={1067} sizes="(min-width: 1024px) 500px, 100vw" className="size-full object-cover dark:hidden" />
+              <Image src="/art/current.webp" alt="" width={1600} height={1067} sizes="(min-width: 1024px) 500px, 100vw" className="hidden size-full object-cover dark:block" />
             </div>
           </div>
         </div>

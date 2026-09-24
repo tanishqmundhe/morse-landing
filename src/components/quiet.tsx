@@ -39,7 +39,14 @@ const ICONS = { bot: UserGroupIcon, google: Calendar03Icon, api: Key01Icon, coun
  * press, everywhere else on the page, and spending it here would cost that.
  * The rest run cool to warm across the four.
  */
-const TINTS = { bot: "var(--accent-patina)", google: "var(--accent-dusk)", api: "var(--accent-indigo)", counts: "var(--accent-plum)" };
+/* The page's own three, cycling. The app's muted profile accents were here
+ * and they read as a different design beside an acid yellow. */
+const TINTS = {
+  bot: "var(--understood-ink)",
+  google: "var(--signal-ink)",
+  api: "var(--action-ink)",
+  counts: "var(--understood-ink)",
+};
 
 /** How much scroll the rail takes to cross all four cards. */
 const TRAVEL = 1500;

@@ -10,12 +10,18 @@ export const CARD = "rounded-[28px] bg-raised shadow-raised";
 export const SECTION = "py-28 lg:py-40 2xl:py-48";
 export const WRAP = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 2xl:max-w-[1360px] 3xl:max-w-[1480px] 4xl:max-w-[1560px]";
 
-/** Capsules only (contract #8). Sage is spent on the one thing to press. */
-// Pressing gives a little: the capsule sinks by 3% and springs back.
+/**
+ * Capsules only (contract #8), and the package's button: the acid yellow with
+ * a 1px ink outline round it. The outline is what makes it read as a control
+ * rather than a highlighter mark — at 93% lightness the fill alone has almost
+ * no edge against paper (1.1:1), so without it the shape dissolves.
+ *
+ * It lifts on hover and sinks on press, which is theirs too; ours only sank.
+ */
 const BUTTON =
-  "inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-[17px] font-medium whitespace-nowrap transition-[background-color,transform] duration-150 ease-out active:scale-[0.97]";
-export const PRIMARY = `${BUTTON} bg-action text-action-foreground hover:bg-action-hover`;
-export const SECONDARY = `${BUTTON} bg-overlay text-ink hover:bg-overlay-hover`;
+  "inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-[17px] font-medium whitespace-nowrap transition-[background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-[2px] active:translate-y-px active:scale-[0.99]";
+export const PRIMARY = `${BUTTON} bg-action text-action-foreground shadow-[0_0_0_1px_var(--ink)] hover:bg-action-hover`;
+export const SECONDARY = `${BUTTON} bg-transparent text-ink shadow-[0_0_0_1px_var(--hairline)] hover:bg-overlay`;
 
 export function Icon({ icon, className = "size-5" }: { icon: IconSvgElement; className?: string }) {
   return <HugeiconsIcon icon={icon} className={className} strokeWidth={1.8} aria-hidden="true" />;

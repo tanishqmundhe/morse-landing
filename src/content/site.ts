@@ -35,7 +35,7 @@ export const hero = {
   platforms: { ios: "Available on iPhone", mac: "macOS coming soon" },
   title: "Good conversations.",
   titleMuted: "Real progress.",
-  lede: "Video calls that write the meeting down for you, answer questions from your notes while you talk, and book the next meeting before anyone hangs up.",
+  lede: "Video calls that write themselves down, answer what you ask, and book what comes next.",
   primary: { label: "Open Morse", href: links.app },
   secondary: { label: "See how it works", href: "#product" },
   film: { src: "/films/signal-loop.mp4", poster: "/films/signal-poster.jpg" },

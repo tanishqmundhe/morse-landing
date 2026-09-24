@@ -4,6 +4,7 @@ import { replaces } from "@/content/site";
 import { BRANDS, type Brand } from "./brand-marks";
 import { LogoMark } from "./logo";
 import { Eyebrow, H2, Heading, LEAD, WRAP } from "./ui";
+import Image from "next/image";
 
 /**
  * What Morse stands in for, built to the geometry of the band under
@@ -114,7 +115,12 @@ export function Replaces() {
           </div>
 
           {/* The band holds still: the brackets are the frame. */}
-          <div className="dots flex h-[132px] items-center justify-between gap-6 px-6 sm:px-8 lg:h-[164px] 3xl:h-[180px]">
+          {/* Taller, and the artwork sits under the dots. It reads as a lit
+              ground the line is printed on rather than as a second panel,
+              which is what a full-height picture here did. */}
+          <div className="dots relative isolate flex h-[190px] items-center justify-between gap-6 overflow-hidden px-6 sm:px-8 lg:h-[240px] 3xl:h-[270px]">
+            <Image src="/art/memory-light.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 size-full object-cover opacity-25 dark:hidden" />
+            <Image src="/art/memory.webp" alt="" width={1600} height={1067} sizes="100vw" className="absolute inset-0 -z-10 hidden size-full object-cover opacity-35 dark:block" />
             <Brackets side="left" />
             <p className="flex min-w-0 items-center gap-4 truncate font-mono text-[20px] tracking-[-0.04em] text-ink sm:text-[26px] lg:text-[30px] 3xl:text-[34px]">
               <LogoMark className="size-6 shrink-0 lg:size-7" />
