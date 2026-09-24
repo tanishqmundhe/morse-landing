@@ -22,7 +22,8 @@ export const nav = {
   // Pages, not anchors. Features, Booking and Questions were all anchors into
   // the home page, which made a site of one page look like a site of six.
   links: [
-    { label: "Product", href: "/" },
+    { label: "Features", href: "/" },
+    { label: "Compare", href: "/compare" },
     { label: "Pricing", href: "/pricing" },
     { label: "Developers", href: "/developers" },
   ],
@@ -399,6 +400,74 @@ export const footer = {
  * anything the product can't do. Replace the numbers, not the features.
  * The quotes in `voices` are placeholders and say so.
  */
+/**
+ * The comparison page: what a meeting stack costs, against what Morse costs.
+ *
+ * **Every competitor price here was supplied by the team on 2026-09-24 and is
+ * a list price for one seat, billed monthly, in USD.** They are the most
+ * perishable thing on the site — these companies reprice, rename and repackage
+ * constantly, and a stale number in a comparison table is the one mistake a
+ * competitor will screenshot. Re-check every row before launch and put the
+ * date you checked it into `checked` below; the page prints it.
+ *
+ * Morse's own numbers come from `pricing.plans`, not from a second list, so
+ * there is one place to change them. They are still placeholders — see the
+ * note on `pricing`.
+ *
+ * Nothing here is a claim about quality. Each row says what a tool costs and
+ * what job it does, which is checkable; none of them says Morse is better at
+ * that job, which is not.
+ */
+export const comparison = {
+  eyebrow: "Compare",
+  title: "Three subscriptions,",
+  titleMuted: "or one.",
+  lede: "Most teams pay for a video tool, a scheduling tool and a notetaker. Morse is all three, and the three of them talk to each other because they are one thing.",
+  checked: "List prices for one seat, billed monthly, checked 24 September 2026.",
+
+  cost: {
+    eyebrow: "What it costs",
+    title: "The stack,",
+    titleMuted: "line by line.",
+    head: { job: "Job", buy: "What people buy", pay: "What they pay" },
+    rows: [
+      { job: "Video", buy: "Zoom Workplace Pro", pay: "~$14" },
+      { job: "Scheduling", buy: "Calendly Standard", pay: "$10" },
+      { job: "Notes", buy: "Fathom Premium $16 · Granola $14 · Fireflies Pro $10 · Otter Pro ~$8–17", pay: "$10–16" },
+    ],
+    total: { job: "Stack total", buy: "Zoom + Calendly + a notetaker", pay: "~$34–40" },
+    ours: [
+      { job: "Morse Pro", buy: "Video, notes, booking and the teleprompter", plan: "pro" },
+      { job: "Morse Studio", buy: "The same, plus shared Knowledge across the team", plan: "studio" },
+    ],
+  },
+
+  jobs: {
+    eyebrow: "Seven jobs",
+    title: "One login,",
+    titleMuted: "instead of seven.",
+    body: "Every category below was checked against the app before it went on this page. The tools named are the ones people actually buy for that job.",
+  },
+
+  /**
+   * The honest half. A comparison page that only lists wins is an advert; this
+   * is the part a reader trusts the rest of the page because of. Every line is
+   * checked against the app, the same as the claims on the home page.
+   */
+  honest: {
+    eyebrow: "Where it does not win",
+    title: "What Morse",
+    titleMuted: "does not do.",
+    rows: [
+      { label: "Webinars and large events", note: "Zoom runs thousands of attendees. Morse is built for the meetings a team actually has." },
+      { label: "A round-robin or team booking page", note: "One host, one calendar. Calendly and SavvyCal do team routing; Morse does not yet." },
+      { label: "Phone dial-in", note: "Morse is browser and iOS. There is no PSTN bridge." },
+      { label: "Bring your own model key", note: "The provider is server-side. Morse issues you a token to drive Morse, not the other way round." },
+      { label: "A wiki", note: "Knowledge feeds the in-call assistant. It is not Notion and does not try to be." },
+    ],
+  },
+};
+
 export const pricing = {
   eyebrow: "Pricing",
   title: "Pricing and plans.",

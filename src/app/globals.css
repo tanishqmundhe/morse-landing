@@ -49,12 +49,18 @@
 
   --rim: rgb(14 29 33 / 0.10);
   --shade: 0.22 0.022 215;
-  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.05),
-    0 10px 30px -16px oklch(var(--shade) / 0.18);
-  --elev-float: 0 0 0 1px var(--rim), 0 2px 6px oklch(var(--shade) / 0.06),
-    0 18px 44px -14px oklch(var(--shade) / 0.26);
-  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.07), inset 0 0 0 1px var(--rim);
-  --glow: 0 8px 26px rgb(251 91 64 / 0.28);
+  /* Depth is carried by the rim and by luminance, not by a drop shadow. The
+     first pass had a 44px blur at 26% under every floating card and a 30px one
+     under every raised one, which read as a sticker lifted off the page —
+     Linear, Vercel and Stripe all sit nearer 1-3px of contact shadow and a
+     short, shallow ambient one. These are that: roughly half the alpha and
+     two-thirds the blur. The 1px rim does the work it was doing. */
+  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.04),
+    0 6px 16px -10px oklch(var(--shade) / 0.10);
+  --elev-float: 0 0 0 1px var(--rim), 0 1px 3px oklch(var(--shade) / 0.05),
+    0 10px 24px -12px oklch(var(--shade) / 0.14);
+  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.06), inset 0 0 0 1px var(--rim);
+  --glow: 0 4px 14px rgb(251 91 64 / 0.18);
 
   /* The five accents a person picks in Settings — app-true, not re-tinted. */
   --accent-sage: #4e6838;
@@ -100,11 +106,13 @@
 
   --rim: rgb(239 239 234 / 0.07);
   --shade: 0.05 0 0;
-  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.4),
-    0 10px 28px -16px oklch(var(--shade) / 0.6);
+  /* Dark needs less, not more: the ground is already near-black, so a heavy
+     shadow only makes a dark halo. 0.75 at 44px was the worst offender. */
+  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.3),
+    0 6px 16px -10px oklch(var(--shade) / 0.35);
   --elev-float: 0 0 0 1px rgb(239 239 234 / 0.09),
-    0 18px 44px -14px oklch(var(--shade) / 0.75);
-  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.5), inset 0 0 0 1px var(--rim);
+    0 1px 3px oklch(var(--shade) / 0.35), 0 12px 28px -14px oklch(var(--shade) / 0.45);
+  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.45), inset 0 0 0 1px var(--rim);
 
   --accent-sage: #a9be8c;
   --accent-patina: #6ec3b4;

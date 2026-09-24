@@ -88,9 +88,10 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 
 ## Sections (in order)
 
-1. **Header (`site-header.tsx`):** fixed. It's clear over the film and turns into a solid pill (`bg-canvas/85`, `shadow-float`) once the film has scrolled away.
+1. **Header (`site-header.tsx`):** fixed, and glass at every scroll position — `backdrop-blur-xl backdrop-saturate-150` over `bg-canvas/55`, going to `/88` once the film has scrolled away. It used to be fully transparent over the hero, which left `ink-soft` links sitting on the arch's lime and all but invisible; the single scrim under the bar is not enough where the picture is brightest. Blurring and darkening the backdrop fixes it everywhere at once and stops the links changing legibility as you scroll.
+   - Over the home hero the bar takes `.on-stage`, so the glass is dark glass in both themes.
    - The logo sits on the left and Open Morse (sage) on the right.
-   - Between them, a pill of four links in page order. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
+   - Between them, four links: **Features, Compare, Pricing, Developers.** "Product" was the home page's label and said nothing — every page here is about the product. Its highlight is a rule under the current word. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
 2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page — cells of 200 × 132 inside the column over a 280-tall dotted band, `· · ·  >` at the left edge and `<  · · ·` at the right. Theirs is six fixed cells and nothing moves; ours scrolls the strip and holds the band still, because the list is longer than a row and a marquee takes any number. Track is the list twice over, moving half its width, so the loop never jumps.
    - **Seven categories, each checked against the app** before it went on the page: the video call, the notetaker, the recording library, the transcription service, the in-call assistant, the whiteboard and the booking link. Twenty-one tools.
    - **Left off, and why** (`brand-marks.ts` carries the full note): voice recorders — the voice-note backend is real but the recording, transcription and summarising happen on a phone and there is no iOS client in this repo, so claiming it would be claiming someone else's app. Notion and Confluence — Knowledge feeds the in-call assistant, it is not a wiki. 1Password and Bitwarden — the vault replaces a password pasted into a chat, not a password manager. Google Calendar (Morse syncs with it) and Excalidraw (what the whiteboard runs on).
@@ -141,6 +142,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - Below `lg` nothing pins — the cards stack and the band renders finished, since a rail that can't travel shouldn't sit half-drawn.
 5b. **Who uses Morse (`#used-by`, `used-by.tsx`):** seven companies, as their own marks, reversed out of a dark band. It sits after the quiet part and before booking — you have seen what it does, here is who does it with, now here is how to start.
    - **Centred heading on paper, marks on the band.** Contract #2e holds even at 82% scrim: a card may sit on the artwork, loose text may not.
+   - **It takes the theme.** Cream sky and ink marks on a light page, black sky and paper marks on a dark one. It shipped black-skied in both, which left a dark slab in the middle of a cream page. Measured worst case: marks 10.0:1 light and 9.2:1 dark, names about 7.4:1 and 6.6:1.
    - **`object-[center_72%]`.** The picture's middle band is its darkest, and cropping there gave a flat olive rectangle with no artwork in it at all. 72% lands on the lit mesa and the ground below.
    - **Every mark carries its name**, set in the page's own mono label. Not one of these is a logo anybody recognises, so a bare row would be decoration claiming to be proof.
    - **Names are `ink/80`, not `ink-soft`.** Measured against the brightest pixel under the row: marks 9.2:1, `ink-soft` names 4.2:1 — under AA for text this small — `ink/80` names about 6.6:1.
@@ -182,6 +184,17 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - **Every link** draws a line in from the left on hover and lets it retreat the way it came (`UNDERLINE`, on the shared curve).
    - Under it all: the year, Privacy and Terms, and "A product by" with the Unified Machines lockup.
 
+## Compare (`/compare`)
+
+Three parts, in the order a sceptic reads them: the money, the seven jobs one
+login replaces, and — last and deliberately — what Morse does not do.
+
+- **The third part is why the first two are believable.** A comparison page that only lists wins is an advert and everyone can tell. Every line of it is checked against the app, and it names the competitor that wins each one.
+- **No tick-and-cross matrix against named rivals.** A grid of red crosses under somebody else's logo is a claim about their product that goes stale the week they ship, and comparative use of their marks is against most of their brand guidelines besides. The page asserts what things cost and what job they do — both checkable, neither an opinion.
+- **Competitor prices are the most perishable thing on the site.** They were supplied by the team on 2026-09-24 as list prices for one seat billed monthly in USD, and the page prints that date. **Re-check every row before launch** and update `comparison.checked`. A stale number in a comparison table is the one mistake a competitor will screenshot.
+- **Morse's own numbers come from `pricing.plans`**, not a second list, so there is one place to change them. They are still placeholders.
+- Plain paper, no artwork: a comparison page that shouted would make the reader distrust the numbers on it.
+
 ## Pricing (`/pricing`)
 
 Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Every price, limit and plan name is invented** — Morse has no published pricing. What each plan *lists* is real, so the page can be shown without claiming anything the app can't do. Replace the numbers, not the features.
@@ -192,6 +205,11 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
 - **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
 - **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
+## Depth
+
+- **Depth is the rim and the luminance; the shadow is the last 10%.** `--elev-raised` and `--elev-float` are a 1px rim, a 1-3px contact shadow and one short ambient one. The first pass put a 44px blur at 26% under every floating card and 30px under every raised one, and in dark mode the float was 0.75 at 44px — which reads as a sticker lifted off the page rather than a surface on it. Linear, Vercel and Stripe all sit nearer a 1-3px contact shadow plus something shallow; these now do too, at roughly half the alpha and two-thirds the blur. **Dark needs less, not more:** the ground is already near-black, so a heavy shadow only draws a dark halo.
+- **Nothing outside the three tokens.** If a surface needs more depth than `shadow-float`, it needs a different background, not a bigger shadow.
+
 ## Motion
 
 - **One curve.** `EASE` in `ui.tsx` (`cubic-bezier(0.22, 1, 0.36, 1)` — quick to leave, long to arrive) is used by everything that opens, lifts, slides or draws itself in, so the whole page settles the same way instead of each piece easing to its own taste.

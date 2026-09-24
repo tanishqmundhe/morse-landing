@@ -7,11 +7,12 @@ import { Eyebrow, H2, Heading, LEAD, SECTION, WRAP } from "./ui";
 /**
  * Who is running their meetings on Morse.
  *
- * A dark band, black-skied in both themes like the hero, with the seven marks
- * reversed out of it. The heading is centred and sits on paper above the band,
- * because contract #2e holds: a card may sit on the artwork, loose text may
- * not — and here the artwork is scrimmed to 80% anyway, which is the only
- * reason marks can be read on it at all.
+ * A band of the artwork with the seven marks laid over it. It takes the theme
+ * like every other panel — cream sky and ink marks on a light page, black sky
+ * and paper marks on a dark one. The heading is centred and sits on the page
+ * above the band, because contract #2e holds: a card may sit on the artwork,
+ * loose text may not, and the artwork is scrimmed past 80% here anyway, which
+ * is the only reason marks can be read on it at all.
  *
  * **Every mark carries its name.** Not one of these is a logo anybody
  * recognises, so a bare row would be decoration claiming to be proof. The name
@@ -75,9 +76,20 @@ export function UsedBy() {
         <p className={`${LEAD} mx-auto mt-6 max-w-[52ch]`}>{usedBy.body}</p>
       </div>
 
-      {/* Black-skied in both themes, so `on-stage` swaps the text ramp with it
-          rather than leaving light-mode ink on a dark picture. */}
-      <div className="on-stage relative isolate mt-14 overflow-hidden rounded-[22px] sm:rounded-[26px] lg:mt-16">
+      {/* The band takes the theme like every other panel: cream sky and ink
+          marks on a light page, black sky and paper marks on a dark one. It
+          was black-skied in both, which left a dark slab sitting in the middle
+          of a cream page. */}
+      <div className="relative isolate mt-14 overflow-hidden rounded-[22px] sm:rounded-[26px] lg:mt-16">
+        <Image
+          src="/art/current-light.webp"
+          alt=""
+          aria-hidden="true"
+          width={1600}
+          height={1067}
+          sizes="(max-width: 1280px) 100vw, 1200px"
+          className="absolute inset-0 -z-20 size-full object-cover object-[center_72%] dark:hidden"
+        />
         <Image
           src="/art/current.webp"
           alt=""
@@ -85,9 +97,9 @@ export function UsedBy() {
           width={1600}
           height={1067}
           sizes="(max-width: 1280px) 100vw, 1200px"
-          className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]"
+          className="absolute inset-0 -z-20 hidden size-full object-cover object-[center_72%] dark:block"
         />
-        <GlitchBand src="current" onStage delay={4.6} className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]" />
+        <GlitchBand src="current" delay={4.6} className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]" />
         {/* `object-[center_72%]` because the picture's middle band is its
             darkest — cropping there gave a flat olive rectangle with no
             artwork visible in it at all. 72% lands on the lit mesa and the
@@ -96,8 +108,9 @@ export function UsedBy() {
             The scrim is flat rather than a gradient: the marks sit right
             across the width, so every one of them needs the same ground under
             it, and a gradient would leave one end of the row paler than the
-            other. */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.19_0.002_90/0.82)]" />
+            other. Paper on the light page, ink on the dark one — the picture
+            is texture under the marks either way, never a picture you read. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.88)] dark:bg-[oklch(0.19_0.002_90/0.82)]" />
 
         <ul className="grid grid-cols-2 gap-x-6 gap-y-12 px-8 py-16 sm:grid-cols-4 sm:px-10 lg:flex lg:items-start lg:justify-between lg:gap-5 lg:px-12 lg:py-20">
           {COMPANIES.map((company) => (

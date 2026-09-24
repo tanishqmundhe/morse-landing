@@ -46,12 +46,18 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed inset-x-2.5 top-2.5 z-40 transition-[background-color,box-shadow] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
+      className={`fixed inset-x-2.5 top-2.5 z-40 shadow-raised backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-radius] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
         // The home hero is dark in both themes, so the bar reads on stage while
-        // it is transparent over it; once it goes solid it is on the page.
+        // it is over it; once the film has gone it is on the page.
         !solid && onHome ? "on-stage" : ""
       } ${
-        menu ? "rounded-[28px] bg-canvas/95 shadow-float backdrop-blur-md" : solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
+        // Glass at every scroll position, not only once the film has gone. The
+        // bar used to be fully transparent over the hero, and `ink-soft` links
+        // on the arch's lime were all but invisible — the single scrim under
+        // the bar is not enough where the picture is at its brightest.
+        // Darkening and blurring what is behind the bar fixes it everywhere at
+        // once, and stops the links changing legibility as you scroll.
+        menu ? "rounded-[28px] bg-canvas/95" : solid ? "rounded-full bg-canvas/88" : "rounded-full bg-canvas/55"
       }`}
     >
       {/* Capped with the hero, or the mark and the CTA drift to the edges. */}

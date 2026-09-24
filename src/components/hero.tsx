@@ -43,8 +43,11 @@ export function Hero() {
         sizes="100vw"
         className="animate-film-in absolute inset-0 -z-20 size-full object-cover"
       />
-      {/* The hero tears first, and the rest of the page follows it. */}
-      <GlitchBand src="signal" className="absolute inset-0 -z-20 size-full object-cover" />
+      {/* The hero tears first, and the rest of the page follows it. `onStage`
+          because the picture below is black-skied in both themes: without it the
+          tear drew the cream-sky copy over it on a light page, which read as
+          the picture flashing white rather than dropping out. */}
+      <GlitchBand src="signal" onStage className="absolute inset-0 -z-20 size-full object-cover" />
       {/* The scrim is heaviest where the words are and lets go by the middle,
           so the arch stays bright on the side nothing is written on. */}
       <div
