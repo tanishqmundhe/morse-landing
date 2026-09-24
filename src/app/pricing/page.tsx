@@ -46,7 +46,7 @@ export default function Page() {
               stays bright to the right, and the header reads over the top. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.2_0.011_50/0.96)_0%,oklch(0.2_0.011_50/0.9)_42%,oklch(0.2_0.011_50/0.52)_72%,transparent_94%),linear-gradient(0deg,oklch(0.2_0.011_50/0.88)_0%,transparent_58%)]"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.205_0_0/0.96)_0%,oklch(0.205_0_0/0.9)_42%,oklch(0.205_0_0/0.52)_72%,transparent_94%),linear-gradient(0deg,oklch(0.205_0_0/0.88)_0%,transparent_58%)]"
           />
           <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-stage/85 to-transparent" />
           {/* Narrow screens put the copy over the brightest part of the film. */}

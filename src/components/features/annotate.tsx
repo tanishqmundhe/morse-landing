@@ -60,7 +60,7 @@ export function Annotate() {
   }, { rest: 0.75 });
 
   return (
-    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#e9e3d9" }}>
+    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#e9e7e3" }}>
       <span className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink">
         <span className="size-2 rounded-full bg-signal" />
         Priya is presenting
@@ -68,20 +68,20 @@ export function Annotate() {
 
       <svg viewBox="0 0 380 500" className="absolute inset-0 size-full" fill="none" aria-hidden="true">
         {/* The slide being shared */}
-        <rect x={SLIDE.x} y={SLIDE.y} width={SLIDE.w} height={SLIDE.h} rx={14} fill="#fdfbf7" />
-        <text x={38} y={96} fontSize={15} fontWeight={500} fill="#2a2522" style={{ fontFamily: "var(--font-plex)" }}>Q3 revenue against target</text>
-        <text x={38} y={112} fontSize={11} fill="#8a8178" style={{ fontFamily: "var(--font-plex)" }}>Thousands, by month</text>
+        <rect x={SLIDE.x} y={SLIDE.y} width={SLIDE.w} height={SLIDE.h} rx={14} fill="#fcfcfb" />
+        <text x={38} y={96} fontSize={15} fontWeight={500} fill="#101010" style={{ fontFamily: "var(--font-plex)" }}>Q3 revenue against target</text>
+        <text x={38} y={112} fontSize={11} fill="#6d6d68" style={{ fontFamily: "var(--font-plex)" }}>Thousands, by month</text>
         {[0, 400, 800, 1200].map((v) => (
           <g key={v}>
-            <line x1={70} x2={344} y1={y(v)} y2={y(v)} stroke="#e0d9cd" strokeWidth={1} />
-            <text x={62} y={y(v) + 4} fontSize={10} fill="#a89e93" textAnchor="end" style={{ fontFamily: "var(--font-plex)" }}>{v}</text>
+            <line x1={70} x2={344} y1={y(v)} y2={y(v)} stroke="#cfcdc8" strokeWidth={1} />
+            <text x={62} y={y(v) + 4} fontSize={10} fill="#8a8a85" textAnchor="end" style={{ fontFamily: "var(--font-plex)" }}>{v}</text>
           </g>
         ))}
         {MONTHS.map(([m, v], i) => (
           <g key={m}>
-            <rect x={bx(i)} y={y(v)} width={BAR_W} height={BASE - y(v)} rx={5} fill={i === 2 ? "#c9c0b4" : "#4a5568"} />
-            <text x={bx(i) + BAR_W / 2} y={y(v) - 7} fontSize={11} fill="#6b6259" textAnchor="middle" style={{ fontFamily: "var(--font-plex)" }}>{v}</text>
-            <text x={bx(i) + BAR_W / 2} y={BASE + 16} fontSize={11} fill="#8a8178" textAnchor="middle" style={{ fontFamily: "var(--font-plex)" }}>{m}</text>
+            <rect x={bx(i)} y={y(v)} width={BAR_W} height={BASE - y(v)} rx={5} fill={i === 2 ? "#c9c7c2" : "#4a5568"} />
+            <text x={bx(i) + BAR_W / 2} y={y(v) - 7} fontSize={11} fill="#55554f" textAnchor="middle" style={{ fontFamily: "var(--font-plex)" }}>{v}</text>
+            <text x={bx(i) + BAR_W / 2} y={BASE + 16} fontSize={11} fill="#6d6d68" textAnchor="middle" style={{ fontFamily: "var(--font-plex)" }}>{m}</text>
           </g>
         ))}
         <line x1={70} x2={344} y1={y(1000)} y2={y(1000)} stroke="#b0413e" strokeWidth={1.5} strokeDasharray="7 5" />

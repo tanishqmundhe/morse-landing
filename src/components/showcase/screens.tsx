@@ -378,7 +378,7 @@ export function CalendarScreen({ active }: { active: boolean }) {
           <span />
           {days.map((d, i) => (
             <span key={d} className={`pb-2 text-center text-[14px] ${i === 1 ? "text-ink" : "text-ink-faint"}`}>
-              {i === 1 ? <span className="rounded-full bg-signal px-2 py-0.5 text-[oklch(0.25_0.04_36)]">{d}</span> : d}
+              {i === 1 ? <span className="rounded-full bg-signal px-2 py-0.5 text-ink-inverse">{d}</span> : d}
             </span>
           ))}
         </div>

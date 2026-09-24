@@ -3,61 +3,75 @@
 @import "lenis/dist/lenis.css";
 
 /*
- * Morse's own light palette, copied from the app (Neural-Arc/morse
- * frontend/app/globals.css, v2.23+). The page is light; the app's dark theme
- * survives scoped to `.on-stage`, for the film bands and the header over them.
- * Keep these in step with the app: never invent a colour here.
+ * The palette is Unified Machines' (um-landing src/app/globals.css), adapted
+ * to Morse rather than pasted onto it. UM is flat brutalism: two neutrals,
+ * 1px ink borders, no depth. Morse is depth-by-luminance and needs six
+ * surface steps, so four values are UM's own and three are interpolations
+ * between them. Every derived value is marked "derived" and no hue is
+ * invented. Morse keeps its own structure: 28px capsules, shadows not
+ * borders, IBM Plex Sans.
+ *
+ * The page is light; the dark theme survives scoped to `.on-stage`, for the
+ * film bands and the header over them.
  */
 :root {
   color-scheme: light;
   /* The page column, for rows that bleed to the right but start in line with it. */
   --page: 1200px;
 
-  /*
-   * The app's LIGHT theme, copied exactly (Neural-Arc/morse
-   * frontend/app/globals.css, v2.23+). It is its own theme rather than the
-   * dark one inverted: a warm off-white page, deeper cream wells, near-white
-   * cards and darker text. Elevation still reads as lighter and recession as
-   * darker, so depth-by-luminance survives the switch.
-   */
-  --sunken: oklch(0.925 0.016 72); /* deeper cream: wells, sections */
-  --canvas: oklch(0.955 0.011 76); /* warm off-white page */
-  --raised: oklch(0.993 0.004 76); /* near-white cards */
-  --float: oklch(1 0 0); /* menus, dialogs */
-  --overlay: oklch(0.915 0.016 70); /* chips, secondary buttons */
-  --overlay-hover: oklch(0.88 0.019 68);
-  /* The app keeps video dark in both themes, so every film band is an island
-   * of stage colour on the light page, with `.on-stage` inverting the ink. */
-  --stage: oklch(0.2 0.011 50);
+  /* Surfaces. Elevation reads as lighter and recession as darker, exactly as
+   * before — only the hue changes, from warm cream to UM's near-neutral paper. */
+  --sunken: #e9e7e3; /* UM --paper-2: wells, sections */
+  --canvas: #f1f0ee; /* UM --paper: the page */
+  --raised: #f7f6f4; /* derived, canvas -> float: cards */
+  --float: #fcfcfb; /* UM --white: menus, dialogs, the live card */
+  --overlay: #e4e2dd; /* derived: chips, secondary buttons */
+  --overlay-hover: #dad7d1; /* derived */
+  /* Video stays dark in both themes, so every film band is an island of stage
+   * colour on the light page, with `.on-stage` carrying the dark ramp. */
+  --stage: oklch(0.205 0 0); /* derived from UM --ink */
 
-  --ink: oklch(0.175 0.014 40); /* 16:1 on canvas */
-  --ink-soft: oklch(0.42 0.024 50); /* 8:1 */
-  --ink-faint: oklch(0.5 0.024 56); /* 6.0:1 */
-  --ink-inverse: oklch(0.993 0.004 76);
-  --hairline: oklch(0.87 0.02 70);
+  /* Text. UM's --muted-text sits at 4.6:1 on paper, which is fine for the
+   * small meta it labels there but thin for the body copy and leads Morse
+   * runs it on. So it moves down a rung to --ink-faint, and --ink-soft is a
+   * derived step darker that carries body text at 6.6:1. */
+  --ink: #101010; /* UM --ink, 16.8:1 on canvas */
+  --ink-soft: #55554f; /* derived, 6.6:1 — body and leads */
+  --ink-faint: #646460; /* UM --muted-text nudged darker: its own value lands at
+                          * 4.0:1 on --overlay, and the app puts faint text on
+                          * overlay chips. 4.6:1 everywhere now. Meta only. */
+  --ink-inverse: #f1f0ee;
+  --hairline: #cfcdc8; /* UM --line */
 
-  /* Coral: only what is live. Sage: only what you can press. Both are the
-   * light-theme values — sage darkens to #4e6838 so it can carry near-white
-   * text at 6.1:1 and still read as text on the darkest light surface. */
-  --signal: oklch(0.52 0.16 36);
-  --action: #4e6838;
-  --action-hover: #415630;
-  --action-foreground: #fbfdf7;
+  /* Lime: only what you can press. It cannot carry light text (1.6:1), so it
+   * takes ink, as it does on UM — which makes the button light-on-dark no
+   * longer, and identical in both themes for the first time.
+   * Pink: only what is live. UM's --pink is a large-mark colour at 2.2:1; the
+   * Recording clock is 14px text, so this is UM's --pink-text, which holds
+   * 5.1:1 and still reads as a record light. */
+  --action: #caeb6b; /* UM --accent */
+  --action-hover: #b3d94e; /* UM --accent-deep */
+  --action-foreground: #101010;
+  --signal: #c2185f; /* UM --pink-text */
+  /* Cyan is the third accent and is deliberately unused for now: it is
+   * reserved for the motion pass, to mark the moment Morse understands
+   * something. It is not a decorative colour. */
+  --understood: #99ebfa; /* UM --cyan */
 
-  /* Light and shade. Shade is warm brown, never grey, so shadows read as the
-   * same material in shadow rather than dirt on it. */
-  --rim: oklch(0.32 0.03 45 / 0.09);
-  --shade: 0.32 0.03 45;
+  /* Light and shade. Shade is near-neutral now, a shade cast by the paper
+   * rather than the old warm brown, or shadows read as dirt on it. */
+  --rim: rgb(16 16 16 / 0.09);
+  --shade: 0.2 0.004 85;
   --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.05),
     0 10px 30px -16px oklch(var(--shade) / 0.18);
   --elev-float: 0 0 0 1px var(--rim), 0 2px 6px oklch(var(--shade) / 0.06),
     0 18px 44px -14px oklch(var(--shade) / 0.26);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.07), inset 0 0 0 1px var(--rim);
-  --glow: 0 8px 26px oklch(0.52 0.16 36 / 0.28);
+  --glow: 0 8px 26px rgb(194 24 95 / 0.28);
 
-  /* The five accents a person can pick in Settings → Appearance. These are
-   * the LIGHT values: each is darkened so it carries as text and as a fill on
-   * a near-white card. */
+  /* The five accents a person can pick in Settings -> Appearance. These stay
+   * app-true: they are real colours a user chooses in the product, so
+   * re-tinting them to the new palette would make the mockups lie. */
   --accent-sage: #4e6838;
   --accent-patina: #2c6a60;
   --accent-dusk: #3a5f80;
@@ -66,39 +80,39 @@
 }
 
 /*
- * A dark island on the light page. The app keeps video dark in both themes,
- * so the hero, the closing and the pricing header still sit on stage — and
- * everything inside them (the live card's float surface, its sunken wells,
- * its hairlines) has to come from the dark ramp too, or a near-white card
- * lands on the film with light text on it.
- *
- * So this is the app's whole dark theme, scoped. Every `bg-raised`,
- * `text-ink-soft` and `shadow-float` inside the band keeps working untouched.
+ * A dark island on the light page: the hero, the closing band and the pricing
+ * title. Everything inside them (the live card's float surface, its sunken
+ * wells, its hairlines) has to come from the dark ramp too, or a near-white
+ * card lands on the film with light text on it. So this is the whole dark
+ * theme, scoped — every `bg-raised`, `text-ink-soft` and `shadow-float`
+ * inside the band keeps working untouched.
  */
 .on-stage {
-  --sunken: oklch(0.165 0.008 52);
-  --canvas: oklch(0.142 0.008 55);
-  --raised: oklch(0.205 0.01 50);
-  --float: oklch(0.25 0.008 55);
-  --overlay: oklch(0.28 0.01 52);
-  --overlay-hover: oklch(0.315 0.011 52);
+  --sunken: #191919;
+  --canvas: #131313;
+  --raised: #202020;
+  --float: #282828;
+  --overlay: #2f2f2f;
+  --overlay-hover: #3a3a3a;
 
-  --ink: oklch(0.9564 0.0127 63.92);
-  --ink-soft: oklch(0.72 0.028 56);
-  --ink-faint: oklch(0.66 0.033 55);
-  --ink-inverse: oklch(0.175 0.014 40);
-  --hairline: oklch(0.3 0.012 50);
+  --ink: #f1f0ee;
+  --ink-soft: #b0b0ab; /* 6.7:1 on float */
+  --ink-faint: #94948f;
+  --ink-inverse: #101010;
+  --hairline: #343434;
 
-  --signal: oklch(0.78 0.125 36);
-  --action: #a9be8c;
-  --action-hover: #b8cb9d;
-  --action-foreground: #1a2112;
+  /* Lime is bright enough for both grounds, so action does not flip. Pink
+   * goes back to UM's own --pink here, which needs a dark ground to hold. */
+  --action: #caeb6b;
+  --action-hover: #d8f08c;
+  --action-foreground: #101010;
+  --signal: #ff6fb0; /* UM --pink, 7.1:1 on canvas */
 
-  --rim: oklch(0.9564 0.0127 63.92 / 0.04);
-  --shade: 0.06 0.006 50;
+  --rim: rgb(241 240 238 / 0.05);
+  --shade: 0.05 0 0;
   --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.3),
     0 10px 28px -16px oklch(var(--shade) / 0.5);
-  --elev-float: 0 0 0 1px oklch(0.9564 0.0127 63.92 / 0.07),
+  --elev-float: 0 0 0 1px rgb(241 240 238 / 0.08),
     0 18px 44px -14px oklch(var(--shade) / 0.7);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.45), inset 0 0 0 1px var(--rim);
 
@@ -211,7 +225,7 @@
  * Faint enough to be texture, not pattern.
  */
 .dots {
-  background-image: radial-gradient(oklch(0.175 0.014 40 / 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(16 16 16 / 0.09) 1px, transparent 1px);
   background-size: 13px 13px;
   background-position: 0 0;
 }

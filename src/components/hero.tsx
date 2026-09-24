@@ -21,7 +21,7 @@ export function Hero() {
         {/* Scrims: the copy's corner is held dark enough for AA; the film stays bright up and right. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.2_0.011_50/0.92)_0%,oklch(0.2_0.011_50/0.6)_42%,transparent_72%),linear-gradient(0deg,oklch(0.2_0.011_50/0.9)_0%,transparent_50%)]"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.205_0_0/0.92)_0%,oklch(0.205_0_0/0.6)_42%,transparent_72%),linear-gradient(0deg,oklch(0.205_0_0/0.9)_0%,transparent_50%)]"
         />
         <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-stage/70 to-transparent" />
         {/* Narrow screens put the copy over the brightest part of the film. */}
