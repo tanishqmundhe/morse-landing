@@ -88,7 +88,10 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <a href={nav.cta.href} className={`${PRIMARY} h-11 px-5 text-[16px]`}>
+          <a href={nav.cta.href} /* max-sm:, not hidden: PRIMARY already carries inline-flex and both
+             are display utilities, so the class list does not decide which
+             wins — a variant does. */
+            className={`${PRIMARY} h-11 px-5 text-[16px] max-sm:hidden`}>
             {nav.cta.label}
           </a>
           <button
@@ -106,7 +109,7 @@ export function SiteHeader() {
       {/* On a phone the links live here instead of in the pill. */}
       <div
         id="menu"
-        className={`overflow-hidden px-5 transition-[grid-template-rows,opacity] duration-300 ease-out md:hidden ${menu ? "grid grid-rows-[1fr] pb-4 opacity-100" : "grid grid-rows-[0fr] opacity-0"}`}
+        className={`overflow-hidden overscroll-contain px-5 transition-[grid-template-rows,opacity] duration-300 ease-out md:hidden ${menu ? "grid grid-rows-[1fr] pb-4 opacity-100" : "grid grid-rows-[0fr] opacity-0"}`}
       >
         <nav aria-label="Sections" className="min-h-0">
           {nav.links.map((link) => (
@@ -119,6 +122,9 @@ export function SiteHeader() {
               {link.label}
             </a>
           ))}
+          <a href={nav.cta.href} className={`${PRIMARY} mt-4 w-full sm:hidden`}>
+            {nav.cta.label}
+          </a>
         </nav>
       </div>
     </header>

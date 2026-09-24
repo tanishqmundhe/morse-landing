@@ -87,7 +87,7 @@ export function SiteFooter() {
         <p>© {new Date().getFullYear()} Unified Machines</p>
         <nav className="flex gap-7" aria-label="Legal">
           {footer.legal.map((link) => (
-            <a key={link.label} href={link.href} className={`${UNDERLINE} transition-colors duration-300 hover:text-ink-soft`}>
+            <a key={link.label} href={link.href} className={`${UNDERLINE} inline-flex min-h-6 items-center transition-colors duration-300 hover:text-ink-soft`}>
               {link.label}
             </a>
           ))}
@@ -121,7 +121,10 @@ function Loop() {
       <p className="mt-4 max-w-[38ch] text-[17px]/[1.55] text-ink-soft">{loop.body}</p>
 
       <form
-        className="mt-7 flex items-center gap-2 rounded-full bg-overlay p-1.5 pl-6 transition-colors duration-300 focus-within:bg-overlay-hover"
+        /* The field itself has no outline, so the pill carries the focus ring.
+            A background tint alone was the only indicator and it is well under
+            the 3:1 a non-text indicator needs. */
+        className="mt-7 flex items-center gap-2 rounded-full bg-overlay p-1.5 pl-6 transition-colors duration-300 focus-within:bg-overlay-hover focus-within:ring-2 focus-within:ring-ink focus-within:ring-offset-2 focus-within:ring-offset-canvas"
         onSubmit={(e) => {
           e.preventDefault();
           const body = encodeURIComponent(`Please add ${email} to the list.`);
@@ -139,6 +142,8 @@ function Loop() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder={loop.placeholder}
           className="min-w-0 flex-1 bg-transparent text-[17px] text-ink outline-none placeholder:text-ink-faint"
+          autoComplete="email"
+          spellCheck={false}
         />
         <button type="submit" className={PRIMARY}>
           {loop.action}

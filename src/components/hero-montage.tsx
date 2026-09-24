@@ -111,7 +111,7 @@ export function HeroMontage() {
       <div aria-hidden="true" className="absolute inset-0">
         {EMOJI.map((e, i) => (
           // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs
-          <img
+          <img width={44} height={44}
             key={e}
             data-emoji
             src={`/emoji/${e}.svg`}
@@ -128,7 +128,7 @@ export function HeroMontage() {
           className="absolute -left-14 top-[34%] flex items-center gap-2 rounded-full bg-float px-4 py-2.5 text-[15px] font-medium text-ink shadow-float"
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVG */}
-          <img src="/emoji/raising-hands.svg" alt="" className="size-5" />
+          <img width={44} height={44} src="/emoji/raising-hands.svg" alt="" className="size-5" />
           Daniel raised a hand
         </span>
 

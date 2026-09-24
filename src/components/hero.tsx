@@ -31,7 +31,7 @@ export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="on-stage relative isolate flex min-h-[760px] items-end overflow-hidden bg-stage lg:min-h-svh">
+    <section className="on-stage relative isolate flex min-h-[760px] items-end overflow-hidden bg-stage lg:min-h-svh lg:max-h-[1040px]">
       <Image
         src="/art/signal.webp"
         alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
@@ -86,6 +86,31 @@ export function Hero() {
               <span aria-hidden="true">&middot;</span>
               {hero.platforms.mac}
             </p>
+          </div>
+        </div>
+
+        {/* Below lg the meeting is hidden, which left a phone looking at a
+            picture and three lines of copy with no product in sight. One real
+            card instead: the thing Morse does, at a size a phone can read. */}
+        <div className="animate-enter lg:hidden" style={at(760)}>
+          <div className="rounded-[20px] bg-float/92 p-4 shadow-float backdrop-blur-md">
+            <div className="flex items-center gap-2 text-[13px]">
+              <span className="size-[7px] rounded-full bg-signal" />
+              <span className="text-signal-ink">Recording</span>
+              <span className="ml-auto font-mono text-ink-faint tabular-nums">12:05</span>
+            </div>
+            <p className="mt-3 text-[15px]/[1.5] text-ink-soft">
+              <span className="font-medium text-ink">Sofia</span> said &ldquo;Let&rsquo;s pick this up Thursday at two.&rdquo;
+            </p>
+            <div className="mt-3 flex items-center gap-2.5 rounded-[13px] bg-sunken px-3 py-2.5">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-action">
+                <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
+                  <path d="M2.5 6.2 4.8 8.5 9.5 3.8" fill="none" stroke="var(--action-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span className="flex-1 text-[14px] text-ink">Follow-up booked</span>
+              <span className="text-[13px] text-ink-faint">Thu 2:00</span>
+            </div>
           </div>
         </div>
 

@@ -59,11 +59,11 @@ export function Reactions() {
       <Cam colour="lagoon" />
       {emoji.map((e, i) => (
         // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs, no optimisation to gain
-        <img key={i} src={`/emoji/${e}.svg`} alt="" className="f-float absolute -bottom-2.5 size-11" style={{ left: `${left[i]}%`, ...at(i * 0.62) }} />
+        <img width={44} height={44} key={i} src={`/emoji/${e}.svg`} alt="" className="f-float absolute -bottom-2.5 size-11" style={{ left: `${left[i]}%`, ...at(i * 0.62) }} />
       ))}
       <span className="f-hand absolute top-4 left-4 flex items-center gap-2 rounded-full bg-canvas/80 py-1.5 pr-3.5 pl-2 text-[15px] text-ink">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/emoji/raising-hands.svg" alt="" className="size-[22px]" />
+        <img width={44} height={44} src="/emoji/raising-hands.svg" alt="" className="size-[22px]" />
         Daniel raised a hand
       </span>
       <span className={`${TAG} bottom-4 left-4`}>Daniel Chen</span>

@@ -333,6 +333,14 @@
   summary {
     cursor: pointer;
   }
+  /* Without this iOS waits ~300ms on every tap in case a second one is
+     coming, which reads as the whole page being slow. */
+  a,
+  button,
+  summary,
+  [role="button"] {
+    touch-action: manipulation;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
