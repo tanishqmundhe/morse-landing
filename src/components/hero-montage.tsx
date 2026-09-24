@@ -43,7 +43,7 @@ export function HeroMontage() {
       tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.5 }, 0);
       tl.set(el("[data-hand]"), { opacity: 0, x: -24, scale: 0.86 }, 0);
       tl.set(el("[data-written]"), { opacity: 0, y: 26, scale: 0.9 }, 0);
-      tl.set(el("[data-booked]"), { opacity: 0, x: 26, scale: 0.9 }, 0);
+      tl.set(el("[data-booked]"), { opacity: 0, y: 26, scale: 0.9 }, 0);
 
       // Reactions, rising past the top edge of the frame and out of it.
       q("[data-emoji]").forEach((e, i) => {
@@ -63,8 +63,8 @@ export function HeroMontage() {
       tl.to(el("[data-written]"), { opacity: 0, y: 16, duration: 0.45 }, 13.6);
 
       // And the booking, out past the right, as the third does.
-      tl.to(el("[data-booked]"), { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, 15.4);
-      tl.to(el("[data-booked]"), { opacity: 0, x: 16, duration: 0.45 }, 20.4);
+      tl.to(el("[data-booked]"), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, 15.4);
+      tl.to(el("[data-booked]"), { opacity: 0, y: 16, duration: 0.45 }, 20.4);
 
       tl.set({}, {}, 21.6);
     },
@@ -135,7 +135,7 @@ export function HeroMontage() {
           <p className="mt-1.5 text-[13px] text-ink-soft">A summary, two decisions and three action items.</p>
         </div>
 
-        <div data-booked className="absolute -right-16 bottom-[26%] w-[250px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-booked className="absolute -bottom-10 right-4 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
           <p className="text-[15px] font-medium text-ink">Follow-up booked</p>
           <p className="mt-1 text-[13px] text-ink-soft">Thursday, 2:00 &ndash; 2:30 pm</p>
         </div>

@@ -76,7 +76,7 @@ export function MindMap() {
   const sections: [string, string, string[]][] = [
     ["Onboarding", "#FF8FB1", ["Drop after sign-up", "Try a nudge"]],
     ["Acme renewal", "#E8C98A", ["This year’s rate", "Two extra seats"]],
-    ["Next steps", "#8FD9C4", ["Daniel: the nudge", "Priya: the terms"]],
+    ["Next steps", "#8FD9C4", ["Daniel: the nudge", "Sofia: the terms"]],
   ];
   const parts: React.ReactNode[] = [];
   // All three branches set off together, each a beat behind the last.

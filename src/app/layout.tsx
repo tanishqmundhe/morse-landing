@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Geist_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Devanagari } from "next/font/google";
+import { Caveat, Geist_Mono, IBM_Plex_Sans } from "next/font/google";
 import { meta } from "@/content/site";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import "./globals.css";
@@ -17,14 +17,6 @@ const plex = IBM_Plex_Sans({
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
-  display: "swap",
-});
-
-// Plex's Devanagari cut, for the Hindi and Marathi the captions card shows.
-const plexDeva = IBM_Plex_Sans_Devanagari({
-  subsets: ["devanagari"],
-  weight: ["300", "400"],
-  variable: "--font-plex-deva",
   display: "swap",
 });
 
@@ -64,7 +56,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable} ${plexDeva.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${plex.variable} ${geistMono.variable} ${caveat.variable}`} suppressHydrationWarning>
       <head>
         {/* Before paint, or the page shows light for a frame and then swaps. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />

@@ -6,7 +6,7 @@ import { Cam } from "../cam";
 
 /**
  * What you say, and what Morse shows. Captions are translated as they're
- * spoken: someone speaks Hindi or Marathi and the caption appears in English.
+ * spoken: someone speaks Spanish or Portuguese and the caption appears in English.
  * The card holds what was said long enough to read, then turns it over into
  * the English caption with the letter 3D swap (after Fancy Components), holds
  * that, and moves to the next speaker.
@@ -14,37 +14,35 @@ import { Cam } from "../cam";
 
 const TURNS = [
   {
-    who: "Priya Shah",
+    who: "Sofia Ferrer",
     colour: "ember",
-    said: { label: "Priya says, in Hindi", text: "ऑनबोर्डिंग पर ध्यान देना होगा, लोग साइन अप करके वापस नहीं आते।" },
+    said: { label: "Sofia says, in Spanish", text: "Tenemos que centrarnos en la incorporación: la gente se registra y no vuelve." },
     shown: "We need to focus on onboarding. People sign up and never come back.",
   },
   {
     who: "Daniel Chen",
     colour: "lagoon",
-    said: { label: "Daniel says, in Marathi", text: "पुढच्या आठवड्यापासून दुसऱ्या मीटिंगची आठवण पाठवूया." },
+    said: { label: "Daniel says, in Portuguese", text: "Vamos enviar um lembrete antes da segunda reunião." },
     shown: "Let’s send a second-meeting reminder, starting next week.",
   },
 ];
 const LINES = TURNS.flatMap((t) => [
-  { label: t.said.label, text: t.said.text, deva: true },
-  { label: "Morse shows, in English", text: t.shown, deva: false },
+  { label: t.said.label, text: t.said.text },
+  { label: "Morse shows, in English", text: t.shown },
 ]);
 
-// Devanagari turns word by word, so conjuncts and vowel signs stay joined;
-// Latin turns letter by letter.
-function Tokens({ text, deva }: { text: string; deva: boolean }) {
+function Tokens({ text }: { text: string }) {
   return text.split(" ").map((word, i) => (
     <Fragment key={i}>
       {i > 0 && " "}
       <span className="inline-block whitespace-nowrap">
-        {deva ? <span className="tok inline-block">{word}</span> : [...word].map((ch, j) => <span key={j} className="tok inline-block">{ch}</span>)}
+        {[...word].map((ch, j) => <span key={j} className="tok inline-block">{ch}</span>)}
       </span>
     </Fragment>
   ));
 }
 
-const HOLD_SAID = 3.4; // long enough to take in the Hindi or Marathi
+const HOLD_SAID = 3.4; // long enough to take in the line as it was said
 const HOLD_SHOWN = 4.6; // and to read the English
 
 export function Captions() {
@@ -55,11 +53,11 @@ export function Captions() {
       tl.fromTo(
         toks(i),
         { rotationX: -90, opacity: 0 },
-        { rotationX: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)", stagger: { each: LINES[i].deva ? 0.05 : 0.014 } },
+        { rotationX: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)", stagger: { each: 0.014 } },
         at,
       );
     const turnOut = (i: number, at: number) =>
-      tl.to(toks(i), { rotationX: 90, opacity: 0, duration: 0.4, ease: "power2.in", stagger: { each: LINES[i].deva ? 0.03 : 0.008 } }, at);
+      tl.to(toks(i), { rotationX: 90, opacity: 0, duration: 0.4, ease: "power2.in", stagger: { each: 0.008 } }, at);
     const speaker = (on: number, at: number) =>
       tl.to(q("[data-speaker]"), { opacity: (k: number) => (k === on ? 1 : 0), duration: 0.8, ease: "power2.inOut" }, at);
 
@@ -93,7 +91,7 @@ export function Captions() {
         <div className="grid text-[13px] text-ink-faint">
           {LINES.map((l, i) => (
             <p key={i} data-label={i} className="col-start-1 row-start-1">
-              <Tokens text={l.label} deva={false} />
+              <Tokens text={l.label} />
             </p>
           ))}
         </div>
@@ -103,10 +101,9 @@ export function Captions() {
               key={i}
               data-line={i}
               className="col-start-1 row-start-1"
-              lang={l.deva ? (i === 0 ? "hi" : "mr") : "en"}
-              style={l.deva ? { fontFamily: "var(--font-plex-deva), var(--font-plex), sans-serif" } : undefined}
+              lang={i % 2 === 0 ? (i === 0 ? "es" : "pt") : "en"}
             >
-              <Tokens text={l.text} deva={l.deva} />
+              <Tokens text={l.text} />
             </p>
           ))}
         </div>

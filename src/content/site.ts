@@ -51,7 +51,7 @@ export const hero = {
       {
         id: "notes",
         label: "Notes",
-        speaker: "Priya",
+        speaker: "Sofia",
         text: "Can we get the launch brief ready for Friday?",
         result: { lead: "Action item", text: "Launch brief · Jamie · Fri" },
       },
@@ -66,7 +66,7 @@ export const hero = {
       {
         id: "follow-up",
         label: "Follow-up",
-        speaker: "Priya",
+        speaker: "Sofia",
         text: "Let’s pick this up Thursday at two.",
         title: "Book a follow-up?",
         time: "Thu, 2:00 – 2:30 pm",
@@ -134,7 +134,7 @@ export const showcase = {
       id: "teleprompter",
       line: [
         { text: "Someone asks about Acme" },
-        { chip: "question", label: "Priya asked" },
+        { chip: "question", label: "Sofia asked" },
         { text: "and the answer is already in front of you." },
         { chip: "teleprompter", label: "From Acme notes" },
       ],
@@ -182,7 +182,7 @@ export const extras = {
   titleMuted: "done properly.",
   body: "Six more things Morse does while the call is running.",
   items: [
-    { id: "captions", title: "Captions, translated as you speak", body: "Speak Hindi or Marathi; everyone in the call reads it in English." },
+    { id: "captions", title: "Captions, translated as you speak", body: "Speak Spanish or Portuguese; everyone in the call reads it in English." },
     { id: "languages", title: "18 languages", body: "Ten understood without a setting, eight more when you ask." },
     { id: "whiteboard", title: "A whiteboard in the call", body: "Sketch it out together, with everyone’s cursor on the board." },
     { id: "annotate", title: "Draw on what’s shared", body: "Circle the number that matters while you present." },
@@ -225,14 +225,14 @@ export const booking = {
   title: "One link, and your",
   titleMuted: "calendar does the rest.",
   body: "Share it once. People pick from the times you have free, in their own time zone, and it lands on your week with a Morse link.",
-  link: "onmorse.com/priya",
+  link: "onmorse.com/sofia",
   points: [
     "Meeting types from 15 to 90 minutes",
     "Your usual hours, and your country’s holidays",
     "Ten minutes to undo, for them and for you",
   ],
   page: {
-    host: "Priya Shah",
+    host: "Sofia Ferrer",
     role: "Product lead",
     bio: "Happy to talk through onboarding, pricing or anything half-formed.",
     film: { src: "/films/ascii-wood.mp4", poster: "/films/ascii-wood-poster.jpg" },
@@ -250,7 +250,7 @@ export const booking = {
     confirm: "Confirm",
     booking: "Booking…",
     done: {
-      title: "You’re booked in with Priya.",
+      title: "You’re booked in with Sofia.",
       what: "Intro call, Wednesday 23 September at 10:30",
       sent: "The invitation and the joining link are on their way to",
       carries: ". It carries a calendar entry, so the time will be in your own calendar too.",

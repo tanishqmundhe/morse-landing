@@ -38,12 +38,12 @@ import { Avatar as Disc } from "../avatar";
 export const SCREEN_W = 1120;
 export const SCREEN_H = 700;
 
-type Who = "priya" | "daniel" | "you";
+type Who = "sofia" | "daniel" | "you";
 /** `name` is what a tile calls them; `full` is who they are. The two differ
  *  for one person — your own tile says "You" — and the disc needs the second,
  *  or it initialises the word rather than the person. */
 const PEOPLE: Record<Who, { name: string; full: string; colour: string; dot: string }> = {
-  priya: { name: "Priya Shah", full: "Priya Shah", colour: "ember", dot: "#e8927c" },
+  sofia: { name: "Sofia Ferrer", full: "Sofia Ferrer", colour: "ember", dot: "#e8927c" },
   daniel: { name: "Daniel Chen", full: "Daniel Chen", colour: "lagoon", dot: "#8fb8c9" },
   you: { name: "You", full: "Amara Cole", colour: "sage", dot: "#a9be8c" },
 };
@@ -100,9 +100,9 @@ function Panel({ title, count, children, width }: { title: string; count?: numbe
 }
 
 const TURNS: [Who, string, string][] = [
-  ["priya", "17:11", "I pulled the numbers from last quarter before this."],
+  ["sofia", "17:11", "I pulled the numbers from last quarter before this."],
   ["daniel", "17:11", "The gap is mostly onboarding. People sign up and never get to a second meeting."],
-  ["priya", "17:12", "What did we promise Acme on the renewal?"],
+  ["sofia", "17:12", "What did we promise Acme on the renewal?"],
 ];
 
 function Transcript({ active }: { active: boolean }) {
@@ -132,7 +132,7 @@ function Transcript({ active }: { active: boolean }) {
 }
 
 function Stage({ speaking }: { speaking: Who }) {
-  const others = (["priya", "daniel", "you"] as Who[]).filter((w) => w !== speaking);
+  const others = (["sofia", "daniel", "you"] as Who[]).filter((w) => w !== speaking);
   const tile = (who: Who, big: boolean) => (
     <div
       key={who}
@@ -191,7 +191,7 @@ export function RoomScreen({ active }: { active: boolean }) {
       <RoomBar />
       <div className="mt-2.5 flex min-h-0 flex-1 gap-3">
         <Transcript active={active} />
-        <Stage speaking="priya" />
+        <Stage speaking="sofia" />
         <Panel title="People" count={3} width={280}>
           <span className="mt-4 flex h-[42px] items-center justify-center gap-2 rounded-full bg-overlay text-[15px] text-ink">
             <Icon icon={UserAdd01Icon} className="size-[18px]" /> Add people
@@ -199,7 +199,7 @@ export function RoomScreen({ active }: { active: boolean }) {
           {([
             ["you", "Amara (you)", "Host · Design lead"],
             ["daniel", "Daniel Chen", "Guest"],
-            ["priya", "Priya Shah", "Guest · speaking"],
+            ["sofia", "Sofia Ferrer", "Guest · speaking"],
           ] as [Who, string, string][]).map(([who, name, role]) => (
             <div key={who} className="mt-4 flex items-center gap-3">
               <Avatar who={who} size={36} />
@@ -207,7 +207,7 @@ export function RoomScreen({ active }: { active: boolean }) {
                 <p className="text-[15px] text-ink">{name}</p>
                 <p className="text-[13px] text-ink-faint">{role}</p>
               </div>
-              <Icon icon={Mic01Icon} className={`size-[17px] ${who === "priya" ? "text-signal-ink" : "text-ink-soft"}`} />
+              <Icon icon={Mic01Icon} className={`size-[17px] ${who === "sofia" ? "text-signal-ink" : "text-ink-soft"}`} />
             </div>
           ))}
         </Panel>
@@ -230,7 +230,7 @@ export function TeleprompterScreen({ active }: { active: boolean }) {
           <div key={active ? "on" : "off"}>
             <div className="mt-2.5 rounded-[16px] bg-sunken p-3.5 shadow-sunken">
               <p className="text-[14px]/[1.4] text-ink-soft">
-                <b className="font-medium text-ink">Priya</b> asked “What did we promise Acme on the renewal?”
+                <b className="font-medium text-ink">Sofia</b> asked “What did we promise Acme on the renewal?”
               </p>
               <p className="mt-2 text-[18px]/[1.42] text-ink">
                 {active ? <Written text="This year’s rate, fixed until March, with two extra seats." delay={500} step={70} /> : "This year’s rate, fixed until March, with two extra seats."}
@@ -266,7 +266,7 @@ export function TeleprompterScreen({ active }: { active: boolean }) {
 export function NotesScreen({ active }: { active: boolean }) {
   const items: [string, string][] = [
     ["Draft the onboarding nudge", "Daniel · Fri"],
-    ["Send Acme the renewal terms", "Priya · Tomorrow"],
+    ["Send Acme the renewal terms", "Sofia · Tomorrow"],
     ["Book three user interviews", "You · Next week"],
   ];
   return (
@@ -349,7 +349,7 @@ export function CalendarScreen({ active }: { active: boolean }) {
     { d: 0, h: 1, len: 1, title: "Standup", tone: "var(--action)" },
     { d: 1, h: 2, len: 2, title: "Weekly design review", tone: "var(--action)" },
     { d: 2, h: 4, len: 1, title: "Acme renewal", tone: "#94b6d2" },
-    { d: 4, h: 3, len: 1, title: "1:1 with Priya", tone: "var(--action)" },
+    { d: 4, h: 3, len: 1, title: "1:1 with Sofia", tone: "var(--action)" },
     { d: 0, h: 5, len: 2, title: "Focus (Google)", tone: "oklch(0.72 0.028 56)" },
     { d: 3, h: 5, len: 1, title: "Follow-up: design review", tone: "var(--signal)", drop: true },
   ];
@@ -420,9 +420,9 @@ export function BookingScreen({ active }: { active: boolean }) {
     <Frame>
       <div className="flex h-full flex-col items-center justify-center" key={active ? "on" : "off"}>
         <div className="flex w-[820px] items-center gap-5">
-          <Avatar who="priya" size={64} />
+          <Avatar who="sofia" size={64} />
           <div>
-            <p className="text-[28px] font-light text-ink">Book a meeting with Priya Shah</p>
+            <p className="text-[28px] font-light text-ink">Book a meeting with Sofia Ferrer</p>
             <p className="text-[18px] text-ink-soft">Product lead</p>
           </div>
         </div>
@@ -519,7 +519,7 @@ export function HomeScreen() {
         </div>
         <p className="mt-6 font-mono text-label text-ink-faint uppercase">Upcoming</p>
         {[
-          ["11:00", "Weekly design review", "Priya, Daniel"],
+          ["11:00", "Weekly design review", "Sofia, Daniel"],
           ["14:00", "Acme renewal", "Guest: Sam from Acme"],
         ].map(([t, n, w]) => (
           <div key={n} className="mt-2 flex items-center gap-5 rounded-[20px] bg-raised px-5 py-3.5">

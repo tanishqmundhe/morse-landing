@@ -34,7 +34,7 @@ const SKIN: Record<string, { from: string; to: string; ink: boolean }> = {
 const INK = "#0E1D21";
 const PAPER = "#F9F9EF";
 
-/** "Priya Shah" → "PS". One letter if there is only one word. */
+/** "Sofia Ferrer" → "SF". One letter if there is only one word. */
 export function initialsOf(name: string) {
   const words = name.replace(/\(.*\)/, "").trim().split(/\s+/).filter(Boolean);
   return ((words[0]?.[0] ?? "") + (words.length > 1 ? (words.at(-1)?.[0] ?? "") : "")).toUpperCase();

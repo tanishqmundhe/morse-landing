@@ -31,7 +31,7 @@ export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="on-stage relative isolate flex min-h-[760px] items-center overflow-hidden bg-stage lg:min-h-[calc(100svh-8px)] lg:max-h-[1000px]">
+    <section className="on-stage relative isolate flex min-h-[700px] items-center overflow-hidden bg-stage lg:min-h-[820px] lg:max-h-[900px]">
       <Image
         src="/art/signal.webp"
         alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
@@ -92,7 +92,10 @@ export function Hero() {
         {/* Off the right edge on purpose. The section clips it, which is what
             makes it read as a window rather than a picture of one. */}
         <div className="relative hidden animate-enter lg:block" style={at(700)}>
-          <div className="absolute top-1/2 -right-[13%] -translate-y-1/2 2xl:-right-[9%]">
+          {/* Enough to crop the frame, not enough to eat a panel. At -13% the
+              People list went entirely and the pop-ups were chopped by the
+              viewport, which is the one edge nothing can break out of. */}
+          <div className="absolute top-1/2 -right-[4%] -translate-y-1/2 2xl:-right-[2%]">
             <HeroMontage />
           </div>
         </div>

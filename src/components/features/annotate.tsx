@@ -4,7 +4,7 @@ import { Cam } from "../cam";
 import { useLoop } from "./timeline";
 
 /**
- * Drawing on a shared screen. Priya presents a quarter's revenue against
+ * Drawing on a shared screen. Sofia presents a quarter's revenue against
  * target on a light slide, and marks up the month that fell short: a loop
  * round the bar, a note written by hand, then an arrow from the note to the
  * bar. The pen is the app's first annotation ink (#F2784B), and it moves the
@@ -64,7 +64,7 @@ export function Annotate() {
     <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#e9e7e3" }}>
       <span className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink">
         <span className="size-2 rounded-full bg-signal" />
-        Priya is presenting
+        Sofia is presenting
       </span>
 
       <svg viewBox="0 0 380 500" className="absolute inset-0 size-full" fill="none" aria-hidden="true">
@@ -88,7 +88,7 @@ export function Annotate() {
         <line x1={70} x2={344} y1={y(1000)} y2={y(1000)} stroke="#b0413e" strokeWidth={1.5} strokeDasharray="7 5" />
         <text x={72} y={y(1000) - 6} fontSize={10} fill="#b0413e" style={{ fontFamily: "var(--font-plex)" }}>Target 1,000</text>
 
-        {/* Priya's marks */}
+        {/* Sofia's marks */}
         <g data-mark strokeLinecap="round" strokeLinejoin="round">
           <path data-ink="loop" d={LOOP} stroke={INK} strokeWidth={3.2} fill="none" />
           <g clipPath="url(#note-clip)">
@@ -112,7 +112,7 @@ export function Annotate() {
 
       {/* The people in the call, under the shared screen */}
       <div className="absolute inset-x-4 bottom-4 flex gap-2.5">
-        {([["ember", "Priya"], ["lagoon", "Daniel"], ["sage", "You"]] as const).map(([c, n], i) => (
+        {([["ember", "Sofia"], ["lagoon", "Daniel"], ["sage", "You"]] as const).map(([c, n], i) => (
           <div
             key={n}
             className="relative aspect-[4/3] flex-1 overflow-hidden rounded-[14px] bg-sunken"

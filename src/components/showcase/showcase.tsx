@@ -153,8 +153,8 @@ function Chip({ chip, label }: { chip: ChipKind; label: string }) {
       {chip === "call" || chip === "question" ? (
         <span className="flex">
           {(chip === "call"
-            ? ([["ember", "Priya Shah"], ["lagoon", "Daniel Chen"], ["sage", "Amara Cole"]] as const)
-            : ([["ember", "Priya Shah"]] as const)
+            ? ([["ember", "Sofia Ferrer"], ["lagoon", "Daniel Chen"], ["sage", "Amara Cole"]] as const)
+            : ([["ember", "Sofia Ferrer"]] as const)
           ).map(([c, who], k) => (
             <span
               key={c}
