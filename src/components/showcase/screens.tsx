@@ -50,7 +50,7 @@ function Avatar({ who, size }: { who: Who; size: number }) {
   return (
     <span
       className="inline-block shrink-0 rounded-full bg-cover bg-center"
-      style={{ width: size, height: size, backgroundImage: `url(/app/avatar-${PEOPLE[who].colour}.webp)` }}
+      style={{ width: size, height: size, backgroundImage: `url(/app/avatar-${PEOPLE[who].colour}.svg)` }}
     />
   );
 }
