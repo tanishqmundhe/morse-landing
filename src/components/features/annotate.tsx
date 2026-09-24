@@ -118,7 +118,7 @@ export function Annotate() {
             className="relative aspect-[4/3] flex-1 overflow-hidden rounded-[14px] bg-sunken"
             style={{ boxShadow: i === 0 ? "0 0 0 2px var(--signal)" : undefined }}
           >
-            <Cam colour={c} />
+            <Cam colour={c} seat={i} />
             {/* The name sits on the camera now, so it carries its own footing. */}
             <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-9 bg-gradient-to-t from-black/60 to-transparent" />
             <span className="absolute bottom-1.5 left-2 text-[12px] text-[#f1f0ee]">{n}</span>

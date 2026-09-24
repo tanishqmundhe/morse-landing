@@ -83,7 +83,7 @@ export function Captions() {
     <div ref={root} className="relative size-full overflow-hidden rounded-[26px] bg-raised shadow-raised">
       {TURNS.map((t, k) => (
         <div key={t.who} data-speaker className="absolute inset-0" style={{ opacity: k === 0 ? 1 : 0 }}>
-          <Cam colour={t.colour} />
+          <Cam colour={t.colour} seat={k} />
           <span className="absolute top-4 left-4 rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink">{t.who}</span>
         </div>
       ))}

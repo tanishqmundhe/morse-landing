@@ -131,7 +131,7 @@ export function Intelligence() {
                   key={colour}
                   className={`relative overflow-hidden rounded-[18px] bg-sunken ${i === 2 ? "max-sm:hidden" : ""}`}
                 >
-                  <Cam colour={colour} />
+                  <Cam colour={colour} seat={i} />
                 </div>
               ))}
             </div>

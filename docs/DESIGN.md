@@ -211,6 +211,23 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
 - **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
 - **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
+## Why the faces stopped looking fake
+
+Every cam clip is cut from one source recording, so played from the top **all
+three tiles show the same frame at the same moment** — everyone blinks
+together, nods together, smiles together. A room of people moving in lockstep
+is the single thing that makes footage read as fake, and it does it whatever
+the footage is.
+
+`<Cam seat={n}>` fixes it: each seat starts at a different point in its clip
+(0 / 1.9 / 3.5 / 2.7s) **and runs at a slightly different rate** (1 / 0.94 /
+1.06 / 0.97). The offset alone would only hold them a fixed distance apart; the
+rate difference makes them drift, so no two tiles are ever in step again.
+
+- **Keep the rate within a few percent of 1.** Past that it is visible as slow motion on a talking head.
+- **The seat is the person, not the position**, in the showcase room — otherwise somebody jumps to a different part of their clip when the speaker changes.
+- Pass a seat anywhere several tiles share a screen: the Intelligence section, the annotation card, the captions card. A lone tile does not need one.
+
 ## Morse Intelligence, the section (`#intelligence`, `intelligence.tsx`)
 
 Sits after the showcase, where the meeting has just been shown. Layout borrowed

@@ -143,7 +143,9 @@ function Stage({ speaking }: { speaking: Who }) {
       className="relative overflow-hidden rounded-[20px] bg-sunken"
       style={{ boxShadow: big ? "0 0 0 2px var(--signal)" : undefined }}
     >
-      <Cam colour={PEOPLE[who].colour} />
+      {/* The seat is the person, not the position, so somebody does not
+          jump to a different part of their clip when the speaker changes. */}
+      <Cam colour={PEOPLE[who].colour} seat={["sofia", "daniel", "you"].indexOf(who)} />
       <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-canvas/70 px-3 py-1 text-[14px] text-ink">
         {big && <Icon icon={Mic02Icon} className="size-3.5" />}
         {PEOPLE[who].name}

@@ -10,7 +10,27 @@ import { useEffect, useRef, useState } from "react";
  * it leaves — a page of films would otherwise fetch and decode megabytes
  * before anyone scrolled to them. Reduced motion holds the poster's frame.
  */
-export function Film({ src, poster, className = "" }: { src: string; poster?: string; className?: string }) {
+export function Film({
+  src,
+  poster,
+  className = "",
+  offset = 0,
+  rate = 1,
+}: {
+  src: string;
+  poster?: string;
+  className?: string;
+  /** Seconds into the clip to start. See the note on `rate`. */
+  offset?: number;
+  /** Playback rate. Three tiles cut from one source play the same frames at
+   *  the same moment — everyone blinks together, nods together, smiles
+   *  together — and a room of people moving in lockstep is the single thing
+   *  that makes footage read as fake. `offset` puts each one in a different
+   *  part of the clip; `rate` makes them drift apart from there instead of
+   *  holding a fixed distance, which is what a fixed offset alone does. Keep
+   *  it within a few percent of 1: past that it is visible as slow motion. */
+  rate?: number;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
   const [load, setLoad] = useState(false);
 
@@ -31,6 +51,15 @@ export function Film({ src, poster, className = "" }: { src: string; poster?: st
     );
     near.observe(video);
 
+    // Start somewhere else in the clip, and run at a slightly different speed.
+    // Set on `loadedmetadata` because `currentTime` before that is discarded.
+    const place = () => {
+      video.playbackRate = rate;
+      if (offset) video.currentTime = offset % (video.duration || 1);
+    };
+    if (video.readyState >= 1) place();
+    video.addEventListener("loadedmetadata", place);
+
     const play = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !still.matches) void video.play().catch(() => {});
       else video.pause();
@@ -40,8 +69,9 @@ export function Film({ src, poster, className = "" }: { src: string; poster?: st
     return () => {
       near.disconnect();
       play.disconnect();
+      video.removeEventListener("loadedmetadata", place);
     };
-  }, []);
+  }, [offset, rate]);
 
   return (
     <video

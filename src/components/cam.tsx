@@ -28,6 +28,28 @@ import { Film } from "./film";
  * released models, so they stand in a generic call and never carry a quote or
  * an endorsement.
  */
-export function Cam({ colour, className = "" }: { colour: string; className?: string }) {
-  return <Film src={`/app/cam-${colour}.mp4`} poster={`/app/cam-${colour}.jpg`} className={className} />;
+export function Cam({
+  colour,
+  className = "",
+  seat = 0,
+}: {
+  colour: string;
+  className?: string;
+  /** Which tile this is. Every clip is cut from one source recording, so
+   *  played from the top they all blink, nod and smile on the same frame —
+   *  and a room of people moving in lockstep is exactly what makes footage
+   *  read as fake. The seat number puts each tile in a different part of its
+   *  clip and runs it at a slightly different speed, so they drift apart
+   *  instead of holding formation. */
+  seat?: number;
+}) {
+  return (
+    <Film
+      src={`/app/cam-${colour}.mp4`}
+      poster={`/app/cam-${colour}.jpg`}
+      className={className}
+      offset={[0, 1.9, 3.5, 2.7][seat % 4]}
+      rate={[1, 0.94, 1.06, 0.97][seat % 4]}
+    />
+  );
 }
