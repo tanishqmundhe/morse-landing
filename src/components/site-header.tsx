@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowDown01Icon, Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, ArrowRight01Icon, Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { nav } from "@/content/site";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme";
@@ -23,8 +23,14 @@ export function SiteHeader() {
   const [menu, setMenu] = useState(false);
   /** Which nav item has its panel open, by href. Null is closed. */
   const [open, setOpen] = useState<string | null>(null);
+  /** The link under the pointer. The rule follows it and falls back to the
+   *  current page when the pointer leaves, so the bar answers the pointer
+   *  instead of only reporting where you are. */
+  const [hover, setHover] = useState<string | null>(null);
+  /** The row under the pointer inside the panel. */
+  const [row, setRow] = useState<number | null>(null);
   const shut = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const links = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const links = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
     const onScroll = () => {
@@ -65,10 +71,11 @@ export function SiteHeader() {
   const active = path;
 
   useLayoutEffect(() => {
-    const el = active ? links.current[active] : null;
+    const target = hover ?? active;
+    const el = target ? links.current[target] : null;
     // Measuring the link is the only way to place the highlight.
     setMark(el ? { x: el.offsetLeft, w: el.offsetWidth } : null);
-  }, [active]);
+  }, [active, hover]);
 
   return (
     <header
@@ -100,18 +107,27 @@ export function SiteHeader() {
             width, because the actions are 193px wide against the logo's 107 and
             `justify-between` splits the difference. It is still the containing
             block for its own underline. */}
-        <nav aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
+        <nav
+          aria-label="Main"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
+          onPointerLeave={() => setHover(null)}
+        >
           {nav.links.map((link) => {
-            const tone = active === link.href ? "text-ink" : "text-ink-soft hover:text-ink";
-            const cls = `relative py-1 text-[16px] transition-colors duration-200 ${tone}`;
+            const lit = hover === link.href || (!hover && active === link.href);
+            const cls = `relative cursor-pointer py-1 text-[16px] transition-colors duration-200 ${
+              lit ? "text-ink" : "text-ink-soft"
+            }`;
+            const measure = (el: HTMLElement | null) => {
+              links.current[link.href] = el;
+            };
+
             if (!link.menu) {
               return (
                 <a
                   key={link.href}
-                  ref={(el) => {
-                    links.current[link.href] = el;
-                  }}
+                  ref={measure}
                   href={link.href}
+                  onPointerEnter={() => setHover(link.href)}
                   aria-current={active === link.href ? "location" : undefined}
                   className={cls}
                 >
@@ -119,25 +135,27 @@ export function SiteHeader() {
                 </a>
               );
             }
+
             const isOpen = open === link.href;
             return (
               <div
                 key={link.href}
                 className="relative"
-                onPointerEnter={() => hold(link.href)}
+                onPointerEnter={() => {
+                  setHover(link.href);
+                  hold(link.href);
+                }}
                 onPointerLeave={() => hold(null)}
               >
                 {/* A button, not a link: it opens something rather than going
                     somewhere, and a reader on a keyboard needs to be told so. */}
                 <button
                   type="button"
-                  ref={(el) => {
-                    links.current[link.href] = el as unknown as HTMLAnchorElement;
-                  }}
+                  ref={measure}
                   aria-expanded={isOpen}
                   aria-controls="features-menu"
                   onClick={() => setOpen(isOpen ? null : link.href)}
-                  className={`${cls} flex cursor-pointer items-center gap-1.5`}
+                  className={`${cls} flex items-center gap-1.5`}
                 >
                   {link.label}
                   <Icon
@@ -146,35 +164,39 @@ export function SiteHeader() {
                   />
                 </button>
 
-                {/* Three columns, a mono label over each, hairline between
-                    the rows — the register the FAQ list and the footer already
-                    use. Names only: a menu is a way to somewhere, and the
-                    somewhere explains itself when you arrive. */}
+                {/* One column, six rows, and a single block that slides to
+                    whichever row the pointer is on — the same idea as the rule
+                    under the nav, which is the page's way of marking a place. */}
                 <div
                   id="features-menu"
-                  className={`absolute top-full left-1/2 z-50 w-[min(92vw,860px)] -translate-x-1/2 pt-4 transition-[opacity,transform] duration-200 ease-out ${
+                  className={`absolute top-full left-1/2 z-50 w-[288px] -translate-x-1/2 pt-3 transition-[opacity,transform] duration-200 ease-out ${
                     isOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"
                   }`}
+                  onPointerLeave={() => setRow(null)}
                 >
-                  <div className="grid grid-cols-3 gap-x-8 rounded-[24px] bg-canvas/95 p-7 shadow-float ring-1 ring-rim backdrop-blur-xl">
-                    {link.menu.map((column) => (
-                      <div key={column.group}>
-                        <p className="font-mono text-label text-ink-faint uppercase">{column.group}</p>
-                        <ul className="mt-4 border-t border-hairline">
-                          {column.items.map((item) => (
-                            <li key={item.label} className="border-b border-hairline">
-                              <a
-                                href={item.href}
-                                onClick={() => setOpen(null)}
-                                tabIndex={isOpen ? undefined : -1}
-                                className="-mx-2 block rounded-[10px] px-2 py-2.5 text-[16px] text-ink-soft transition-colors duration-200 hover:bg-overlay hover:text-ink"
-                              >
-                                {item.label}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <div className="relative rounded-[20px] bg-canvas/95 p-2 shadow-float ring-1 ring-rim backdrop-blur-xl">
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-2 top-2 h-11 rounded-[13px] bg-overlay transition-[transform,opacity] duration-300 ease-out"
+                      style={{ transform: `translateY(${(row ?? 0) * 44}px)`, opacity: row === null ? 0 : 1 }}
+                    />
+                    {link.menu.map((item, i) => (
+                      <a
+                        key={item.href}
+                        href={onHome ? item.href : `/${item.href}`}
+                        onClick={() => setOpen(null)}
+                        onPointerEnter={() => setRow(i)}
+                        tabIndex={isOpen ? undefined : -1}
+                        className="relative flex h-11 items-center gap-2 rounded-[13px] px-3.5 text-[16px] text-ink-soft transition-colors duration-200 hover:text-ink focus-visible:text-ink"
+                      >
+                        {item.label}
+                        <Icon
+                          icon={ArrowRight01Icon}
+                          className={`ml-auto size-4 text-ink-faint transition-[opacity,transform] duration-300 ease-out ${
+                            row === i ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-0"
+                          }`}
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -222,22 +244,19 @@ export function SiteHeader() {
               {/* No disclosure on a phone: the sheet is already a list, and a
                   list inside a list you have to open is one tap too many. */}
               {link.menu && (
-                <div className="mb-3 flex flex-col gap-4 pl-4">
-                  {link.menu.map((column) => (
-                    <div key={column.group}>
-                      <p className="font-mono text-label text-ink-faint uppercase">{column.group}</p>
-                      <ul className="mt-1.5 flex flex-col">
-                        {column.items.map((item) => (
-                          <li key={item.label}>
-                            <a href={item.href} onClick={() => setMenu(false)} className="block py-1.5 text-[16px] text-ink-soft">
-                              {item.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                <ul className="mb-3 flex flex-col pl-4">
+                  {link.menu.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={onHome ? item.href : `/${item.href}`}
+                        onClick={() => setMenu(false)}
+                        className="block py-2 text-[16px] text-ink-faint"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
           ))}

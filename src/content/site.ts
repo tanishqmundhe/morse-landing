@@ -34,48 +34,24 @@ export const nav = {
       label: "Features",
       href: "/",
       /**
-       * Every feature Morse has, grouped by when you meet it, and nothing but
-       * the names. The first version gave each entry a line of explanation,
-       * which turned a menu into reading — a menu is a way to somewhere, and
-       * the somewhere explains itself when you arrive.
+       * Six, not seventeen. The first version listed every feature Morse has,
+       * grouped into three columns — which is a sitemap, not a menu. A menu is
+       * for getting somewhere, and seventeen choices is slower to read than
+       * scrolling the page it is offering to save you.
        *
-       * Several entries land on the same section, and that is correct: the
-       * page shows the whiteboard, the captions and the reactions in one
-       * filmstrip. The menu indexes features, not sections.
+       * `href` is the fragment alone. Written as `/#product` it is a route
+       * change as far as Next is concerned, so the home page reloads and jumps
+       * to the anchor instead of gliding to it — Lenis only takes anchors that
+       * start with `#`. The header adds the `/` back when you are on another
+       * page, where it really is a route change.
        */
       menu: [
-        {
-          group: "In the meeting",
-          items: [
-            { label: "Video calls", href: "/#product" },
-            { label: "Live transcript", href: "/#product" },
-            { label: "Morse Intelligence", href: "/#intelligence" },
-            { label: "Captions and translation", href: "/#features" },
-            { label: "A whiteboard in the call", href: "/#features" },
-            { label: "Draw on what\u2019s shared", href: "/#features" },
-            { label: "Reactions and raised hands", href: "/#features" },
-          ],
-        },
-        {
-          group: "After it",
-          items: [
-            { label: "Notes and action items", href: "/#product" },
-            { label: "Recording and playback", href: "/#product" },
-            { label: "Knowledge base", href: "/#product" },
-            { label: "Notes as a mind map", href: "/#features" },
-            { label: "Eighteen languages", href: "/#features" },
-          ],
-        },
-        {
-          group: "Around it",
-          items: [
-            { label: "Booking pages", href: "/#booking" },
-            { label: "One calendar, not two", href: "/#quiet" },
-            { label: "On your phone", href: "/#app" },
-            { label: "Agents and the API", href: "/#agents" },
-            { label: "Instead of seven tools", href: "/#instead-of" },
-          ],
-        },
+        { label: "In the meeting", href: "#product" },
+        { label: "Morse Intelligence", href: "#intelligence" },
+        { label: "Everything else", href: "#features" },
+        { label: "Booking pages", href: "#booking" },
+        { label: "On your phone", href: "#app" },
+        { label: "Agents and the API", href: "#agents" },
       ],
     },
     { label: "Compare", href: "/compare" },
