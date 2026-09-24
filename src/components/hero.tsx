@@ -31,7 +31,7 @@ export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="on-stage relative isolate flex min-h-[700px] items-center overflow-hidden bg-stage lg:min-h-[820px] lg:max-h-[900px]">
+    <section className="on-stage relative isolate flex min-h-[760px] items-end overflow-hidden bg-stage lg:min-h-svh">
       <Image
         src="/art/signal.webp"
         alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
@@ -45,12 +45,12 @@ export function Hero() {
           so the arch stays bright on the side nothing is written on. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[linear-gradient(96deg,oklch(0.19_0.002_90/0.95)_0%,oklch(0.19_0.002_90/0.86)_28%,oklch(0.19_0.002_90/0.4)_56%,oklch(0.19_0.002_90/0.12)_76%,transparent_92%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.19_0.002_90/0.97)_0%,oklch(0.19_0.002_90/0.9)_22%,oklch(0.19_0.002_90/0.58)_42%,oklch(0.19_0.002_90/0.18)_62%,transparent_84%),linear-gradient(90deg,oklch(0.19_0.002_90/0.5)_0%,transparent_46%)]"
       />
       {/* And a second one under the header, so the bar reads over the sky. */}
       <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-stage/80 to-transparent" />
 
-      <div className="mx-auto grid w-full max-w-[2040px] items-center gap-12 px-6 pt-32 pb-16 sm:px-10 lg:grid-cols-[minmax(420px,0.86fr)_minmax(0,1.14fr)] lg:gap-10 lg:px-14 lg:pt-28 lg:pb-20">
+      <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-14 sm:px-10 lg:grid-cols-[minmax(440px,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:px-14 lg:pb-16">
         <div>
           <h1 className="text-[44px]/[1.03] font-light tracking-[-0.035em] text-ink sm:text-[58px]/[1.01] lg:text-[58px]/[1] xl:text-[68px]/[1] 2xl:text-[76px]/[0.99] 3xl:text-[84px]/[0.98]">
             <span className="block animate-enter" style={at(120)}>
@@ -91,11 +91,11 @@ export function Hero() {
 
         {/* Off the right edge on purpose. The section clips it, which is what
             makes it read as a window rather than a picture of one. */}
-        <div className="relative hidden animate-enter lg:block" style={at(700)}>
-          {/* Enough to crop the frame, not enough to eat a panel. At -13% the
-              People list went entirely and the pop-ups were chopped by the
-              viewport, which is the one edge nothing can break out of. */}
-          <div className="absolute top-1/2 -right-[4%] -translate-y-1/2 2xl:-right-[2%]">
+        <div className="hidden animate-enter lg:block" style={at(700)}>
+          {/* Flush with the floor and the right gutter, so the two columns
+              stand on the same line. It runs a little past the right edge —
+              enough to crop the frame, not enough to eat a panel. */}
+          <div className="-mr-[3%] flex justify-end 2xl:-mr-[1%]">
             <HeroMontage />
           </div>
         </div>

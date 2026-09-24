@@ -24,7 +24,7 @@ const SCREENS = [RoomScreen, TeleprompterScreen, NotesScreen] as const;
 const HOLD = 7200;
 
 /** Big enough to read the transcript, small enough to leave the artwork room. */
-const SCALE = 0.62;
+const SCALE = 0.74;
 
 const EMOJI = ["red-heart", "thumbs-up", "fire", "clapping-hands", "party-popper"];
 
@@ -42,8 +42,8 @@ export function HeroMontage() {
       const el = (s: string) => q(s)[0];
       tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.5 }, 0);
       tl.set(el("[data-hand]"), { opacity: 0, x: -24, scale: 0.86 }, 0);
-      tl.set(el("[data-written]"), { opacity: 0, y: 26, scale: 0.9 }, 0);
-      tl.set(el("[data-booked]"), { opacity: 0, y: 26, scale: 0.9 }, 0);
+      tl.set(el("[data-written]"), { opacity: 0, y: -22, scale: 0.9 }, 0);
+      tl.set(el("[data-booked]"), { opacity: 0, y: -22, scale: 0.9 }, 0);
 
       // Reactions, rising past the top edge of the frame and out of it.
       q("[data-emoji]").forEach((e, i) => {
@@ -60,11 +60,11 @@ export function HeroMontage() {
 
       // The notes, out past the bottom edge, as the second screen arrives.
       tl.to(el("[data-written]"), { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 8.4);
-      tl.to(el("[data-written]"), { opacity: 0, y: 16, duration: 0.45 }, 13.6);
+      tl.to(el("[data-written]"), { opacity: 0, y: -14, duration: 0.45 }, 13.6);
 
       // And the booking, out past the right, as the third does.
       tl.to(el("[data-booked]"), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, 15.4);
-      tl.to(el("[data-booked]"), { opacity: 0, y: 16, duration: 0.45 }, 20.4);
+      tl.to(el("[data-booked]"), { opacity: 0, y: -14, duration: 0.45 }, 20.4);
 
       tl.set({}, {}, 21.6);
     },
@@ -110,7 +110,9 @@ export function HeroMontage() {
             src={`/emoji/${e}.svg`}
             alt=""
             className="absolute size-10 drop-shadow-lg"
-            style={{ left: `${26 + i * 13}%`, top: "62%" }}
+            /* Over the stage, not the roster: at 26+13i the last two rose
+               through the People panel and landed on its header. */
+            style={{ left: `${20 + i * 10}%`, top: "62%" }}
           />
         ))}
 
@@ -123,7 +125,7 @@ export function HeroMontage() {
           Daniel raised a hand
         </span>
 
-        <div data-written className="absolute -bottom-12 left-6 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-written className="absolute -top-12 left-4 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
           <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
             <span className="grid size-5 place-items-center rounded-full bg-action">
               <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
@@ -135,7 +137,7 @@ export function HeroMontage() {
           <p className="mt-1.5 text-[13px] text-ink-soft">A summary, two decisions and three action items.</p>
         </div>
 
-        <div data-booked className="absolute -bottom-10 right-4 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
+        <div data-booked className="absolute -top-10 right-6 w-[250px] rounded-[18px] bg-float p-4 shadow-float">
           <p className="text-[15px] font-medium text-ink">Follow-up booked</p>
           <p className="mt-1 text-[13px] text-ink-soft">Thursday, 2:00 &ndash; 2:30 pm</p>
         </div>
