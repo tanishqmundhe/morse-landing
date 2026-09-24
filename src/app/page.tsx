@@ -1,5 +1,6 @@
 import { BookingPage } from "@/components/booking-page";
 import { Closing } from "@/components/closing";
+import { AppSection } from "@/components/app-section";
 import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features/features";
@@ -20,6 +21,7 @@ export default function Home() {
         <Features />
         <Quiet />
         <BookingPage />
+        <AppSection />
         <Faq />
         <Closing />
       </main>

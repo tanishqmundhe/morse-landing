@@ -308,6 +308,32 @@ export const closing = {
  * nowhere; swap in the real handles or drop the ones that don\u2019t exist. The
  * sign-up form has no list behind it and opens a mail draft instead.
  */
+/**
+ * The iOS section, near the foot of the page. The Mac line is a promise, so it
+ * says what it is and nothing more until there is a date to give.
+ */
+export const app = {
+  eyebrow: "On your phone",
+  title: "The meeting,",
+  titleMuted: "in your pocket.",
+  body: "Join from anywhere, read the notes on the way home, and book the follow-up before you have put your coat down.",
+  points: [
+    "Join a call, or start one, in a tap",
+    "Notes and action items the moment it ends",
+    "Your booking page, and who took which slot",
+  ],
+  cta: { label: "Download for iPhone", href: links.app },
+  mac: "macOS coming soon",
+  /** What the phone in this section shows. */
+  screen: {
+    greeting: "Good afternoon, Amara.",
+    sub: "Your next conversation is a click away.",
+    next: { when: "16:30", length: "30 min", title: "Product & design sync", who: "You and the product team" },
+    later: { when: "Tomorrow", length: "45 min", title: "Customer conversation", who: "Google Calendar" },
+    action: "Join",
+  },
+};
+
 export const footer = {
   loop: {
     title: "Once a month, at most.",
