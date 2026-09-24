@@ -60,7 +60,7 @@ export function Annotate() {
   }, { rest: 0.75 });
 
   return (
-    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#171310" }}>
+    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#e9e3d9" }}>
       <span className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-canvas/75 px-3 py-1 text-[14px] text-ink">
         <span className="size-2 rounded-full bg-signal" />
         Priya is presenting
@@ -68,7 +68,7 @@ export function Annotate() {
 
       <svg viewBox="0 0 380 500" className="absolute inset-0 size-full" fill="none" aria-hidden="true">
         {/* The slide being shared */}
-        <rect x={SLIDE.x} y={SLIDE.y} width={SLIDE.w} height={SLIDE.h} rx={14} fill="#f4f1ea" />
+        <rect x={SLIDE.x} y={SLIDE.y} width={SLIDE.w} height={SLIDE.h} rx={14} fill="#fdfbf7" />
         <text x={38} y={96} fontSize={15} fontWeight={500} fill="#2a2522" style={{ fontFamily: "var(--font-plex)" }}>Q3 revenue against target</text>
         <text x={38} y={112} fontSize={11} fill="#8a8178" style={{ fontFamily: "var(--font-plex)" }}>Thousands, by month</text>
         {[0, 400, 800, 1200].map((v) => (

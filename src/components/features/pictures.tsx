@@ -93,7 +93,7 @@ export function MindMap() {
       <g key={name}>
         <path className="f-ink" pathLength={1} style={at(t)} stroke={col} strokeOpacity={0.7} strokeWidth={1.6} d={`M88 150 C 120 150, 120 ${sy}, 150 ${sy}`} />
         <circle className="f-pop" style={at(t + 0.5)} cx={154} cy={sy} r={5} fill={col} />
-        <text className="f-fade" style={{ ...at(t + 0.6), fontFamily: "var(--font-plex)" }} x={166} y={sy + 5} fill="#F7EFE8" fontSize={14}>{name}</text>
+        <text className="f-fade" style={{ ...at(t + 0.6), fontFamily: "var(--font-plex)" }} x={166} y={sy + 5} fill="var(--ink)" fontSize={14}>{name}</text>
       </g>,
     );
     items.forEach((it, ii) => {
@@ -103,7 +103,7 @@ export function MindMap() {
         <g key={it}>
           <path className="f-ink" pathLength={1} style={at(ti)} stroke={col} strokeOpacity={0.45} strokeWidth={1.3} d={`M262 ${sy} C 280 ${sy}, 280 ${iy}, 298 ${iy}`} />
           <circle className="f-pop" style={at(ti + 0.4)} cx={302} cy={iy} r={3.5} fill={col} />
-          <text className="f-fade" style={{ ...at(ti + 0.45), fontFamily: "var(--font-plex)" }} x={312} y={iy + 4} fill="#b3a194" fontSize={12}>{it}</text>
+          <text className="f-fade" style={{ ...at(ti + 0.45), fontFamily: "var(--font-plex)" }} x={312} y={iy + 4} fill="var(--ink-soft)" fontSize={12}>{it}</text>
         </g>,
       );
     });
@@ -112,8 +112,8 @@ export function MindMap() {
     <div className={STAGE}>
       <svg viewBox="0 0 420 300" className="absolute inset-0 size-full" fill="none" strokeLinecap="round" aria-hidden="true">
         <g className="f-sheet">
-          <circle className="f-pop" cx={70} cy={150} r={7} fill="#F7EFE8" />
-          <text className="f-fade" style={{ ...at(0.1), fontFamily: "var(--font-plex)" }} x={22} y={180} fill="#F7EFE8" fontSize={13}>Design review</text>
+          <circle className="f-pop" cx={70} cy={150} r={7} fill="var(--ink)" />
+          <text className="f-fade" style={{ ...at(0.1), fontFamily: "var(--font-plex)" }} x={22} y={180} fill="var(--ink)" fontSize={13}>Design review</text>
           {parts}
         </g>
       </svg>

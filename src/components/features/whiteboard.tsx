@@ -5,7 +5,7 @@ import { useLoop } from "./timeline";
 
 /**
  * The whiteboard is Excalidraw, so this is drawn the way Excalidraw draws:
- * roughjs shapes on its dark canvas (#121212), Excalifont for text, and
+ * roughjs shapes on its light canvas (#ffffff), Excalifont for text, and
  * collaborators' cursors with name tags. Two people work at once. Arjun drags
  * out "Sign up", an arrow and "First call"; meanwhile Priya drags out a dashed
  * "2nd call", links it and notes where people drop off. Shapes grow as the
@@ -16,8 +16,8 @@ import { useLoop } from "./timeline";
 
 const W = 380;
 const H = 500;
-const INK = "#dedede"; // Excalidraw's default stroke, as dark mode renders it
-const RED = "#ff8787";
+const INK = "#1e1e1e"; // Excalidraw's default stroke, as light mode renders it
+const RED = "#e03131";
 const ARJUN = "#74c0fc";
 const PRIYA = "#ffa94d";
 
@@ -132,15 +132,15 @@ export function Whiteboard() {
 
   const text = { fontFamily: "Excalifont, var(--font-caveat), cursive", fontSize: 20 };
   return (
-    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#121212" }}>
+    <div ref={root} className="relative size-full overflow-hidden rounded-[26px] shadow-raised" style={{ background: "#ffffff" }}>
       <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 size-full" fill="none" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         {/* Excalidraw's toolbar island */}
         <g transform="translate(118 20)">
-          <rect width={144} height={32} rx={9} fill="#232329" />
+          <rect width={144} height={32} rx={9} fill="#ffffff" stroke="#e9e9ed" />
           {[0, 1, 2, 3, 4].map((k) => (
             <g key={k} transform={`translate(${8 + k * 27} 5)`}>
-              {k === 0 && <rect width={22} height={22} rx={6} fill="#403e6a" />}
-              <g stroke="#b8b8c0" strokeWidth={1.4} transform="translate(5 5)">
+              {k === 0 && <rect width={22} height={22} rx={6} fill="#e0dfff" />}
+              <g stroke="#1b1b1f" strokeWidth={1.4} transform="translate(5 5)">
                 {k === 0 && <rect width={12} height={12} rx={2.5} />}
                 {k === 1 && <path d="M6 0 L12 6 L6 12 L0 6 Z" />}
                 {k === 2 && <circle cx={6} cy={6} r={6} />}
@@ -173,7 +173,7 @@ export function Whiteboard() {
 
         {([["arjun", "Arjun", ARJUN], ["priya", "Priya", PRIYA]] as const).map(([id, name, colour]) => (
           <g key={id} data-cursor={id}>
-            <path d="M0 0 L 0 17 L 4.5 13 L 8 20.5 L 11 19 L 7.5 12 L 13.5 11.5 Z" fill={colour} stroke="#121212" strokeWidth={1.2} strokeLinejoin="round" />
+            <path d="M0 0 L 0 17 L 4.5 13 L 8 20.5 L 11 19 L 7.5 12 L 13.5 11.5 Z" fill={colour} stroke="#ffffff" strokeWidth={1.2} strokeLinejoin="round" />
             <rect x={12} y={19} width={name.length * 7.6 + 16} height={21} rx={7} fill={colour} />
             <text x={20} y={34} fontSize={12.5} fill="#1b1b1f" style={{ fontFamily: "var(--font-plex)" }}>{name}</text>
           </g>

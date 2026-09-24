@@ -107,7 +107,7 @@ export function Quiet() {
                       aria-hidden="true"
                       className="pointer-events-none absolute inset-0"
                       style={{
-                        background: "radial-gradient(120% 80% at 50% 118%, color-mix(in oklch, var(--tint) 20%, transparent), transparent 72%)",
+                        background: "radial-gradient(120% 80% at 50% 118%, color-mix(in oklch, var(--tint) 30%, transparent), transparent 74%)",
                         opacity: "var(--on)",
                         transition: `opacity 620ms ${EASE}`,
                       }}

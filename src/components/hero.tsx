@@ -14,18 +14,18 @@ export function Hero() {
 
   return (
     <section className="p-2.5 sm:p-3.5">
-      <div className="relative isolate flex min-h-[640px] flex-col overflow-hidden rounded-[22px] bg-stage sm:rounded-[30px] lg:h-[calc(100svh-28px)] lg:max-h-[940px]">
+      <div className="on-stage relative isolate flex min-h-[640px] flex-col overflow-hidden rounded-[22px] bg-stage sm:rounded-[30px] lg:h-[calc(100svh-28px)] lg:max-h-[940px]">
         <div className="absolute inset-0 -z-10 animate-film-in">
           <Film src={hero.film.src} poster={hero.film.poster} className="object-[62%_40%]" />
         </div>
         {/* Scrims: the copy's corner is held dark enough for AA; the film stays bright up and right. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.142_0.008_55/0.92)_0%,oklch(0.142_0.008_55/0.6)_42%,transparent_72%),linear-gradient(0deg,oklch(0.142_0.008_55/0.9)_0%,transparent_50%)]"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,oklch(0.2_0.011_50/0.92)_0%,oklch(0.2_0.011_50/0.6)_42%,transparent_72%),linear-gradient(0deg,oklch(0.2_0.011_50/0.9)_0%,transparent_50%)]"
         />
-        <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-canvas/70 to-transparent" />
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-stage/70 to-transparent" />
         {/* Narrow screens put the copy over the brightest part of the film. */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-canvas/55 lg:hidden" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-stage/55 lg:hidden" />
 
         {/* The header sits here, fixed; this keeps the copy clear of it. */}
         <div className="h-24 shrink-0" />

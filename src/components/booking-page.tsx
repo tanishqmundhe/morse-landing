@@ -262,7 +262,7 @@ export function BookingPage() {
 
             {/* The visitor's pointer */}
             <svg data-cursor className="pointer-events-none absolute top-0 left-0 z-10 size-5 overflow-visible" viewBox="0 0 16 22" aria-hidden="true">
-              <path d="M0 0 L 0 17 L 4.5 13 L 8 20.5 L 11 19 L 7.5 12 L 13.5 11.5 Z" fill="#F7EFE8" stroke="#0c0907" strokeWidth={1.2} strokeLinejoin="round" />
+              <path d="M0 0 L 0 17 L 4.5 13 L 8 20.5 L 11 19 L 7.5 12 L 13.5 11.5 Z" fill="var(--ink)" stroke="var(--float)" strokeWidth={1.2} strokeLinejoin="round" />
             </svg>
           </div>
         </div>

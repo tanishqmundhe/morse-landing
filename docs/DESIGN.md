@@ -9,7 +9,8 @@ not reinvented.
 
 ## Contract points this page keeps
 
-- **#1 Warm-black ground.** The tokens are the app's dark palette, copied exactly (`globals.css`). The page is dark only, like the app's default.
+- **#1 Warm off-white ground.** The tokens are the app's *light* palette, copied exactly (`globals.css`) — a warm off-white page, deeper cream wells, near-white cards, dark ink. Elevation still reads as lighter and recession as darker, so depth-by-luminance survives.
+- **#1b Dark islands on it.** The app keeps video dark in both themes, so every film band (hero, closing, the pricing title) carries `.on-stage`, which scopes the app's whole dark theme — surfaces, ink, action, rim, elevations, accents — to that band. The header joins it while it is transparent. Nothing else on the page is dark.
 - **#2 One accent, spent on action.** Sage (`--action`) marks only things you press: Open Morse, Book, a picked day or time, a ticked action item. Coral (`--signal`) marks only what is live (the Recording dot) and the focus ring.
 - **#3 Two registers.** IBM Plex Sans for everything people say. Geist Mono only for the uppercase `text-label` eyebrows. No third family.
 - **#4 Weight inverts with scale.** Headlines are Plex 300. Labels are 600 at 13px.

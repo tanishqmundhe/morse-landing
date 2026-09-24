@@ -3,29 +3,92 @@
 @import "lenis/dist/lenis.css";
 
 /*
- * Morse's own dark palette, copied from the app (Neural-Arc/morse
- * frontend/app/globals.css, v2.23+). The landing page is dark only, like the
- * app's default. Keep these in step with the app: never invent a colour here.
+ * Morse's own light palette, copied from the app (Neural-Arc/morse
+ * frontend/app/globals.css, v2.23+). The page is light; the app's dark theme
+ * survives scoped to `.on-stage`, for the film bands and the header over them.
+ * Keep these in step with the app: never invent a colour here.
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   /* The page column, for rows that bleed to the right but start in line with it. */
   --page: 1200px;
 
-  --sunken: oklch(0.165 0.008 52);
-  --canvas: oklch(0.142 0.008 55); /* #0C0907 */
-  --raised: oklch(0.205 0.01 50); /* cards */
-  --float: oklch(0.25 0.008 55); /* menus, dialogs */
-  --overlay: oklch(0.28 0.01 52); /* chips, secondary buttons */
-  --overlay-hover: oklch(0.315 0.011 52);
-  --stage: oklch(0.168 0.009 50);
+  /*
+   * The app's LIGHT theme, copied exactly (Neural-Arc/morse
+   * frontend/app/globals.css, v2.23+). It is its own theme rather than the
+   * dark one inverted: a warm off-white page, deeper cream wells, near-white
+   * cards and darker text. Elevation still reads as lighter and recession as
+   * darker, so depth-by-luminance survives the switch.
+   */
+  --sunken: oklch(0.925 0.016 72); /* deeper cream: wells, sections */
+  --canvas: oklch(0.955 0.011 76); /* warm off-white page */
+  --raised: oklch(0.993 0.004 76); /* near-white cards */
+  --float: oklch(1 0 0); /* menus, dialogs */
+  --overlay: oklch(0.915 0.016 70); /* chips, secondary buttons */
+  --overlay-hover: oklch(0.88 0.019 68);
+  /* The app keeps video dark in both themes, so every film band is an island
+   * of stage colour on the light page, with `.on-stage` inverting the ink. */
+  --stage: oklch(0.2 0.011 50);
 
-  --ink: oklch(0.9564 0.0127 63.92); /* #F7EFE8 */
-  --ink-soft: oklch(0.72 0.028 56); /* #B3A194 */
+  --ink: oklch(0.175 0.014 40); /* 16:1 on canvas */
+  --ink-soft: oklch(0.42 0.024 50); /* 8:1 */
+  --ink-faint: oklch(0.5 0.024 56); /* 6.0:1 */
+  --ink-inverse: oklch(0.993 0.004 76);
+  --hairline: oklch(0.87 0.02 70);
+
+  /* Coral: only what is live. Sage: only what you can press. Both are the
+   * light-theme values — sage darkens to #4e6838 so it can carry near-white
+   * text at 6.1:1 and still read as text on the darkest light surface. */
+  --signal: oklch(0.52 0.16 36);
+  --action: #4e6838;
+  --action-hover: #415630;
+  --action-foreground: #fbfdf7;
+
+  /* Light and shade. Shade is warm brown, never grey, so shadows read as the
+   * same material in shadow rather than dirt on it. */
+  --rim: oklch(0.32 0.03 45 / 0.09);
+  --shade: 0.32 0.03 45;
+  --elev-raised: 0 0 0 1px var(--rim), 0 1px 2px oklch(var(--shade) / 0.05),
+    0 10px 30px -16px oklch(var(--shade) / 0.18);
+  --elev-float: 0 0 0 1px var(--rim), 0 2px 6px oklch(var(--shade) / 0.06),
+    0 18px 44px -14px oklch(var(--shade) / 0.26);
+  --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.07), inset 0 0 0 1px var(--rim);
+  --glow: 0 8px 26px oklch(0.52 0.16 36 / 0.28);
+
+  /* The five accents a person can pick in Settings → Appearance. These are
+   * the LIGHT values: each is darkened so it carries as text and as a fill on
+   * a near-white card. */
+  --accent-sage: #4e6838;
+  --accent-patina: #2c6a60;
+  --accent-dusk: #3a5f80;
+  --accent-indigo: #555a8f;
+  --accent-plum: #834873;
+}
+
+/*
+ * A dark island on the light page. The app keeps video dark in both themes,
+ * so the hero, the closing and the pricing header still sit on stage — and
+ * everything inside them (the live card's float surface, its sunken wells,
+ * its hairlines) has to come from the dark ramp too, or a near-white card
+ * lands on the film with light text on it.
+ *
+ * So this is the app's whole dark theme, scoped. Every `bg-raised`,
+ * `text-ink-soft` and `shadow-float` inside the band keeps working untouched.
+ */
+.on-stage {
+  --sunken: oklch(0.165 0.008 52);
+  --canvas: oklch(0.142 0.008 55);
+  --raised: oklch(0.205 0.01 50);
+  --float: oklch(0.25 0.008 55);
+  --overlay: oklch(0.28 0.01 52);
+  --overlay-hover: oklch(0.315 0.011 52);
+
+  --ink: oklch(0.9564 0.0127 63.92);
+  --ink-soft: oklch(0.72 0.028 56);
   --ink-faint: oklch(0.66 0.033 55);
+  --ink-inverse: oklch(0.175 0.014 40);
   --hairline: oklch(0.3 0.012 50);
 
-  /* Coral: only what is live. Sage: only what you can press. */
   --signal: oklch(0.78 0.125 36);
   --action: #a9be8c;
   --action-hover: #b8cb9d;
@@ -38,9 +101,7 @@
   --elev-float: 0 0 0 1px oklch(0.9564 0.0127 63.92 / 0.07),
     0 18px 44px -14px oklch(var(--shade) / 0.7);
   --elev-sunken: inset 0 1px 2px oklch(var(--shade) / 0.45), inset 0 0 0 1px var(--rim);
-  --glow: 0 8px 26px oklch(0.78 0.125 36 / 0.35);
 
-  /* The five accents a person can pick in Settings → Appearance (dark values). */
   --accent-sage: #a9be8c;
   --accent-patina: #6ec3b4;
   --accent-dusk: #94b6d2;
@@ -59,6 +120,7 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-faint: var(--ink-faint);
+  --color-ink-inverse: var(--ink-inverse);
   --color-hairline: var(--hairline);
   --color-signal: var(--signal);
   --color-action: var(--action);
@@ -149,7 +211,7 @@
  * Faint enough to be texture, not pattern.
  */
 .dots {
-  background-image: radial-gradient(oklch(0.956 0.013 64 / 0.075) 1px, transparent 1px);
+  background-image: radial-gradient(oklch(0.175 0.014 40 / 0.1) 1px, transparent 1px);
   background-size: 13px 13px;
   background-position: 0 0;
 }
