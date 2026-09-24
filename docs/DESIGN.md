@@ -196,14 +196,25 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 Three parts, in the order a sceptic reads them: the money, the seven jobs one
 login replaces, and — last and deliberately — what Morse does not do.
 
-- **The third part is why the first two are believable.** A comparison page that only lists wins is an advert and everyone can tell. Every line of it is checked against the app, and it names the competitor that wins each one.
-- **No tick-and-cross matrix against named rivals.** A grid of red crosses under somebody else's logo is a claim about their product that goes stale the week they ship, and comparative use of their marks is against most of their brand guidelines besides. The page asserts what things cost and what job they do — both checkable, neither an opinion.
-- **Competitor prices are the most perishable thing on the site.** They were supplied by the team on 2026-09-24 as list prices for one seat billed monthly in USD, and the page prints that date. **Re-check every row before launch** and update `comparison.checked`. A stale number in a comparison table is the one mistake a competitor will screenshot.
-- **Morse's own numbers come from `pricing.plans`**, not a second list, so there is one place to change them. They are still placeholders.
-- Plain paper, no artwork: a comparison page that shouted would make the reader distrust the numbers on it.
-- **Built as a document, after Linear's `/switch`:** a sticky numbered rail down the left, one narrow column of argument on the right, hairlines between the parts, and display type big enough to carry the first screen alone. The first pass was three plain sections stacked with a table in the middle — correct, and completely forgettable.
-- **The number before the table.** Three boxes against one is the whole argument and it should read from across the room, so the stack's total and Morse Pro sit side by side as two cards above the rows that explain them.
-- **The seven jobs carry the tools' own marks**, from the same `BRANDS` list the home page's band runs on, grouped off `cat` so the two can never drift. A column of names was a wall of grey.
+**Rebuilt after looking at how Linear, Vercel and Attio do this.** All three
+agree on the same three things, and the page now follows them:
+
+- **No cards.** Columns divided by a hairline, on the page's own ground. None of the three puts a bordered box round a price — a card is a frame to read before the number.
+- **The number is the biggest thing on the screen**, stated plainly: `$40`, unit small underneath. **Never a range, never a tilde.**
+- **The detail is a table** — grouped, hairline-ruled, labels left. That is the entire comparison apparatus at Linear and Vercel: no shadows, no fills, no chrome.
+
+**What the first version got wrong**, on exactly those three points: the money
+sat in two bordered cards with an arrow between them, and the total read
+**"~$34–40"**. A tilde and a range means the one number the page turns on
+cannot be held against the one it is compared to; three of the rows quoted
+ranges as well. Unreadable at a glance, which is the only speed a comparison
+is read at.
+
+- **One firm price per row.** Each row names the product most teams land on and says what it costs. The alternatives are a footnote, which is where a hedge belongs. The total is summed in the component from the rows, so it can never disagree with them.
+- **The honest section stays, and stays last.** A comparison page that only lists wins is an advert and everyone can tell.
+- **Still no tick-and-cross matrix against named rivals.** A grid of red crosses under somebody else's logo is a claim about their product that goes stale the week they ship, and comparative use of their marks is against most of their brand guidelines. The page asserts what things cost and what job they do — both checkable, neither an opinion.
+- **Competitor prices are the most perishable thing on the site.** Re-check every row before launch and update `comparison.checked`; the page prints that date.
+- **Morse's own number comes from `pricing.plans`**, not a second list. It is still a placeholder.
 
 ## Pricing (`/pricing`)
 

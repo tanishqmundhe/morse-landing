@@ -512,23 +512,29 @@ export const comparison = {
   title: "Three subscriptions,",
   titleMuted: "or one.",
   lede: "Most teams pay for a video tool, a scheduling tool and a notetaker. Morse is all three, and the three of them talk to each other because they are one thing.",
-  checked: "List prices for one seat, billed monthly, checked 24 September 2026.",
+  checked: "List prices for one seat, billed monthly, in USD. Checked 25 September 2026.",
 
   cost: {
     eyebrow: "What it costs",
     title: "The stack,",
     titleMuted: "line by line.",
-    head: { job: "Job", buy: "What people buy", pay: "What they pay" },
+    stackLabel: "A typical stack",
+    oursLabel: "Morse Pro",
+    unit: "per person, per month",
+    /**
+     * **One firm price per row, and no tilde.** This read "~$14", "$10–16" and
+     * a "~$34–40" total, which is three different kinds of vague in one table
+     * and unreadable at a glance: a reader cannot hold a range against a
+     * single number. Each row names the one product most teams actually land
+     * on and states what it costs. The alternatives are a footnote, which is
+     * where a hedge belongs.
+     */
     rows: [
-      { job: "Video", buy: "Zoom Workplace Pro", pay: "~$14" },
-      { job: "Scheduling", buy: "Calendly Standard", pay: "$10" },
-      { job: "Notes", buy: "Fathom Premium $16 · Granola $14 · Fireflies Pro $10 · Otter Pro ~$8–17", pay: "$10–16" },
+      { job: "Video", tool: "Zoom Workplace Pro", pay: 14 },
+      { job: "Scheduling", tool: "Calendly Standard", pay: 10 },
+      { job: "Notes", tool: "Fathom Premium", pay: 16 },
     ],
-    total: { job: "Stack total", buy: "Zoom + Calendly + a notetaker", pay: "~$34–40" },
-    ours: [
-      { job: "Morse Pro", buy: "Video, notes, booking and Morse Intelligence", plan: "pro" },
-      { job: "Morse Studio", buy: "The same, plus shared Knowledge across the team", plan: "studio" },
-    ],
+    alts: "Granola is $14, Fireflies Pro $10 and Otter Pro $17. The row takes Fathom because it is the one most teams land on.",
   },
 
   jobs: {
