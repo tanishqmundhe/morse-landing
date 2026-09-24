@@ -72,7 +72,10 @@ export function Hero() {
       {/* And a second one under the header, so the bar reads over the sky. */}
       <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-canvas/80 to-transparent" />
 
-      <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-14 sm:px-10 lg:grid-cols-[minmax(440px,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:px-14 lg:pb-16">
+      {/* Both columns sit off the floor rather than on it. They were flush with
+          the bottom padding, which left the copy and the montage crowding the
+          edge of the screen with the picture doing nothing above them. */}
+      <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-24 sm:px-10 lg:grid-cols-[minmax(440px,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:px-14 lg:pb-28 2xl:pb-32">
         <div>
           <h1 className="text-[44px]/[1.03] font-light tracking-[-0.035em] text-ink sm:text-[58px]/[1.01] lg:text-[58px]/[1] xl:text-[68px]/[1] 2xl:text-[76px]/[0.99] 3xl:text-[84px]/[0.98]">
             <span className="block animate-enter" style={at(120)}>
