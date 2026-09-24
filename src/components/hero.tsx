@@ -75,9 +75,9 @@ export function Hero() {
       {/* Both columns sit off the floor rather than on it. They were flush with
           the bottom padding, which left the copy and the montage crowding the
           edge of the screen with the picture doing nothing above them. */}
-      <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-24 sm:px-10 lg:grid-cols-[minmax(440px,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:px-14 lg:pb-28 2xl:pb-32">
+      <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-24 sm:px-10 lg:grid-cols-[minmax(560px,1.04fr)_minmax(0,1fr)] lg:gap-10 lg:px-14 lg:pb-28 2xl:pb-32">
         <div>
-          <h1 className="text-[44px]/[1.03] font-light tracking-[-0.035em] text-ink sm:text-[58px]/[1.01] lg:text-[58px]/[1] xl:text-[68px]/[1] 2xl:text-[76px]/[0.99] 3xl:text-[84px]/[0.98]">
+          <h1 className="text-balance text-[38px]/[1.05] font-light tracking-[-0.038em] text-ink sm:text-[48px]/[1.02] lg:text-[46px]/[1.02] xl:text-[56px]/[1.01] 2xl:text-[64px]/[1] 3xl:text-[72px]/[0.99]">
             <span className="block animate-enter" style={at(120)}>
               {hero.title}
             </span>

@@ -146,28 +146,36 @@ export function SiteHeader() {
                   />
                 </button>
 
+                {/* Three columns, a mono label over each, hairline between
+                    the rows — the register the FAQ list and the footer already
+                    use. Names only: a menu is a way to somewhere, and the
+                    somewhere explains itself when you arrive. */}
                 <div
                   id="features-menu"
-                  className={`absolute top-full left-1/2 z-50 w-[560px] -translate-x-1/2 pt-4 transition-[opacity,transform] duration-200 ease-out ${
+                  className={`absolute top-full left-1/2 z-50 w-[min(92vw,860px)] -translate-x-1/2 pt-4 transition-[opacity,transform] duration-200 ease-out ${
                     isOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"
                   }`}
                 >
-                  <div className="rounded-[22px] bg-canvas/95 p-2.5 shadow-float ring-1 ring-rim backdrop-blur-xl">
-                    <ul className="grid grid-cols-2 gap-0.5">
-                      {link.menu.map((item) => (
-                        <li key={item.href}>
-                          <a
-                            href={item.href}
-                            onClick={() => setOpen(null)}
-                            tabIndex={isOpen ? undefined : -1}
-                            className="block rounded-[15px] px-3.5 py-3 transition-colors duration-200 hover:bg-overlay"
-                          >
-                            <span className="block text-[15px] text-ink">{item.label}</span>
-                            <span className="mt-0.5 block text-[13px]/[1.4] text-ink-faint">{item.note}</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="grid grid-cols-3 gap-x-8 rounded-[24px] bg-canvas/95 p-7 shadow-float ring-1 ring-rim backdrop-blur-xl">
+                    {link.menu.map((column) => (
+                      <div key={column.group}>
+                        <p className="font-mono text-label text-ink-faint uppercase">{column.group}</p>
+                        <ul className="mt-4 border-t border-hairline">
+                          {column.items.map((item) => (
+                            <li key={item.label} className="border-b border-hairline">
+                              <a
+                                href={item.href}
+                                onClick={() => setOpen(null)}
+                                tabIndex={isOpen ? undefined : -1}
+                                className="-mx-2 block rounded-[10px] px-2 py-2.5 text-[16px] text-ink-soft transition-colors duration-200 hover:bg-overlay hover:text-ink"
+                              >
+                                {item.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -214,15 +222,22 @@ export function SiteHeader() {
               {/* No disclosure on a phone: the sheet is already a list, and a
                   list inside a list you have to open is one tap too many. */}
               {link.menu && (
-                <ul className="mb-2 flex flex-col gap-1 pl-4">
-                  {link.menu.map((item) => (
-                    <li key={item.href}>
-                      <a href={item.href} onClick={() => setMenu(false)} className="block py-1.5 text-[16px] text-ink-faint">
-                        {item.label}
-                      </a>
-                    </li>
+                <div className="mb-3 flex flex-col gap-4 pl-4">
+                  {link.menu.map((column) => (
+                    <div key={column.group}>
+                      <p className="font-mono text-label text-ink-faint uppercase">{column.group}</p>
+                      <ul className="mt-1.5 flex flex-col">
+                        {column.items.map((item) => (
+                          <li key={item.label}>
+                            <a href={item.href} onClick={() => setMenu(false)} className="block py-1.5 text-[16px] text-ink-soft">
+                              {item.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
           ))}

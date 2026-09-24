@@ -41,7 +41,7 @@ function Mark({ brand }: { brand: Brand }) {
     <svg
       viewBox={brand.viewBox}
       aria-hidden="true"
-      className="size-[18px] shrink-0 text-ink-soft"
+      className={brand.wordmark ? "h-[11px] w-auto shrink-0 text-ink-soft" : "size-[18px] shrink-0 text-ink-soft"}
       dangerouslySetInnerHTML={{ __html: brand.svg }}
     />
   );

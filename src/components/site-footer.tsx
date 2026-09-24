@@ -99,8 +99,9 @@ export function SiteFooter() {
             own three colours on hover — the one place another brand's palette
             is allowed on this page, because it is their name. */}
         <p className="group flex items-center gap-2.5">
-          {footer.maker} Unified Machines
+          {footer.maker}
           <UnifiedMachinesLogo markOnly className="um-mark h-[17px] w-auto shrink-0" title="" />
+          Unified Machines
         </p>
       </div>
     </footer>

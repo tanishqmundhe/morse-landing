@@ -33,16 +33,49 @@ export const nav = {
     {
       label: "Features",
       href: "/",
+      /**
+       * Every feature Morse has, grouped by when you meet it, and nothing but
+       * the names. The first version gave each entry a line of explanation,
+       * which turned a menu into reading — a menu is a way to somewhere, and
+       * the somewhere explains itself when you arrive.
+       *
+       * Several entries land on the same section, and that is correct: the
+       * page shows the whiteboard, the captions and the reactions in one
+       * filmstrip. The menu indexes features, not sections.
+       */
       menu: [
-        { label: "In the meeting", note: "The call, the transcript and Morse Intelligence.", href: "/#product" },
-        { label: "Instead of seven tools", note: "What one login replaces.", href: "/#instead-of" },
-        { label: "Everything else", note: "Captions, whiteboard, reactions, mind maps.", href: "/#features" },
-        { label: "The quiet part", note: "What Morse does while nobody watches.", href: "/#quiet" },
-        { label: "Booking pages", note: "One link, and your calendar does the rest.", href: "/#booking" },
-        { label: "On your phone", note: "The iOS app.", href: "/#app" },
-        { label: "Agents and the API", note: "A token lets a script, or an agent, use Morse as you.", href: "/#agents" },
-        { label: "Who uses Morse", note: "The teams already running their calls on it.", href: "/#used-by" },
-        { label: "Questions", note: "The things people ask first.", href: "/#questions" },
+        {
+          group: "In the meeting",
+          items: [
+            { label: "Video calls", href: "/#product" },
+            { label: "Live transcript", href: "/#product" },
+            { label: "Morse Intelligence", href: "/#product" },
+            { label: "Captions and translation", href: "/#features" },
+            { label: "A whiteboard in the call", href: "/#features" },
+            { label: "Draw on what\u2019s shared", href: "/#features" },
+            { label: "Reactions and raised hands", href: "/#features" },
+          ],
+        },
+        {
+          group: "After it",
+          items: [
+            { label: "Notes and action items", href: "/#product" },
+            { label: "Recording and playback", href: "/#product" },
+            { label: "Knowledge base", href: "/#product" },
+            { label: "Notes as a mind map", href: "/#features" },
+            { label: "Eighteen languages", href: "/#features" },
+          ],
+        },
+        {
+          group: "Around it",
+          items: [
+            { label: "Booking pages", href: "/#booking" },
+            { label: "One calendar, not two", href: "/#quiet" },
+            { label: "On your phone", href: "/#app" },
+            { label: "Agents and the API", href: "/#agents" },
+            { label: "Instead of seven tools", href: "/#instead-of" },
+          ],
+        },
       ],
     },
     { label: "Compare", href: "/compare" },

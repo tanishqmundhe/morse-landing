@@ -44,7 +44,7 @@ function Cell({ brand }: { brand: Brand }) {
       {MARKS && (
         <svg
           viewBox={brand.viewBox}
-          className={brand.wordmark ? "h-[22px] w-auto shrink-0" : "size-[22px] shrink-0"}
+          className={brand.wordmark ? "h-[15px] w-auto shrink-0" : "size-[22px] shrink-0"}
           fill="currentColor"
           role="img"
           aria-label={brand.wordmark ? brand.name : undefined}
