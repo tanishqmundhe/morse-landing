@@ -83,7 +83,7 @@ function Brackets({ side }: { side: "left" | "right" }) {
 
 export function Replaces() {
   return (
-    <section className="px-2.5 py-24 sm:px-3.5 lg:py-32" aria-label="What Morse stands in for">
+    <section id="instead-of" className="scroll-mt-24 px-2.5 py-24 sm:px-3.5 lg:py-32" aria-label="What Morse stands in for">
       {/* No picture here. This sits directly under the hero's panel, and a
           second image against the first read as two slabs rather than as a
           page. The colour comes from the strip instead: the mark crossing the

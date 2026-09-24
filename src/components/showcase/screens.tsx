@@ -397,7 +397,7 @@ export function NotesScreen({ active }: { active: boolean }) {
         </div>
         <div className="flex flex-col gap-3">
           <div className="relative flex-1 overflow-hidden rounded-[22px] bg-sunken">
-            <Cam colour="ember" />
+            <Cam colour="fjord" />
             <div className="absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-full bg-canvas/75 px-3 py-2">
               <span className="grid size-8 place-items-center rounded-full bg-ink text-canvas">
                 <Icon icon={PauseIcon} className="size-4" />

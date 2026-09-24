@@ -21,8 +21,29 @@ export const meta = {
 export const nav = {
   // Pages, not anchors. Features, Booking and Questions were all anchors into
   // the home page, which made a site of one page look like a site of six.
+  /**
+   * "Features" opens rather than navigates. Pointing it at "/" was a link that
+   * did nothing from the home page and went to the top of it from anywhere
+   * else; what a reader wants from that word is a way into the parts.
+   *
+   * Every entry goes somewhere different. Four items pointing at `#product`
+   * would be a menu pretending the page has more sections than it has.
+   */
   links: [
-    { label: "Features", href: "/" },
+    {
+      label: "Features",
+      href: "/",
+      menu: [
+        { label: "In the meeting", note: "The call, the transcript and Morse Intelligence.", href: "/#product" },
+        { label: "Instead of seven tools", note: "What one login replaces.", href: "/#instead-of" },
+        { label: "Everything else", note: "Captions, whiteboard, reactions, mind maps.", href: "/#features" },
+        { label: "The quiet part", note: "What Morse does while nobody watches.", href: "/#quiet" },
+        { label: "Booking pages", note: "One link, and your calendar does the rest.", href: "/#booking" },
+        { label: "On your phone", note: "The iOS app.", href: "/#app" },
+        { label: "Who uses Morse", note: "The teams already running their calls on it.", href: "/#used-by" },
+        { label: "Questions", note: "The things people ask first.", href: "/#questions" },
+      ],
+    },
     { label: "Compare", href: "/compare" },
     { label: "Pricing", href: "/pricing" },
     { label: "Developers", href: "/developers" },

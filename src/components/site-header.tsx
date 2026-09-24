@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { nav } from "@/content/site";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme";
@@ -21,6 +21,9 @@ export function SiteHeader() {
   const [solid, setSolid] = useState(!onHome);
   const [mark, setMark] = useState<{ x: number; w: number } | null>(null);
   const [menu, setMenu] = useState(false);
+  /** Which nav item has its panel open, by href. Null is closed. */
+  const [open, setOpen] = useState<string | null>(null);
+  const shut = useRef<ReturnType<typeof setTimeout> | null>(null);
   const links = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
@@ -32,6 +35,29 @@ export function SiteHeader() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [onHome, path]);
+
+  // Escape closes the panel wherever focus is, and scrolling away closes it
+  // too — a menu left hanging over a section you have already reached is just
+  // something in the way.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
+    const onScroll = () => setOpen(null);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [open]);
+
+  // A short grace period on the way out, so crossing the gap between the word
+  // and the panel does not close it under the pointer.
+  const hold = (href: string | null) => {
+    if (shut.current) clearTimeout(shut.current);
+    if (href) setOpen(href);
+    else shut.current = setTimeout(() => setOpen(null), 140);
+  };
 
   // The nav lists pages, so the current one is the route. The scroll-spy this
   // replaced was watching section ids that the nav stopped pointing at, which
@@ -75,21 +101,78 @@ export function SiteHeader() {
             `justify-between` splits the difference. It is still the containing
             block for its own underline. */}
         <nav aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
-          {nav.links.map((link) => (
-            <a
-              key={link.href}
-              ref={(el) => {
-                links.current[link.href] = el;
-              }}
-              href={link.href}
-              aria-current={active === link.href ? "location" : undefined}
-              className={`relative py-1 text-[16px] transition-colors duration-200 ${
-                active === link.href ? "text-ink" : "text-ink-soft hover:text-ink"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {nav.links.map((link) => {
+            const tone = active === link.href ? "text-ink" : "text-ink-soft hover:text-ink";
+            const cls = `relative py-1 text-[16px] transition-colors duration-200 ${tone}`;
+            if (!link.menu) {
+              return (
+                <a
+                  key={link.href}
+                  ref={(el) => {
+                    links.current[link.href] = el;
+                  }}
+                  href={link.href}
+                  aria-current={active === link.href ? "location" : undefined}
+                  className={cls}
+                >
+                  {link.label}
+                </a>
+              );
+            }
+            const isOpen = open === link.href;
+            return (
+              <div
+                key={link.href}
+                className="relative"
+                onPointerEnter={() => hold(link.href)}
+                onPointerLeave={() => hold(null)}
+              >
+                {/* A button, not a link: it opens something rather than going
+                    somewhere, and a reader on a keyboard needs to be told so. */}
+                <button
+                  type="button"
+                  ref={(el) => {
+                    links.current[link.href] = el as unknown as HTMLAnchorElement;
+                  }}
+                  aria-expanded={isOpen}
+                  aria-controls="features-menu"
+                  onClick={() => setOpen(isOpen ? null : link.href)}
+                  className={`${cls} flex cursor-pointer items-center gap-1.5`}
+                >
+                  {link.label}
+                  <Icon
+                    icon={ArrowDown01Icon}
+                    className={`size-4 text-ink-faint transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                <div
+                  id="features-menu"
+                  className={`absolute top-full left-1/2 z-50 w-[560px] -translate-x-1/2 pt-4 transition-[opacity,transform] duration-200 ease-out ${
+                    isOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"
+                  }`}
+                >
+                  <div className="rounded-[22px] bg-canvas/95 p-2.5 shadow-float ring-1 ring-rim backdrop-blur-xl">
+                    <ul className="grid grid-cols-2 gap-0.5">
+                      {link.menu.map((item) => (
+                        <li key={item.href}>
+                          <a
+                            href={item.href}
+                            onClick={() => setOpen(null)}
+                            tabIndex={isOpen ? undefined : -1}
+                            className="block rounded-[15px] px-3.5 py-3 transition-colors duration-200 hover:bg-overlay"
+                          >
+                            <span className="block text-[15px] text-ink">{item.label}</span>
+                            <span className="mt-0.5 block text-[13px]/[1.4] text-ink-faint">{item.note}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
           <span
             aria-hidden="true"
             className="absolute -bottom-0.5 left-0 h-px bg-ink transition-[transform,width,opacity] duration-300 ease-out"
@@ -124,14 +207,24 @@ export function SiteHeader() {
       >
         <nav aria-label="Sections" className="min-h-0">
           {nav.links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenu(false)}
-              className="block border-t border-hairline/70 py-3.5 text-[18px] text-ink-soft first:border-t-0"
-            >
-              {link.label}
-            </a>
+            <div key={link.href} className="border-t border-hairline/70 first:border-t-0">
+              <a href={link.href} onClick={() => setMenu(false)} className="block py-3.5 text-[18px] text-ink-soft">
+                {link.label}
+              </a>
+              {/* No disclosure on a phone: the sheet is already a list, and a
+                  list inside a list you have to open is one tap too many. */}
+              {link.menu && (
+                <ul className="mb-2 flex flex-col gap-1 pl-4">
+                  {link.menu.map((item) => (
+                    <li key={item.href}>
+                      <a href={item.href} onClick={() => setMenu(false)} className="block py-1.5 text-[16px] text-ink-faint">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           ))}
           <a href={nav.cta.href} className={`${PRIMARY} mt-4 w-full sm:hidden`}>
             {nav.cta.label}

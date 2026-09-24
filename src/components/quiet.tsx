@@ -99,7 +99,7 @@ export function Quiet() {
   const n = quiet.items.length;
 
   return (
-    <section ref={root} className="relative max-lg:!h-auto" style={{ height: `calc(100svh + ${TRAVEL}px)` }} aria-label="The quiet part">
+    <section id="quiet" ref={root} className="relative scroll-mt-24 max-lg:!h-auto" style={{ height: `calc(100svh + ${TRAVEL}px)` }} aria-label="The quiet part">
       <div className="sticky top-0 flex h-svh flex-col justify-center max-lg:static max-lg:h-auto max-lg:py-28">
         <div className={WRAP}>
           <div className="max-w-[760px]">

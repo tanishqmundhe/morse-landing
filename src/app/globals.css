@@ -262,7 +262,13 @@
  */
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 46s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+/* The used-by band runs slower: seven marks with names under them need longer
+   to be read than a row of tool cells, and a logo wall that hurries reads as
+   though it is hiding how short the list is. */
+.marquee-slow { animation: marquee 64s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee, .marquee-slow { animation: none; }
+}
 
 /* Section 4: the booking film breathes rather than sitting still. */
 @keyframes film-drift {

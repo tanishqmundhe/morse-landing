@@ -112,16 +112,32 @@ export function UsedBy() {
             is texture under the marks either way, never a picture you read. */}
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.55)] dark:bg-[oklch(0.19_0.002_90/0.7)]" />
 
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-12 px-8 py-16 sm:grid-cols-4 sm:px-10 lg:flex lg:items-start lg:justify-between lg:gap-5 lg:px-12 lg:py-20">
-          {COMPANIES.map((company) => (
-            <li key={company.name} className="flex flex-col items-center gap-4 text-ink">
-              <span className="grid h-11 place-items-center">
-                <Mark company={company} base={32} />
-              </span>
-              <span className="text-center font-mono text-label text-ink/80">{company.name}</span>
-            </li>
-          ))}
-        </ul>
+        {/* The row runs, so it never reads as a wall of seven and nothing
+            more. The track is the list twice over moving by exactly half its
+            width, which is the same trick the "Instead of" band uses — the
+            loop cannot jump, whatever the list grows to.
+
+            The second copy is `aria-hidden`: a screen reader should hear the
+            seven companies once, not fourteen. Edges fade with a mask so marks
+            arrive and leave rather than being clipped off mid-shape. */}
+        <div
+          className="overflow-hidden py-16 lg:py-20 [mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
+        >
+          <div className="marquee-slow flex w-max">
+            {[0, 1].map((copy) => (
+              <ul key={copy} className="flex" aria-hidden={copy > 0}>
+                {COMPANIES.map((company) => (
+                  <li key={company.name} className="flex w-[180px] shrink-0 flex-col items-center gap-4 px-4 text-ink sm:w-[220px] lg:w-[248px]">
+                    <span className="grid h-11 place-items-center">
+                      <Mark company={company} base={32} />
+                    </span>
+                    <span className="text-center font-mono text-label text-ink/80">{company.name}</span>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

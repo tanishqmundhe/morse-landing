@@ -12,6 +12,15 @@ import { Film } from "./film";
  *
  * One file per profile colour, keyed the same way the stills were
  * (`/app/cam-<colour>.mp4`), so every tile in the app picks up its own person.
+ *
+ * **Every clip closes its own loop.** The first set cut back to frame one on
+ * the last frame, which is a visible jump on a talking head and the thing that
+ * made the page look like three short clips rather than a call. Each is now
+ * 5.4s whose final 0.6s is a crossfade from its own tail into its own head, so
+ * there is no seam to see. Re-cut them the same way if they are ever replaced.
+ *
+ * Four faces, not three: the notes page takes `fjord` so the same person is
+ * not on screen in two sections at once.
  * Loading, pausing offscreen and holding still for reduced motion are all
  * Film's, inherited rather than rebuilt.
  *
