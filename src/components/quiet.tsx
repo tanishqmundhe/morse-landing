@@ -41,11 +41,20 @@ const ICONS = { bot: UserGroupIcon, google: Calendar03Icon, api: Key01Icon, coun
  */
 /* The page's own three, cycling. The app's muted profile accents were here
  * and they read as a different design beside an acid yellow. */
+/**
+ * Two tints per card, because one cannot do both jobs. `--tint` is the neon
+ * itself and goes on fills and on the icon's stroke, where it is a big mark
+ * and can be as bright as the artwork. `--tint-ink` is the text-safe form and
+ * goes on the 001 markers, which are 13px mono — the neon there is 1.1:1.
+ *
+ * Three accents, cycling. The muted profile accents that were here read as a
+ * different design beside an acid yellow, and their darkened forms read as mud.
+ */
 const TINTS = {
-  bot: "var(--understood-ink)",
-  google: "var(--signal-ink)",
-  api: "var(--action-ink)",
-  counts: "var(--understood-ink)",
+  bot: { fill: "var(--understood)", ink: "var(--understood-ink)" },
+  google: { fill: "var(--signal)", ink: "var(--signal-ink)" },
+  api: { fill: "var(--action)", ink: "var(--action-ink)" },
+  counts: { fill: "var(--understood)", ink: "var(--understood-ink)" },
 };
 
 /** How much scroll the rail takes to cross all four cards. */
@@ -107,7 +116,9 @@ export function Quiet() {
                   <article
                     key={item.id}
                     className="relative flex flex-col bg-canvas p-7"
-                    style={{ ["--f" as string]: f, ["--on" as string]: on, ["--tint" as string]: TINTS[item.id as keyof typeof TINTS] }}
+                    style={{ ["--f" as string]: f, ["--on" as string]: on, ["--tint" as string]: TINTS[item.id as keyof typeof TINTS].fill,
+                      ["--tint-ink" as string]: TINTS[item.id as keyof typeof TINTS].ink,
+                    }}
                   >
                     {/* A wash of the card's colour, rising from its foot. */}
                     <span
@@ -121,7 +132,7 @@ export function Quiet() {
                     />
                     <p
                       className="relative font-mono text-label tabular-nums"
-                      style={{ color: "color-mix(in oklch, var(--tint) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
+                      style={{ color: "color-mix(in oklch, var(--tint-ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                     >
                       {String(i + 1).padStart(3, "0")}
                     </p>
@@ -166,7 +177,7 @@ export function Quiet() {
                         className="size-12 3xl:size-14"
                         strokeWidth={1.1}
                         aria-hidden="true"
-                        style={{ color: "color-mix(in oklch, var(--tint) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
+                        style={{ color: "color-mix(in oklch, var(--tint-ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
                       />
                     </div>
                   </article>
