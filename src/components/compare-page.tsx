@@ -38,16 +38,28 @@ import { Eyebrow, LEAD, PRIMARY, WRAP } from "./ui";
 const { cost, difference, orbit, honest } = comparison;
 const STACK = cost.rows.reduce((sum, row) => sum + row.pay, 0);
 
-/** A tool's own mark, from the same list the home page's band runs on. */
-function Mark({ brand, big = false }: { brand: Brand; big?: boolean }) {
-  const size = big ? "h-[22px]" : "h-[11px]";
+/**
+ * A tool's own mark, in an orbit node.
+ *
+ * **`fill="currentColor"` on the element, not just a text colour.** Some marks
+ * carry `fill="currentColor"` inside their own markup and some are bare paths
+ * that inherit it; without it on the `<svg>` the bare ones fell back to black
+ * while the others took the ink, so half the orbit was dark and half was
+ * light on the same dark ground.
+ *
+ * **A wordmark is sized by width.** Zoom and Cal.com publish their lettering
+ * 24 wide and about 5 tall, so a 22px *height* drew Zoom 97px across — nearly
+ * twice the 56px node it sits in. Width is the dimension that has to fit.
+ */
+function Mark({ brand }: { brand: Brand }) {
   return (
     <svg
       viewBox={brand.viewBox}
+      fill="currentColor"
       role={brand.wordmark ? "img" : undefined}
       aria-label={brand.wordmark ? brand.name : undefined}
       aria-hidden={brand.wordmark ? undefined : true}
-      className={brand.wordmark ? `${size} w-auto shrink-0 ${big ? "text-ink" : "text-ink-soft"}` : `${big ? "size-[26px] text-ink" : "size-[18px] text-ink-soft"} shrink-0`}
+      className={brand.wordmark ? "h-auto w-[32px] shrink-0 text-ink" : "size-[26px] shrink-0 text-ink"}
       dangerouslySetInnerHTML={{ __html: brand.svg }}
     />
   );
@@ -224,7 +236,7 @@ export function ComparePage() {
                       }}
                     >
                       <span className="orbit-mark grid place-items-center">
-                        <Mark brand={brand} big />
+                        <Mark brand={brand} />
                       </span>
                     </span>
                   );
