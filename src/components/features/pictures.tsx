@@ -51,10 +51,12 @@ export function Languages() {
 /** Pixel emoji float up Arjun's tile; now and then his hand goes up. */
 export function Reactions() {
   const emoji = ["red-heart", "party-popper", "thumbs-up", "fire", "clapping-hands", "face-with-tears-of-joy", "red-heart"];
-  const left = [18, 34, 52, 66, 78, 42, 88];
+  // Kept out of the middle band: they rise the full height of the tile, and a
+  // face is now in the way of anything between about 20 and 80 per cent.
+  const left = [6, 14, 80, 88, 94, 12, 84];
   return (
     <div className={STAGE}>
-      <Cam colour="lagoon" className="object-[50%_22%]" />
+      <Cam colour="lagoon" />
       {emoji.map((e, i) => (
         // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs, no optimisation to gain
         <img key={i} src={`/emoji/${e}.svg`} alt="" className="f-float absolute -bottom-2.5 size-11" style={{ left: `${left[i]}%`, ...at(i * 0.62) }} />
