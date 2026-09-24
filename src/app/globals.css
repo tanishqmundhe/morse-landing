@@ -509,3 +509,17 @@
 @media (prefers-reduced-motion: reduce) {
   .book-steps { animation: none; transform: translateX(-300%); }
 }
+
+/* ── The maker's lockup, lit ─────────────────────────────────────────────
+ *
+ * Unified Machines' own lime, cyan and pink, on hover, in the footer only.
+ * It is the one place another brand's palette is allowed on this page —
+ * because it is their name, not our decoration — and it is a hover, so it
+ * never competes with anything at rest.
+ */
+.group:hover .um-mark { fill: url(#um-lit); }
+.um-mark { transition: fill 320ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .um-mark { transition: none; }
+}

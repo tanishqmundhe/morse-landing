@@ -34,8 +34,8 @@ export const hero = {
   /** Under the buttons. Stated as fact, not sold — the Mac line is a promise,
    *  so it says "coming soon" and nothing more until there is a date. */
   platforms: { ios: "Available on iPhone", mac: "macOS coming soon" },
-  title: "Good conversations.",
-  titleMuted: "Real progress.",
+  title: "Meetings with memory.",
+  titleMuted: "And Morse Intelligence.",
   lede: "Video calls that write themselves down, answer what you ask, and book what comes next.",
   primary: { label: "Open Morse", href: links.app },
   secondary: { label: "See how it works", href: "#product" },
@@ -162,7 +162,7 @@ export const showcase = {
       id: "knowledge",
       line: [
         { text: "And the answers come from your notes," },
-        { chip: "note", label: "Knowledge" },
+        { chip: "note", label: "Knowledge base" },
         { text: "with whole documents dropped in and read." },
         { chip: "upload", label: "PDF, Word, Excel" },
       ],
@@ -306,8 +306,8 @@ export const faq = {
 };
 
 export const closing = {
-  title: "Less meeting admin.",
-  titleMuted: "More meeting of minds.",
+  title: "Turn up and talk.",
+  titleMuted: "Morse has the rest.",
   film: { src: "/films/ringed-meadow-loop.mp4", poster: "/films/ringed-meadow-poster.jpg" },
   cta: { label: "Open Morse", href: links.app },
 };
@@ -357,7 +357,8 @@ export const footer = {
     subject: "Add me to the Morse list",
   },
   pages: {
-    title: "Pages",
+    /** No heading. "Pages" named the obvious and cost a line of its own. */
+    title: "",
     links: [
       { label: "Product", href: "/#product" },
       { label: "Features", href: "/#features" },
@@ -375,7 +376,6 @@ export const footer = {
     links: [
       { label: "X", icon: "x", href: "#" },
       { label: "LinkedIn", icon: "linkedin", href: "#" },
-      { label: "Instagram", icon: "instagram", href: "#" },
     ],
   },
   touch: {
@@ -389,6 +389,9 @@ export const footer = {
     { label: "Terms", href: "#" },
   ],
   maker: "A product by",
+  /** Morse is the product; Unified Machines is who made it. The line used to
+   *  give the year to the maker, which put the wrong name on the page. */
+  copyright: "Morse",
 };
 
 /**

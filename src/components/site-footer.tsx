@@ -36,10 +36,10 @@ export function SiteFooter() {
           </a>
         </div>
 
-        <nav className={`${CELL} border-b border-hairline sm:border-r`} aria-label={footer.pages.title}>
-          <Title>{footer.pages.title}</Title>
-          {/* Down first, then across — a list of pages should read as a list. */}
-          <ul className="mt-6 grid grid-flow-col grid-rows-4 gap-x-6 gap-y-3">
+        {/* No heading. "Pages" named the obvious and spent a line doing it;
+            the label stays on the nav, where a screen reader still gets it. */}
+        <nav className={`${CELL} border-b border-hairline sm:border-r`} aria-label="Pages">
+          <ul className="grid grid-flow-col grid-rows-4 gap-x-6 gap-y-3.5">
             {footer.pages.links.map((link) => (
               <li key={link.label}>
                 <a href={link.href} className={LINK}>
@@ -63,7 +63,7 @@ export function SiteFooter() {
                     className="h-px flex-1 border-t border-dashed border-hairline transition-colors duration-500 group-hover:border-ink-faint"
                     style={{ transitionTimingFunction: EASE }}
                   />
-                  <span className="text-[17px] text-ink-soft transition-colors duration-300 group-hover:text-ink">{link.label}</span>
+                  <span className="text-[19px] text-ink-soft transition-colors duration-300 group-hover:text-ink">{link.label}</span>
                   <Icon
                     icon={ArrowUpRight01Icon}
                     className="size-4 shrink-0 text-ink-faint transition-[transform,color] duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
@@ -76,15 +76,17 @@ export function SiteFooter() {
 
         <div className={`${CELL} sm:col-span-2`}>
           <Title>{footer.touch.title}</Title>
-          <p className="mt-5 max-w-[46ch] text-[17px]/[1.55] text-ink-soft">{footer.touch.body}</p>
-          <a href={`mailto:${footer.touch.email}`} className={`${UNDERLINE} mt-4 inline-block text-[19px] text-ink`}>
+          <p className="mt-5 max-w-[46ch] text-[19px]/[1.55] text-ink-soft">{footer.touch.body}</p>
+          <a href={`mailto:${footer.touch.email}`} className={`${UNDERLINE} mt-4 inline-block text-[21px] text-ink`}>
             {footer.touch.email}
           </a>
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 border-t border-hairline py-8 text-[15px] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Unified Machines</p>
+      <div className="flex flex-col gap-5 border-t border-hairline py-8 text-[16px] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {new Date().getFullYear()} {footer.copyright}
+        </p>
         <nav className="flex gap-7" aria-label="Legal">
           {footer.legal.map((link) => (
             <a key={link.label} href={link.href} className={`${UNDERLINE} inline-flex min-h-6 items-center transition-colors duration-300 hover:text-ink-soft`}>
@@ -92,16 +94,20 @@ export function SiteFooter() {
             </a>
           ))}
         </nav>
-        <p className="flex items-center gap-2.5">
-          {footer.maker}
-          <UnifiedMachinesLogo className="h-[15px] w-auto shrink-0" />
+        {/* The maker, as a sentence: the words in the page's own type, and the
+            lockup after them as the mark. It lights up in Unified Machines'
+            own three colours on hover — the one place another brand's palette
+            is allowed on this page, because it is their name. */}
+        <p className="group flex items-center gap-2.5">
+          {footer.maker} Unified Machines
+          <UnifiedMachinesLogo markOnly className="um-mark h-[17px] w-auto shrink-0" title="" />
         </p>
       </div>
     </footer>
   );
 }
 
-const LINK = `${UNDERLINE} text-[17px] text-ink-soft transition-colors duration-300 hover:text-ink`;
+const LINK = `${UNDERLINE} text-[19px] text-ink-soft transition-colors duration-300 hover:text-ink`;
 
 function Title({ children }: { children: React.ReactNode }) {
   return <p className="font-mono text-label text-ink-faint uppercase">{children}</p>;

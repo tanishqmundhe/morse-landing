@@ -721,7 +721,7 @@ export function KnowledgeScreen({ active }: { active: boolean }) {
         <span className="grid size-14 place-items-center rounded-full bg-raised text-ink shadow-raised">
           <Icon icon={Database01Icon} className="size-6" />
         </span>
-        <p className="mt-3 text-[34px]/[1.15] font-light tracking-[-0.6px] text-ink">Knowledge</p>
+        <p className="mt-3 text-[34px]/[1.15] font-light tracking-[-0.6px] text-ink">Knowledge base</p>
         <p className="mt-1.5 max-w-[60ch] text-[15px]/[1.45] text-ink-soft">
           What Morse Intelligence answers from in a meeting. Logins and passwords belong in the Vault, which it never reads.
         </p>

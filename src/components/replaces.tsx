@@ -44,13 +44,16 @@ function Cell({ brand }: { brand: Brand }) {
       {MARKS && (
         <svg
           viewBox={brand.viewBox}
-          className="size-[22px] shrink-0"
+          className={brand.wordmark ? "h-[22px] w-auto shrink-0" : "size-[22px] shrink-0"}
           fill="currentColor"
-          aria-hidden="true"
+          role="img"
+          aria-label={brand.wordmark ? brand.name : undefined}
+          aria-hidden={brand.wordmark ? undefined : true}
           dangerouslySetInnerHTML={{ __html: brand.svg }}
         />
       )}
-      <span className="truncate text-[16px]">{brand.name}</span>
+      {/* A wordmark says the name itself; typing it again read "zoom Zoom". */}
+      {!(MARKS && brand.wordmark) && <span className="truncate text-[16px]">{brand.name}</span>}
     </div>
   );
 }

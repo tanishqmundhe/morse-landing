@@ -44,8 +44,13 @@ const ICONS = { bot: UserGroupIcon, google: Calendar03Icon, api: Key01Icon, coun
 /**
  * Two tints per card, because one cannot do both jobs. `--tint` is the neon
  * itself and goes on fills and on the icon's stroke, where it is a big mark
- * and can be as bright as the artwork. `--tint-ink` is the text-safe form and
- * goes on the 001 markers, which are 13px mono — the neon there is 1.1:1.
+ * and can be as bright as the artwork. `--tint-ink` is the text-safe form,
+ * kept for anything small that ever has to be read in the accent.
+ *
+ * **The 001–004 markers are gone.** They numbered four things that are not a
+ * sequence — you can do them in any order and nobody does them at all — and
+ * they were the loudest thing in a card whose body copy was the smallest. The
+ * body carries the section now, at the page's lead size.
  *
  * Three accents, cycling. The muted profile accents that were here read as a
  * different design beside an acid yellow, and their darkened forms read as mud.
@@ -130,16 +135,9 @@ export function Quiet() {
                         transition: `opacity 620ms ${EASE}`,
                       }}
                     />
-                    <p
-                      className="relative font-mono text-label tabular-nums"
-                      style={{ color: "color-mix(in oklch, var(--tint-ink) calc(var(--on) * 100%), var(--ink-faint))", transition: `color 420ms ${EASE}` }}
-                    >
-                      {String(i + 1).padStart(3, "0")}
-                    </p>
-
                     {/* Fixed, not a minimum: the four rails sit on one line. */}
                     <p
-                      className="relative mt-8 h-[52px] text-[16px]/[1.6] text-ink-soft 3xl:h-[58px] 3xl:text-[17px]/[1.65]"
+                      className="relative mt-7 h-[60px] text-[18px]/[1.55] text-ink-soft 3xl:h-[66px] 3xl:text-[19px]/[1.6]"
                       style={{
                         opacity: "var(--on)",
                         transform: "translateY(calc((1 - var(--on)) * 6px))",
