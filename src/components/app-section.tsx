@@ -1,22 +1,27 @@
+import Image from "next/image";
 import { ArrowRight01Icon, CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { app } from "@/content/site";
-import { Avatar } from "./avatar";
-import { LogoMark } from "./logo";
+import { Artwork } from "./artwork";
 import { Eyebrow, H2, Heading, Icon, LEAD, PRIMARY, SECTION, WRAP } from "./ui";
 
 /**
  * Morse on a phone, near the foot of the page.
  *
- * The device is drawn rather than photographed: a bezel, a rounded screen and
- * a dynamic island, all from the page's own tokens. A rendered handset in a
- * marketing shot is somebody else's industrial design borrowed as decoration,
- * and it dates the moment Apple changes the corner radius. This is a frame
- * that says "phone" and gets out of the way of what is on it.
+ * The section is one artwork panel with a margin all round — a poster rather
+ * than a band — and two things stand on it: the promise on a frosted card, and
+ * the handset rising out of the panel's bottom edge.
  *
- * What is on it is the app's home, at phone proportions — the greeting, the
- * next two meetings, one green thing to press. It is the same content the
- * showcase's HomeScreen carries, laid out for a 390pt column rather than a
- * 1120px one.
+ * The screen is a real screenshot of the iOS app, not a drawing of one. The
+ * previous version rebuilt the home screen out of the page's own tokens, which
+ * meant the one place on the site that promised a shipped product was showing
+ * something that had never been built. A photograph of the thing is worth more
+ * than a careful lie about it.
+ *
+ * It is cropped just under the Upcoming/Past control and runs off the panel's
+ * foot, so the frame has no bottom bezel. That is deliberate twice over: it
+ * reads as a device coming up out of the picture rather than a picture of a
+ * device, and it ends the screenshot on a finished element instead of on the
+ * meeting list, which in the capture was test data.
  */
 
 /** Apple's mark, as a glyph at text size — the same one the hero uses. */
@@ -28,84 +33,27 @@ function AppleMark() {
   );
 }
 
-function Row({ when, length, title, who, join }: { when: string; length: string; title: string; who: string; join?: boolean }) {
-  return (
-    <div className="flex items-center gap-3 rounded-[18px] bg-raised p-3.5">
-      <div className="w-[52px] shrink-0">
-        <p className="text-[13px] font-medium text-ink">{when}</p>
-        <p className="text-[11px] text-ink-faint">{length}</p>
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[13px] font-medium text-ink">{title}</p>
-        <p className="truncate text-[11px] text-ink-faint">{who}</p>
-      </div>
-      {join ? (
-        <span className="shrink-0 rounded-full bg-action px-3.5 py-1.5 text-[12px] font-medium text-action-foreground">{app.screen.action}</span>
-      ) : (
-        <span className="shrink-0 rounded-full bg-overlay px-3 py-1.5 text-[12px] text-ink-soft">Details</span>
-      )}
-    </div>
-  );
-}
-
-/** The handset. 390 × 800 inside a 12px bezel — iPhone proportions without
- *  copying anybody's corner. */
+/**
+ * The handset: the app's own screen inside a bezel with no foot.
+ *
+ * The bezel stays dark in both themes — `bg-ink` inverts, and a white handset
+ * in dark mode read as a lit object rather than a device. The aspect is the
+ * crop's own (780 × 1350), so the screenshot fills the glass exactly and
+ * nothing is scaled off-centre.
+ */
 function Phone() {
   return (
-    <div className="relative mx-auto w-[318px] shrink-0 sm:w-[352px]">
-      {/* The bezel, and the shadow that lifts it off the page. */}
-      {/* The bezel stays dark in both themes: `bg-ink` inverts, and a white
-          handset in dark mode read as a lit object rather than a device. */}
-      <div className="rounded-[46px] bg-[#0e1d21] p-[11px] shadow-float dark:bg-[#2c2b2a]">
-        {/* 9:19.5, which is the handset's own ratio. Without it the screen came
-            out 1:1.19 and read as a tablet. */}
-        <div className="relative isolate flex aspect-[9/19.5] flex-col overflow-hidden rounded-[36px] bg-canvas">
-          {/* The island. Drawn, not an image. */}
-          <div className="absolute top-2.5 left-1/2 z-10 h-[22px] w-[86px] -translate-x-1/2 rounded-full bg-ink" />
-
-          <div className="flex-1 px-4 pt-12 pb-5">
-            <div className="flex items-center justify-between">
-              <LogoMark className="size-[22px] text-ink" title="" />
-              <Avatar colour="sage" name="Amara Cole" size={26} />
-            </div>
-
-            <p className="mt-6 text-[20px]/[1.2] font-light tracking-[-0.02em] text-ink">{app.screen.greeting}</p>
-            <p className="mt-1.5 text-[12px] text-ink-faint">{app.screen.sub}</p>
-
-            <div className="mt-6 flex flex-col gap-2.5">
-              <Row {...app.screen.next} join />
-              <Row {...app.screen.later} />
-            </div>
-
-            <div className="mt-5 flex items-center gap-2 rounded-[16px] bg-sunken px-3.5 py-3">
-              <span className="size-2 shrink-0 rounded-full bg-understood" />
-              <p className="text-[12px] text-ink-soft">Notes from yesterday are ready</p>
-            </div>
-
-            <div className="mt-5 grid place-items-center rounded-[18px] bg-sunken py-6">
-              <span className="flex items-center gap-2 rounded-full bg-action px-5 py-2.5 text-[13px] font-medium text-action-foreground">
-                <span aria-hidden="true" className="text-[15px] leading-none">+</span>
-                Start a meeting
-              </span>
-              <p className="mt-2.5 text-[11px] text-ink-faint">or paste a link to join</p>
-            </div>
-          </div>
-
-          {/* The app's own tab bar, so the frame reads as a running app rather
-              than a cropped screenshot. */}
-          <div className="mt-auto flex items-center justify-around border-t border-hairline px-4 pt-3 pb-7">
-            {[
-              ["Home", true],
-              ["Calendar", false],
-              ["Knowledge", false],
-              ["You", false],
-            ].map(([label, on]) => (
-              <span key={label as string} className="flex flex-col items-center gap-1.5">
-                <span className={`size-[18px] rounded-[6px] ${on ? "bg-ink" : "bg-ink-faint/40"}`} />
-                <span className={`text-[10px] ${on ? "text-ink" : "text-ink-faint"}`}>{label}</span>
-              </span>
-            ))}
-          </div>
+    <div className="w-[236px] sm:w-[280px] lg:w-[318px] xl:w-[352px]">
+      <div className="rounded-t-[42px] bg-[#0e1d21] p-[10px] pb-0 shadow-float dark:bg-[#2c2b2a]">
+        <div className="overflow-hidden rounded-t-[33px]">
+          <Image
+            src="/app/phone-meetings.webp"
+            alt="The Morse iPhone app: one upcoming meeting, a Start button, and shortcuts to start an instant meeting, create a link for later, or schedule one."
+            width={780}
+            height={1350}
+            sizes="(max-width: 640px) 236px, (max-width: 1280px) 318px, 352px"
+            className="block w-full"
+          />
         </div>
       </div>
     </div>
@@ -115,13 +63,20 @@ function Phone() {
 export function AppSection() {
   return (
     <section id="app" className={`${WRAP} ${SECTION} scroll-mt-24`}>
-      <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-24">
-        <div>
+      {/* The phone runs off the foot of the panel, so the panel's own
+          `overflow-hidden` is what cuts it. */}
+      <Artwork
+        src="dusk"
+        alt="Infrared dusk: a sun setting behind a mesa over still water, in lime, cyan and coral."
+        glitchDelay={3.8}
+        className="grid gap-10 p-6 pt-10 sm:p-10 sm:pt-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-8 lg:p-12"
+      >
+        <div className="self-center rounded-[22px] bg-canvas/88 p-7 backdrop-blur-xl sm:rounded-[26px] sm:p-9 lg:max-w-[540px]">
           <Eyebrow className="mb-5">{app.eyebrow}</Eyebrow>
           <Heading lead={app.title} muted={app.titleMuted} className={H2} />
-          <p className={`${LEAD} mt-6 max-w-[46ch]`}>{app.body}</p>
+          <p className={`${LEAD} mt-6 max-w-[42ch]`}>{app.body}</p>
 
-          <ul className="mt-9 flex flex-col gap-3.5">
+          <ul className="mt-8 flex flex-col gap-3.5">
             {app.points.map((point) => (
               <li key={point} className="flex items-start gap-3 text-[17px]/[1.5] text-ink">
                 <Icon icon={CheckmarkCircle02Icon} className="mt-0.5 size-[19px] shrink-0 text-understood-ink" />
@@ -130,7 +85,7 @@ export function AppSection() {
             ))}
           </ul>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-9 flex flex-wrap items-center gap-4">
             <a href={app.cta.href} className={`${PRIMARY} group`}>
               <AppleMark />
               {app.cta.label}
@@ -140,8 +95,12 @@ export function AppSection() {
           </div>
         </div>
 
-        <Phone />
-      </div>
+        {/* Flush with the panel's foot: the negative margin cancels the panel's
+            own bottom padding so the bezel meets the edge and is cut by it. */}
+        <div className="-mb-6 justify-self-center sm:-mb-10 lg:-mb-12 lg:justify-self-end lg:pr-2">
+          <Phone />
+        </div>
+      </Artwork>
     </section>
   );
 }
