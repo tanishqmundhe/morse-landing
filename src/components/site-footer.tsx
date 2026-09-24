@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight01Icon, InstagramIcon, Linkedin01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
 import { footer } from "@/content/site";
 import { Logo } from "./logo";
@@ -21,6 +22,10 @@ const CELL = "p-8 sm:p-10 lg:p-12";
  * same line as everything above it — sized by the column, not by eye.
  */
 export function SiteFooter() {
+  // Same rule as the header: on the home page a fragment must stay a fragment,
+  // or Next treats it as a route change and the page jumps instead of moving.
+  const onHome = usePathname() === "/";
+  const to = (href: string) => (onHome && href.startsWith("/#") ? href.slice(1) : href);
   return (
     <footer className={WRAP}>
       <div className="grid border-t border-hairline lg:grid-cols-[1.35fr_1fr_1fr]">
@@ -42,7 +47,7 @@ export function SiteFooter() {
           <ul className="grid grid-flow-col grid-rows-4 gap-x-6 gap-y-3.5">
             {footer.pages.links.map((link) => (
               <li key={link.label}>
-                <a href={link.href} className={LINK}>
+                <a href={to(link.href)} className={LINK}>
                   {link.label}
                 </a>
               </li>
