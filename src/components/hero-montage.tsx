@@ -1,23 +1,27 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useLoop } from "./features/timeline";
-import { RoomScreen, SCREEN_H, SCREEN_W } from "./showcase/screens";
+import { NotesScreen, RoomScreen, SCREEN_H, SCREEN_W, TeleprompterScreen } from "./showcase/screens";
 
 /**
- * The hero's meeting: the app's own call screen, playing.
+ * The hero's meeting: the app's own screens, playing, breaking out of the
+ * artwork they sit on.
  *
- * This was a window drawn by hand for the hero — a transcript column, three
- * tiles, a booking row — and it was a worse drawing of something the page
- * already had. `RoomScreen` is the real room, built once at 1120×700 from the
- * product: the transcript, the stage, the People panel, the control dock. So
- * the hero shows that, scaled, and adds the things a still screen cannot say.
+ * Three things were wrong with the version before. It drew its own window
+ * rather than using the one the page already had. It showed one screen, so a
+ * product that does four things looked like it did one. And it sat inside the
+ * panel's bottom corner, which put it under the fold and cut it off.
  *
- * What is added is what happens *in* a call rather than what it contains:
- * reactions going up over whoever is talking, a hand raised before somebody
- * answers, and the teleprompter opening with the answer out of the notes. The
- * overlays live inside the scaled box, in the screen's own coordinates, so
- * they land on the UI rather than beside it.
+ * So: the real screens, at the panel's centre, overlapping its edges — and the
+ * things that pop up spill outside the frame entirely, onto the paper. A card
+ * that stays politely inside its box reads as a screenshot; one that breaks
+ * the box reads as something happening.
  */
+
+/** The three the hero can say something with, in the order a meeting goes. */
+const SCREENS = [RoomScreen, TeleprompterScreen, NotesScreen] as const;
+const HOLD = 7200;
 
 /** Big enough to read the transcript, small enough to leave the artwork room. */
 const SCALE = 0.62;
@@ -25,91 +29,115 @@ const SCALE = 0.62;
 const EMOJI = ["red-heart", "thumbs-up", "fire", "clapping-hands", "party-popper"];
 
 export function HeroMontage() {
+  const [shown, setShown] = useState(0);
+
+  useEffect(() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => setShown((n) => (n + 1) % SCREENS.length), HOLD);
+    return () => clearInterval(id);
+  }, []);
+
   const root = useLoop<HTMLDivElement>(
     (tl, q) => {
       const el = (s: string) => q(s)[0];
+      tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.5 }, 0);
+      tl.set(el("[data-hand]"), { opacity: 0, x: -24, scale: 0.86 }, 0);
+      tl.set(el("[data-written]"), { opacity: 0, y: 26, scale: 0.9 }, 0);
+      tl.set(el("[data-booked]"), { opacity: 0, x: 26, scale: 0.9 }, 0);
 
-      tl.set(q("[data-emoji]"), { opacity: 0, y: 0, scale: 0.6 }, 0);
-      tl.set(el("[data-hand]"), { opacity: 0, y: 10, scale: 0.9 }, 0);
-      tl.set(el("[data-prompt]"), { opacity: 0, y: 18, scale: 0.97 }, 0);
-
-      // The room reacts, one at a time, while Priya is still speaking.
+      // Reactions, rising past the top edge of the frame and out of it.
       q("[data-emoji]").forEach((e, i) => {
-        const at = 1.2 + i * 0.5;
-        tl.to(e, { opacity: 1, scale: 1, duration: 0.28, ease: "back.out(2.4)" }, at);
-        tl.to(e, { y: -230, duration: 2.6, ease: "power1.out" }, at);
-        tl.to(e, { opacity: 0, duration: 0.8, ease: "power1.in" }, at + 1.7);
+        const at = 0.9 + i * 0.42;
+        tl.to(e, { opacity: 1, scale: 1.15, duration: 0.24, ease: "back.out(3)" }, at);
+        tl.to(e, { scale: 1, duration: 0.3, ease: "power2.out" }, at + 0.24);
+        tl.to(e, { y: -340, duration: 3.2, ease: "power1.out" }, at);
+        tl.to(e, { opacity: 0, duration: 1, ease: "power1.in" }, at + 2.2);
       });
 
-      // Daniel wants in before he answers.
-      tl.to(el("[data-hand]"), { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(2)" }, 2.4);
-      tl.to(el("[data-hand]"), { opacity: 0, duration: 0.4 }, 5.2);
+      // A hand, out past the left edge.
+      tl.to(el("[data-hand]"), { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 2.1);
+      tl.to(el("[data-hand]"), { opacity: 0, x: -14, duration: 0.4 }, 6.4);
 
-      // Somebody asks something, and the teleprompter answers from the notes.
-      tl.to(el("[data-prompt]"), { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out" }, 5.8);
-      tl.to(el("[data-prompt]"), { opacity: 0, y: -12, duration: 0.5, ease: "power1.in" }, 10.4);
+      // The notes, out past the bottom edge, as the second screen arrives.
+      tl.to(el("[data-written]"), { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 8.4);
+      tl.to(el("[data-written]"), { opacity: 0, y: 16, duration: 0.45 }, 13.6);
 
-      tl.set({}, {}, 11.4);
+      // And the booking, out past the right, as the third does.
+      tl.to(el("[data-booked]"), { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(2)" }, 15.4);
+      tl.to(el("[data-booked]"), { opacity: 0, x: 16, duration: 0.45 }, 20.4);
+
+      tl.set({}, {}, 21.6);
     },
-    { rest: 0.55 },
+    { rest: 0.35 },
   );
 
   return (
     <div
       ref={root}
-      className="pointer-events-none hidden lg:block"
+      className="pointer-events-none relative hidden lg:block"
       style={{ width: SCREEN_W * SCALE, height: SCREEN_H * SCALE }}
     >
+      {/*
+        The frame goes translucent by overriding --canvas inside this subtree
+        only: Frame paints with it, while the panels and chips on top keep
+        their own opaque tokens. So the glass is the window, not its contents.
+      */}
       <div
-        className="relative"
-        style={{
-          width: SCREEN_W,
-          height: SCREEN_H,
-          transform: `scale(${SCALE})`,
-          transformOrigin: "0 0",
-        }}
+        className="absolute inset-0 overflow-hidden rounded-[28px] shadow-float backdrop-blur-xl [--canvas:rgb(20_20_19/0.72)] dark:[--canvas:rgb(20_20_19/0.66)]"
+        style={{ width: SCREEN_W * SCALE, height: SCREEN_H * SCALE }}
       >
-        <RoomScreen active />
-
-        {/* Everything below is in the screen's own coordinates, so it lands on
-            the UI: the stage runs roughly x 300–840, y 60–600. */}
-        <div aria-hidden="true" className="absolute inset-0">
-          {EMOJI.map((e, i) => (
-            // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs
-            <img
-              key={e}
-              data-emoji
-              src={`/emoji/${e}.svg`}
-              alt=""
-              className="absolute size-11"
-              style={{ left: 340 + i * 96, top: 520 }}
-            />
+        <div style={{ width: SCREEN_W, height: SCREEN_H, transform: `scale(${SCALE})`, transformOrigin: "0 0" }}>
+          {SCREENS.map((Screen, i) => (
+            <div
+              key={i}
+              className="absolute inset-0 transition-opacity duration-700"
+              style={{ opacity: i === shown ? 1 : 0, width: SCREEN_W, height: SCREEN_H }}
+            >
+              <Screen active={i === shown} />
+            </div>
           ))}
+        </div>
+      </div>
 
-          <span
-            data-hand
-            className="absolute flex items-center gap-2 rounded-full bg-canvas/90 px-3.5 py-2 text-[15px] text-ink shadow-float backdrop-blur-sm"
-            style={{ left: 320, top: 462 }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVG */}
-            <img src="/emoji/raising-hands.svg" alt="" className="size-5" />
-            Daniel raised a hand
-          </span>
+      {/* Outside the frame, deliberately. These are the only things on the page
+          allowed past an edge, which is what makes them read as interruptions. */}
+      <div aria-hidden="true" className="absolute inset-0">
+        {EMOJI.map((e, i) => (
+          // eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVGs
+          <img
+            key={e}
+            data-emoji
+            src={`/emoji/${e}.svg`}
+            alt=""
+            className="absolute size-10 drop-shadow-lg"
+            style={{ left: `${26 + i * 13}%`, top: "62%" }}
+          />
+        ))}
 
-          <div
-            data-prompt
-            className="absolute rounded-[18px] bg-float p-4 shadow-float"
-            style={{ left: 306, top: 330, width: 400 }}
-          >
-            <p className="flex items-center gap-2 font-mono text-[12px] tracking-[0.1em] text-understood-ink uppercase">
-              <span className="size-2 rounded-full bg-understood" />
-              Teleprompter
-            </p>
-            <p className="mt-2 text-[16px]/[1.45] text-ink">
-              This year&rsquo;s rate, fixed until March, with two extra seats.
-            </p>
-            <p className="mt-2 text-[13px] text-ink-faint">From Acme renewal notes</p>
-          </div>
+        <span
+          data-hand
+          className="absolute -left-14 top-[34%] flex items-center gap-2 rounded-full bg-float px-4 py-2.5 text-[15px] font-medium text-ink shadow-float"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element -- tiny pixel SVG */}
+          <img src="/emoji/raising-hands.svg" alt="" className="size-5" />
+          Daniel raised a hand
+        </span>
+
+        <div data-written className="absolute -bottom-12 left-6 w-[300px] rounded-[18px] bg-float p-4 shadow-float">
+          <p className="flex items-center gap-2 text-[15px] font-medium text-ink">
+            <span className="grid size-5 place-items-center rounded-full bg-action">
+              <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
+                <path d="M2.5 6.2 4.8 8.5 9.5 3.8" fill="none" stroke="var(--action-foreground)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            Notes are written
+          </p>
+          <p className="mt-1.5 text-[13px] text-ink-soft">A summary, two decisions and three action items.</p>
+        </div>
+
+        <div data-booked className="absolute -right-16 bottom-[26%] w-[250px] rounded-[18px] bg-float p-4 shadow-float">
+          <p className="text-[15px] font-medium text-ink">Follow-up booked</p>
+          <p className="mt-1 text-[13px] text-ink-soft">Thursday, 2:00 &ndash; 2:30 pm</p>
         </div>
       </div>
     </div>
