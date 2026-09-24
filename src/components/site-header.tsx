@@ -14,14 +14,11 @@ import { Icon, PRIMARY } from "./ui";
  * follows the section on screen and slides between links.
  */
 /** "/#product" points at #product on the home page; "/pricing" is its own page. */
-const sectionOf = (href: string) => (href.startsWith("/#") ? href.slice(1) : null);
-
 export function SiteHeader() {
   const path = usePathname();
   const onHome = path === "/";
   // Away from the home page there is no film to stay clear of.
   const [solid, setSolid] = useState(!onHome);
-  const [seen, setSeen] = useState<string | null>(null);
   const [mark, setMark] = useState<{ x: number; w: number } | null>(null);
   const [menu, setMenu] = useState(false);
   const links = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -33,38 +30,13 @@ export function SiteHeader() {
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Off the home page there are no sections to watch; the route is the answer.
-    if (!onHome) return () => window.removeEventListener("scroll", onScroll);
-
-    // A section is current while it crosses the band a third of the way down.
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setSeen(`/#${e.target.id}`);
-      },
-      { rootMargin: "-33% 0px -66% 0px" },
-    );
-    const targets = nav.links
-      .map((l) => sectionOf(l.href))
-      .filter((s): s is string => s !== null)
-      .map((s) => document.querySelector(s))
-      .filter(Boolean) as Element[];
-    targets.forEach((t) => io.observe(t));
-    // Above the first section, nothing is current.
-    const top = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(null), { rootMargin: "0px 0px -60% 0px" });
-    const hero = document.querySelector("main > section");
-    if (hero) top.observe(hero);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      io.disconnect();
-      top.disconnect();
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, [onHome, path]);
 
-  // On the home page the current link is whatever section you're looking at;
-  // anywhere else it's simply the page you're on.
-  const active = onHome ? seen : path;
+  // The nav lists pages, so the current one is the route. The scroll-spy this
+  // replaced was watching section ids that the nav stopped pointing at, which
+  // left nothing marked at all.
+  const active = path;
 
   useLayoutEffect(() => {
     const el = active ? links.current[active] : null;
@@ -75,9 +47,9 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed inset-x-2.5 top-2.5 z-40 transition-[background-color,box-shadow] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
-        // Every page now opens on paper rather than on a film, so the bar is on
-        // the light page from the first pixel and never inverts.
-        ""
+        // The home hero is dark in both themes, so the bar reads on stage while
+        // it is transparent over it; once it goes solid it is on the page.
+        !solid && onHome ? "on-stage" : ""
       } ${
         menu ? "rounded-[28px] bg-canvas/95 shadow-float backdrop-blur-md" : solid ? "rounded-full bg-canvas/85 shadow-float backdrop-blur-md" : ""
       }`}
@@ -88,15 +60,10 @@ export function SiteHeader() {
           <Logo className="glitch-hover h-[26px] w-auto sm:h-[30px]" />
         </a>
 
-        <nav
-          aria-label="Main"
-          className="relative hidden items-center rounded-full bg-canvas/50 p-1.5 shadow-[0_0_0_1px_oklch(0.9564_0.0127_63.92/0.06)] md:flex"
-        >
-          <span
-            aria-hidden="true"
-            className="absolute top-1.5 bottom-1.5 left-0 rounded-full bg-overlay transition-[transform,width,opacity] duration-300 ease-out"
-            style={{ transform: `translateX(${mark?.x ?? 0}px)`, width: mark?.w ?? 0, opacity: mark ? 1 : 0 }}
-          />
+        {/* Plain links. A pill inside a pill inside the header bar was three
+            nested rounded boxes for three words; the page marks its current
+            place with a rule under the word, the way the footer marks a link. */}
+        <nav aria-label="Main" className="relative hidden items-center gap-8 md:flex">
           {nav.links.map((link) => (
             <a
               key={link.href}
@@ -105,13 +72,18 @@ export function SiteHeader() {
               }}
               href={link.href}
               aria-current={active === link.href ? "location" : undefined}
-              className={`relative rounded-full px-4 py-2 text-[16px] transition-colors duration-200 ${
+              className={`relative py-1 text-[16px] transition-colors duration-200 ${
                 active === link.href ? "text-ink" : "text-ink-soft hover:text-ink"
               }`}
             >
               {link.label}
             </a>
           ))}
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-0.5 left-0 h-px bg-ink transition-[transform,width,opacity] duration-300 ease-out"
+            style={{ transform: `translateX(${mark?.x ?? 0}px)`, width: mark?.w ?? 0, opacity: mark ? 1 : 0 }}
+          />
         </nav>
 
         <div className="flex items-center gap-2">

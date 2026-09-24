@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { hero } from "@/content/site";
-import { Artwork } from "./artwork";
 import { HeroMontage } from "./hero-montage";
 import { Icon, PRIMARY, SECONDARY } from "./ui";
 
@@ -9,33 +9,50 @@ import { Icon, PRIMARY, SECONDARY } from "./ui";
 function AppleMark() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="size-[15px] shrink-0 fill-current">
-      <path d="M16.36 12.78c.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.83-.81-3-.79-1.55.02-2.98.9-3.77 2.28-1.61 2.79-.41 6.92 1.15 9.18.76 1.11 1.67 2.35 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.24.88-1.29 1.24-2.53 1.26-2.6-.03-.01-2.41-.93-2.43-3.68M14.1 5.99c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.67 1.37-.58.68-1.1 1.76-.96 2.8 1.02.08 2.06-.52 2.69-1.28"/>
+      <path d="M16.36 12.78c.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.83-.81-3-.79-1.55.02-2.98.9-3.77 2.28-1.61 2.79-.41 6.92 1.15 9.18.76 1.11 1.67 2.35 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.24.88-1.29 1.24-2.53 1.26-2.6-.03-.01-2.41-.93-2.43-3.68M14.1 5.99c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.67 1.37-.58.68-1.1 1.76-.96 2.8 1.02.08 2.06-.52 2.69-1.28" />
     </svg>
   );
 }
 
 /**
- * The words beside the artwork, and the meeting breaking out of it.
+ * The whole hero is the artwork, and everything stands on it.
  *
- * The artwork will not take text — black sky against lime rock has no corner
- * that holds a headline without a scrim heavy enough to waste it — so the
- * words keep their own column and the picture keeps its own panel.
+ * The panel is gone. The picture spans the page edge to edge and runs the full
+ * height of the first screen, in its black-sky form in both themes — this is
+ * the one place that stays dark when the page is light, the way the app keeps
+ * video dark in both.
  *
- * What changed is where they sit relative to each other. Stacked, the title
- * was at the top of the screen, the panel began below the fold, and the
- * meeting sat in the panel's bottom corner where it was cut in half. Side by
- * side, the whole hero is one screenful: words left, panel right, and the
- * meeting centred on the panel, overlapping its edges rather than tucked
- * inside them. The pop-ups go further still and land on the paper.
+ * On it, side by side: the promise on the left, the meeting on the right,
+ * running off the right edge so it reads as a window you are seeing part of.
+ * Everything sits on the scrim's strong end; the arch is left bright on the
+ * far side where nothing is written.
  */
 export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="px-2.5 pt-32 pb-12 sm:px-3.5 sm:pt-36 lg:pt-40 lg:pb-16">
-      <div className="mx-auto grid max-w-[2040px] items-center gap-14 px-4 sm:px-8 lg:grid-cols-[minmax(380px,0.82fr)_minmax(0,1.18fr)] lg:gap-16 lg:px-10">
+    <section className="on-stage relative isolate flex min-h-[760px] items-center overflow-hidden bg-stage lg:min-h-[calc(100svh-8px)] lg:max-h-[1000px]">
+      <Image
+        src="/art/signal.webp"
+        alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
+        width={1600}
+        height={1067}
+        priority
+        sizes="100vw"
+        className="animate-film-in absolute inset-0 -z-20 size-full object-cover"
+      />
+      {/* The scrim is heaviest where the words are and lets go by the middle,
+          so the arch stays bright on the side nothing is written on. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(96deg,oklch(0.19_0.002_90/0.95)_0%,oklch(0.19_0.002_90/0.86)_28%,oklch(0.19_0.002_90/0.4)_56%,oklch(0.19_0.002_90/0.12)_76%,transparent_92%)]"
+      />
+      {/* And a second one under the header, so the bar reads over the sky. */}
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-stage/80 to-transparent" />
+
+      <div className="mx-auto grid w-full max-w-[2040px] items-center gap-12 px-6 pt-32 pb-16 sm:px-10 lg:grid-cols-[minmax(420px,0.86fr)_minmax(0,1.14fr)] lg:gap-10 lg:px-14 lg:pt-28 lg:pb-20">
         <div>
-          <h1 className="text-[44px]/[1.03] font-light tracking-[-0.035em] text-ink sm:text-[58px]/[1.01] lg:text-[56px]/[1] xl:text-[66px]/[1] 2xl:text-[74px]/[0.99] 3xl:text-[82px]/[0.98]">
+          <h1 className="text-[44px]/[1.03] font-light tracking-[-0.035em] text-ink sm:text-[58px]/[1.01] lg:text-[58px]/[1] xl:text-[68px]/[1] 2xl:text-[76px]/[0.99] 3xl:text-[84px]/[0.98]">
             <span className="block animate-enter" style={at(120)}>
               {hero.title}
             </span>
@@ -49,7 +66,7 @@ export function Hero() {
           </h1>
 
           <div className="animate-enter" style={at(420)}>
-            <p className="mt-7 max-w-[480px] text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55] 3xl:text-[22px]/[1.55]">{hero.lede}</p>
+            <p className="mt-7 max-w-[470px] text-[18px]/[1.55] text-ink-soft sm:text-[20px]/[1.55] 3xl:text-[22px]/[1.55]">{hero.lede}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a href={hero.primary.href} className={`${PRIMARY} group`}>
                 {hero.primary.label}
@@ -72,18 +89,10 @@ export function Hero() {
           </div>
         </div>
 
-        {/* The panel clips its own picture; the meeting is a sibling of it, so
-            it and its pop-ups can cross the edge. */}
-        <div className="relative">
-          <Artwork
-            src="signal"
-            alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
-            priority
-            /* Shorter than the window on purpose: the meeting is 434px at this
-                scale, so the panel's edges pass behind it. */
-            className="animate-film-in h-[300px] sm:h-[380px] lg:h-[386px] 3xl:h-[440px]"
-          />
-          <div className="absolute inset-0 hidden animate-enter place-items-center lg:grid" style={at(700)}>
+        {/* Off the right edge on purpose. The section clips it, which is what
+            makes it read as a window rather than a picture of one. */}
+        <div className="relative hidden animate-enter lg:block" style={at(700)}>
+          <div className="absolute top-1/2 -right-[13%] -translate-y-1/2 2xl:-right-[9%]">
             <HeroMontage />
           </div>
         </div>
