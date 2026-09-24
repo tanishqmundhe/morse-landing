@@ -88,7 +88,7 @@ export function UsedBy() {
           width={1600}
           height={1067}
           sizes="(max-width: 1280px) 100vw, 1200px"
-          className="absolute inset-0 -z-20 size-full object-cover object-[center_72%] dark:hidden"
+          className="absolute inset-0 -z-20 size-full object-cover object-[center_18%] dark:hidden"
         />
         <Image
           src="/art/current.webp"
@@ -97,10 +97,10 @@ export function UsedBy() {
           width={1600}
           height={1067}
           sizes="(max-width: 1280px) 100vw, 1200px"
-          className="absolute inset-0 -z-20 hidden size-full object-cover object-[center_72%] dark:block"
+          className="absolute inset-0 -z-20 hidden size-full object-cover object-[center_18%] dark:block"
         />
-        <GlitchBand src="current" delay={4.6} className="absolute inset-0 -z-20 size-full object-cover object-[center_72%]" />
-        {/* `object-[center_72%]` because the picture's middle band is its
+        <GlitchBand src="current" delay={4.6} className="absolute inset-0 -z-20 size-full object-cover object-[center_18%]" />
+        {/* `object-[center_18%]` because the picture's middle band is its
             darkest — cropping there gave a flat olive rectangle with no
             artwork visible in it at all. 72% lands on the lit mesa and the
             ground below it, which is the half worth showing.
@@ -110,7 +110,7 @@ export function UsedBy() {
             it, and a gradient would leave one end of the row paler than the
             other. Paper on the light page, ink on the dark one — the picture
             is texture under the marks either way, never a picture you read. */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.88)] dark:bg-[oklch(0.19_0.002_90/0.82)]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[oklch(0.972_0.014_105/0.76)] dark:bg-[oklch(0.19_0.002_90/0.74)]" />
 
         <ul className="grid grid-cols-2 gap-x-6 gap-y-12 px-8 py-16 sm:grid-cols-4 sm:px-10 lg:flex lg:items-start lg:justify-between lg:gap-5 lg:px-12 lg:py-20">
           {COMPANIES.map((company) => (

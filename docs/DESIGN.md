@@ -21,7 +21,7 @@ not reinvented.
 - **#2e The artwork is a panel, never a backdrop.** The infrared work (`/art/*.webp`) is false-colour: black sky, lime and cyan rock, coral ground, with the scan-echo glitch baked into the pixels rather than animated over them. There is no corner of it that holds a headline without a scrim heavy enough to throw away the reason for showing it — so words sit on paper and the artwork gets its own framed panel below them. A light card may sit on it; text may not.
   It is already the page's palette: the lime is `--action`, the coral is near `--signal`, the cyan is `--understood`. Nothing was tinted to fit.
   **It only works because it is rare.** Four places on the home page and nowhere else: the hero, where it is the whole first screen; the phone section, where it is a framed panel; the used-by band, where it is scrimmed to 82% and is texture rather than picture; and the photograph inside the booking mock. The closing band is a plain well and the pricing page carries none at all — both deliberately, following the reference. A fifth would spend it.
-  Two of the four stay black-skied in both themes and take `.on-stage` with them — the hero and the used-by band. Everywhere else the sky swaps with the page.
+  **All four take the theme.** The hero and the used-by band used to stay black-skied in both and carry `.on-stage` with them, which made the first screen of a light page a dark room and left `signal-light.webp` sitting in `public/art` unused. Each place now has a scrim per sky — paper over the cream one, ink over the black one, the same shape both times — so the words land in the same place either way. Measured on the light hero: title 17.3:1, the muted second line 7.4:1.
   Five pieces exist (`signal`, `current`, `memory`, `voices`, `dusk`); `knowledge` and `voices-light` are shipped but unreferenced and are the first things to delete if the folder needs trimming.
   Source PNGs are 1536x1024 at ~3 MB; shipped as 1600px WebP at ~200-260 KB, which is the only reason this is affordable at all.
 - **#2f One ornament: the Morse rule.** A line of Morse along the top right of each panel, spelling MORSE. It is the product's name in the product's own alphabet, which is the only kind of ornament contract #7 allows.
@@ -89,7 +89,7 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
 ## Sections (in order)
 
 1. **Header (`site-header.tsx`):** fixed, and glass at every scroll position — `backdrop-blur-xl backdrop-saturate-150` over `bg-canvas/55`, going to `/88` once the film has scrolled away. It used to be fully transparent over the hero, which left `ink-soft` links sitting on the arch's lime and all but invisible; the single scrim under the bar is not enough where the picture is brightest. Blurring and darkening the backdrop fixes it everywhere at once and stops the links changing legibility as you scroll.
-   - Over the home hero the bar takes `.on-stage`, so the glass is dark glass in both themes.
+   - No `.on-stage` over the hero any more: the hero takes the theme itself, so the bar is simply the page's own colours at every position.
    - The logo sits on the left and Open Morse (sage) on the right.
    - Between them, four links: **Features, Compare, Pricing, Developers.** "Product" was the home page's label and said nothing — every page here is about the product. Its highlight is a rule under the current word. Its `overlay` highlight slides to the section crossing the top third of the screen, and nothing is highlighted over the hero.
 2a. **Instead of (`replaces.tsx`):** built to the geometry of the band under aeye.framer.ai's hero, measured off the live page — cells of 200 × 132 inside the column over a 280-tall dotted band, `· · ·  >` at the left edge and `<  · · ·` at the right. Theirs is six fixed cells and nothing moves; ours scrolls the strip and holds the band still, because the list is longer than a row and a marquee takes any number. Track is the list twice over, moving half its width, so the loop never jumps.
@@ -142,7 +142,8 @@ pauses whenever one leaves. A first view of the page transfers about 1.3MB.
    - Below `lg` nothing pins — the cards stack and the band renders finished, since a rail that can't travel shouldn't sit half-drawn.
 5b. **Who uses Morse (`#used-by`, `used-by.tsx`):** seven companies, as their own marks, reversed out of a dark band. It sits after the quiet part and before booking — you have seen what it does, here is who does it with, now here is how to start.
    - **Centred heading on paper, marks on the band.** Contract #2e holds even at 82% scrim: a card may sit on the artwork, loose text may not.
-   - **It takes the theme.** Cream sky and ink marks on a light page, black sky and paper marks on a dark one. It shipped black-skied in both, which left a dark slab in the middle of a cream page. Measured worst case: marks 10.0:1 light and 9.2:1 dark, names about 7.4:1 and 6.6:1.
+   - **It takes the theme.** Cream sky and ink marks on a light page, black sky and paper marks on a dark one. It shipped black-skied in both, which left a dark slab in the middle of a cream page.
+   - **`object-[center_18%]`, for the comets.** The first crop chased luminance — the picture's middle band is its darkest — and landed on 72%, which is the water and the scrub: the half with nothing in it. The comets are the subject and they live in the top third. Scrim came down to 0.76 light / 0.74 dark to let them through; measured worst case, marks hold 10.9:1 light and 8.1:1 dark.
    - **`object-[center_72%]`.** The picture's middle band is its darkest, and cropping there gave a flat olive rectangle with no artwork in it at all. 72% lands on the lit mesa and the ground below.
    - **Every mark carries its name**, set in the page's own mono label. Not one of these is a logo anybody recognises, so a bare row would be decoration claiming to be proof.
    - **Names are `ink/80`, not `ink-soft`.** Measured against the brightest pixel under the row: marks 9.2:1, `ink-soft` names 4.2:1 — under AA for text this small — `ink/80` names about 6.6:1.
@@ -194,6 +195,9 @@ login replaces, and — last and deliberately — what Morse does not do.
 - **Competitor prices are the most perishable thing on the site.** They were supplied by the team on 2026-09-24 as list prices for one seat billed monthly in USD, and the page prints that date. **Re-check every row before launch** and update `comparison.checked`. A stale number in a comparison table is the one mistake a competitor will screenshot.
 - **Morse's own numbers come from `pricing.plans`**, not a second list, so there is one place to change them. They are still placeholders.
 - Plain paper, no artwork: a comparison page that shouted would make the reader distrust the numbers on it.
+- **Built as a document, after Linear's `/switch`:** a sticky numbered rail down the left, one narrow column of argument on the right, hairlines between the parts, and display type big enough to carry the first screen alone. The first pass was three plain sections stacked with a table in the middle — correct, and completely forgettable.
+- **The number before the table.** Three boxes against one is the whole argument and it should read from across the room, so the stack's total and Morse Pro sit side by side as two cards above the rows that explain them.
+- **The seven jobs carry the tools' own marks**, from the same `BRANDS` list the home page's band runs on, grouped off `cat` so the two can never drift. A column of names was a wall of grey.
 
 ## Pricing (`/pricing`)
 

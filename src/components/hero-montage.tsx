@@ -89,7 +89,7 @@ export function HeroMontage() {
         their own opaque tokens. So the glass is the window, not its contents.
       */}
       <div
-        className="absolute inset-0 overflow-hidden rounded-[28px] shadow-float backdrop-blur-xl [--canvas:rgb(20_20_19/0.72)] dark:[--canvas:rgb(20_20_19/0.66)]"
+        className="absolute inset-0 overflow-hidden rounded-[28px] shadow-float backdrop-blur-xl [--canvas:rgb(249_249_239/0.74)] dark:[--canvas:rgb(20_20_19/0.66)]"
         style={{ width: SCREEN_W * SCALE, height: SCREEN_H * SCALE }}
       >
         <div style={{ width: SCREEN_W, height: SCREEN_H, transform: `scale(${SCALE})`, transformOrigin: "0 0" }}>

@@ -47,9 +47,9 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed inset-x-2.5 top-2.5 z-40 shadow-raised backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-radius] duration-300 sm:inset-x-3.5 sm:top-3.5 ${
-        // The home hero is dark in both themes, so the bar reads on stage while
-        // it is over it; once the film has gone it is on the page.
-        !solid && onHome ? "on-stage" : ""
+        /* No `.on-stage` over the hero any more: it takes the theme itself,
+           so the bar is simply the page's own colours at every position. */
+        ""
       } ${
         // Glass at every scroll position, not only once the film has gone. The
         // bar used to be fully transparent over the hero, and `ink-soft` links

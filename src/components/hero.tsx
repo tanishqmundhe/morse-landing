@@ -19,10 +19,11 @@ function AppleMark() {
  * The whole hero is the artwork, and everything stands on it.
  *
  * The panel is gone. The picture spans the page edge to edge and runs the full
- * height of the first screen, in its black-sky form in both themes — this is
- * one of two places that stay dark when the page is light (the used-by band is
- * the other), the way the app keeps
- * video dark in both.
+ * height of the first screen, and it takes the theme like every other panel:
+ * cream sky and ink words on a light page, black sky and paper words on a dark
+ * one. It was black-skied in both and carried `.on-stage` with it, which made
+ * the first screen of a light page a dark room and left the cream-sky file
+ * unused in `public/art`.
  *
  * On it, side by side: the promise on the left, the meeting on the right,
  * running off the right edge so it reads as a window you are seeing part of.
@@ -33,29 +34,43 @@ export function Hero() {
   const at = (ms: number) => ({ animationDelay: `${ms}ms` });
 
   return (
-    <section className="on-stage relative isolate flex min-h-[760px] items-end overflow-hidden bg-stage lg:min-h-svh lg:max-h-[1040px]">
+    <section className="relative isolate flex min-h-[760px] items-end overflow-hidden bg-canvas lg:min-h-svh lg:max-h-[1040px]">
+      {/* Both skies, as every other panel on the page has them. The hero used
+          to be black-skied in both themes and carry `.on-stage` with it, which
+          meant the first screen of a light page was a dark room — and the
+          cream-sky file was sitting in `public/art` unused. */}
       <Image
-        src="/art/signal.webp"
+        src="/art/signal-light.webp"
         alt="Infrared desert arch in electric lime and turquoise over coral ground, streaked with analogue scan echoes."
         width={1600}
         height={1067}
         priority
         sizes="100vw"
-        className="animate-film-in absolute inset-0 -z-20 size-full object-cover"
+        className="animate-film-in absolute inset-0 -z-20 size-full object-cover dark:hidden"
       />
-      {/* The hero tears first, and the rest of the page follows it. `onStage`
-          because the picture below is black-skied in both themes: without it the
-          tear drew the cream-sky copy over it on a light page, which read as
-          the picture flashing white rather than dropping out. */}
-      <GlitchBand src="signal" onStage className="absolute inset-0 -z-20 size-full object-cover" />
+      <Image
+        src="/art/signal.webp"
+        alt=""
+        aria-hidden="true"
+        width={1600}
+        height={1067}
+        priority
+        sizes="100vw"
+        className="animate-film-in absolute inset-0 -z-20 hidden size-full object-cover dark:block"
+      />
+      {/* The hero tears first, and the rest of the page follows it. */}
+      <GlitchBand src="signal" className="absolute inset-0 -z-20 size-full object-cover" />
       {/* The scrim is heaviest where the words are and lets go by the middle,
           so the arch stays bright on the side nothing is written on. */}
+      {/* One scrim per sky. Paper over the cream one, ink over the black one —
+          same shape both times, so the words sit in the same place and the
+          arch stays bright on the side nothing is written on. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.19_0.002_90/0.97)_0%,oklch(0.19_0.002_90/0.9)_22%,oklch(0.19_0.002_90/0.58)_42%,oklch(0.19_0.002_90/0.18)_62%,transparent_84%),linear-gradient(90deg,oklch(0.19_0.002_90/0.5)_0%,transparent_46%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,oklch(0.972_0.014_105/0.97)_0%,oklch(0.972_0.014_105/0.92)_22%,oklch(0.972_0.014_105/0.62)_42%,oklch(0.972_0.014_105/0.2)_62%,transparent_84%),linear-gradient(90deg,oklch(0.972_0.014_105/0.55)_0%,transparent_46%)] dark:bg-[linear-gradient(0deg,oklch(0.19_0.002_90/0.97)_0%,oklch(0.19_0.002_90/0.9)_22%,oklch(0.19_0.002_90/0.58)_42%,oklch(0.19_0.002_90/0.18)_62%,transparent_84%),linear-gradient(90deg,oklch(0.19_0.002_90/0.5)_0%,transparent_46%)]"
       />
       {/* And a second one under the header, so the bar reads over the sky. */}
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-stage/80 to-transparent" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-canvas/80 to-transparent" />
 
       <div className="mx-auto grid w-full max-w-[2040px] items-end gap-12 px-6 pt-36 pb-14 sm:px-10 lg:grid-cols-[minmax(440px,0.9fr)_minmax(0,1.1fr)] lg:gap-10 lg:px-14 lg:pb-16">
         <div>
