@@ -33,13 +33,29 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
   const dark = useSyncExternalStore(subscribe, isDark, () => false);
 
   const flip = () => {
-    const next = !document.documentElement.classList.contains("dark");
-    document.documentElement.classList.toggle("dark", next);
-    try {
-      localStorage.setItem(KEY, next ? "dark" : "light");
-    } catch {
-      // Private windows refuse; the choice then lasts the session, which is fine.
+    const swap = () => {
+      const next = !document.documentElement.classList.contains("dark");
+      document.documentElement.classList.toggle("dark", next);
+      try {
+        localStorage.setItem(KEY, next ? "dark" : "light");
+      } catch {
+        // Private windows refuse; the choice then lasts the session, which is fine.
+      }
+    };
+
+    // The new theme comes down from the top like a blind, soft at first — the
+    // keyframes are in globals.css under "The theme changes like a blind".
+    //
+    // Two ways out of it, both to the instant swap this had before: browsers
+    // without the API (Firefox, at the time of writing), and anyone who has
+    // asked for less motion. A 0.7s wipe of the whole page is precisely the
+    // kind of thing that setting means, and the class still has to change.
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (still || !document.startViewTransition) {
+      swap();
+      return;
     }
+    document.startViewTransition(swap);
   };
 
   return (

@@ -425,3 +425,53 @@
   .glitch::after { display: none; }
   .glitch-band { opacity: 0; }
 }
+
+/* ── The theme changes like a blind coming down ──────────────────────────
+ *
+ * After Skiper UI's theme toggle (skiper26), the rectangle variant with blur,
+ * starting from the top. The View Transitions API takes a picture of the page
+ * before the class changes and another after; the old one is held still
+ * underneath and the new one is wiped down over it from the top edge,
+ * arriving soft and pulling into focus.
+ *
+ * `::view-transition-new(root)` carries the animation in both directions.
+ * Skiper ships a `-light-` and a `-dark-` keyframe, but they are identical
+ * frame for frame, so there is one here.
+ *
+ * Order matters: the browser applies `filter` before `clip-path`, so the
+ * leading edge stays a hard line and only the content behind it is blurred.
+ * That is what makes it read as a blind and not as a fade.
+ *
+ * Browsers without the API (Firefox, at the time of writing) get the instant
+ * swap they had before: `theme.tsx` checks for `startViewTransition` and falls
+ * back to changing the class directly. So does anyone asking for less motion —
+ * this is a 0.7s full-page wipe, which is exactly what that setting is about.
+ */
+::view-transition-group(root) {
+  animation-duration: 0.7s;
+  animation-timing-function: var(--ease-out);
+}
+
+/* The page being left stays put and stays sharp; the new one covers it. */
+::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+::view-transition-new(root) {
+  animation-name: theme-wipe;
+}
+
+@keyframes theme-wipe {
+  from {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+    filter: blur(8px);
+  }
+  50% {
+    filter: blur(4px);
+  }
+  to {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    filter: blur(0px);
+  }
+}
