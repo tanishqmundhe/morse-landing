@@ -246,7 +246,7 @@ export function BookingPage() {
                   <circle cx="12" cy="12" r="11" className="fill-action/15" />
                   <path data-check d="M7 12.5 L 10.5 16 L 17 8.5" stroke="var(--action)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <h4 className="text-[24px]/[1.25] font-light tracking-[-0.3px] text-ink">{p.done.title}</h4>
+                <h3 className="text-[24px]/[1.25] font-light tracking-[-0.3px] text-ink">{p.done.title}</h3>
               </div>
               <p className="mt-3 text-[18px]/[1.5] text-ink">{p.done.what}</p>
               <p className="mt-1 text-[15px] text-ink-soft">{p.zone.replace("Times shown in ", "")}</p>

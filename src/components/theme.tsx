@@ -48,7 +48,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={flip}
       aria-pressed={dark}
       aria-label="Dark mode"
-      className={`grid size-10 shrink-0 place-items-center rounded-full text-ink-soft transition-colors duration-200 hover:bg-overlay hover:text-ink ${className}`}
+      className={`grid size-11 shrink-0 place-items-center rounded-full text-ink-soft transition-colors duration-200 hover:bg-overlay hover:text-ink ${className}`}
     >
       <Icon icon={Moon02Icon} className="size-[19px] dark:hidden" />
       <Icon icon={Sun03Icon} className="hidden size-[19px] dark:block" />
