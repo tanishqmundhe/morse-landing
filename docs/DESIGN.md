@@ -211,6 +211,20 @@ Laid out the way `aeye.framer.ai/pricing` lays one out, in Morse's system. **Eve
 - **Compare (`pricing/compare.tsx`):** sixteen lines in four groups, each opening with its own raised header. "Yes" becomes a tick, "—" stays a dash. It scrolls sideways on a narrow screen rather than folding: a comparison you can't compare is no use.
 - **Voices:** deliberately empty. Fabricated quotes from people who don't exist would be the one dishonest thing on the page, so the section says so instead.
 - **Rhythm:** each part carries bottom padding only (`PART`), so the gap between two parts is one section's worth. `SECTION` can't be cancelled with `pt-0` here — its `lg:py-40` sits in a media query and wins.
+## Morse Intelligence, the section (`#intelligence`, `intelligence.tsx`)
+
+Sits after the showcase, where the meeting has just been shown. Layout borrowed
+from the booking section: a framed mock that plays itself on one GSAP clock, on
+the artwork, with the words on the page above it.
+
+- **One notification, finishing its sentence.** The spec's rule is that looking → answering → answered is the same card getting to the end of what it started, never three cards replacing one another — re-playing the entry on each change reads as flicker. There is a single card element and the timeline rewrites what is inside it.
+- **Three cases, 8s each, a 24s loop.** An answer, a nothing-found, and an offer to book. A section that only ever shows the happy path is a section nobody believes, and those three are what the feature actually does.
+- **The record fills up beside it.** Each notification expires into a row that washes coral for 1.1s. That flash is the answer to "where did that go?", and it is the only place a row is ever tinted.
+- **Hidden states are `display: none`, not just `autoAlpha`.** With `autoAlpha` the card kept the height of its tallest state, so "Looking in your notes" sat in a 200px empty panel. It now resizes with its content — 105px for the short answer, 194px for the offer.
+- **The room fills the frame.** The tiles were pinned to the foot with artwork showing above them, which left a third of a very large section doing nothing. Two tiles on a phone, three from `sm`.
+- **`w-[min(460px,calc(100%-24px))]`, with the `calc`.** Written as `100%-24px` Tailwind emits it verbatim, the declaration is invalid, and the card took its 460px on a 350px phone frame. Any arbitrary value doing arithmetic needs the `calc`.
+- Reduced motion rests at 4.6s — the card answered, the source shown, nothing moving.
+
 ## Morse Intelligence
 
 **The feature is called Morse Intelligence, not the Teleprompter.** The handoff

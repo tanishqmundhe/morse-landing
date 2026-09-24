@@ -3,6 +3,7 @@ import { Closing } from "@/components/closing";
 import { AppSection } from "@/components/app-section";
 import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
+import { Intelligence } from "@/components/intelligence";
 import { Features } from "@/components/features/features";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -21,6 +22,7 @@ export default function Home() {
         <Hero />
         <Replaces />
         <Showcase />
+        <Intelligence />
         <Features />
         <Quiet />
         {/* The agent handoff, brought over from /developers. It belongs on the

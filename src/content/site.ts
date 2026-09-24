@@ -49,7 +49,7 @@ export const nav = {
           items: [
             { label: "Video calls", href: "/#product" },
             { label: "Live transcript", href: "/#product" },
-            { label: "Morse Intelligence", href: "/#product" },
+            { label: "Morse Intelligence", href: "/#intelligence" },
             { label: "Captions and translation", href: "/#features" },
             { label: "A whiteboard in the call", href: "/#features" },
             { label: "Draw on what\u2019s shared", href: "/#features" },
@@ -273,6 +273,61 @@ export const usedBy = {
   title: "The teams already",
   titleMuted: "running their calls on it.",
   body: "Seven companies building AI products, using Morse for the meetings that build them.",
+};
+
+/**
+ * Morse Intelligence, on the home page.
+ *
+ * Every case below is from the handoff spec of 24 September 2026, which took
+ * them from the real feature. Three, because three is what it takes to show
+ * that the thing has states: an answer, a nothing-found, and an offer to book.
+ * A section that only ever shows the happy path is a section nobody believes.
+ *
+ * `row` is what the answer collapses to in the record. It leads with the
+ * answer, not the question — the reader was in the room and heard the question
+ * asked, so it is the least informative thing on the card.
+ */
+export const intelligence = {
+  eyebrow: "Morse Intelligence",
+  title: "Someone asks.",
+  titleMuted: "The answer is already there.",
+  body: "It listens to the call, not to you. A question goes past and the answer comes back out of your own notes — before you have finished saying “let me check”.",
+  panel: "Morse Intelligence",
+  looking: "Looking in your notes",
+  cases: [
+    {
+      who: "Sofia Ferrer",
+      heard: "Do you support SAML single sign-on?",
+      answer: "SAML 2.0 and SCIM provisioning are on the Business plan and above.",
+      source: "From Security questionnaire answers",
+      row: "SAML 2.0 and SCIM are on Business and above.",
+      tone: "answer" as const,
+    },
+    {
+      who: "Daniel Chen",
+      heard: "What happened on the call last March?",
+      answer: "Nothing in your notes about this.",
+      source: "",
+      row: "Nothing in your notes — “last March?”",
+      tone: "none" as const,
+    },
+    {
+      who: "Daniel Chen",
+      heard: "Let’s pick this up Thursday at two.",
+      answer: "",
+      source: "",
+      row: "Booked — Acme, Thursday 2:00 pm",
+      tone: "offer" as const,
+      offer: {
+        kicker: "Book a follow-up?",
+        title: "Acme — renewal follow-up",
+        when: "Thursday 26 September, 2:00–2:30 pm",
+        clash: "You’re free then.",
+        yes: "Book and invite",
+        no: "Don’t book",
+      },
+    },
+  ],
 };
 
 export const quiet = {
